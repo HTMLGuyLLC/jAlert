@@ -266,8 +266,21 @@ html,body
 	font-weight: bold;
 	z-index: 1;
 }
+.ja_close_alt
+{
+  border-radius: 50%;
+  background: #D51C1C;
+  color: rgb(255, 255, 255);
+  top: -16px;
+  right: -18px;
+  border: 1px solid rgb(55, 55, 55);
+  padding: 3px 8px;
+}
 .ja_close:hover{
 	background: #d4d4d4;
+}
+.ja_close_alt:hover{
+	background: #DF2020;
 }
 
  /* 

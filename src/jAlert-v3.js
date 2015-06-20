@@ -527,7 +527,12 @@
 			if( alert.options.closeBtn )
 			{
 				$.fn.jAlert.debug( 'Adding close button: '+alert.options.id );
-				html += 		"<div class='closejAlert ja_close'>X</div>"; //closejAlert has a close handler attached, ja_close is for styling
+				html += 		"<div class='closejAlert ja_close";
+				if( alert.options.closeBtnAlt )
+				{
+					html += ' ja_close_alt';
+				}
+				html += "'>X</div>"; //closejAlert has a close handler attached, ja_close is for styling
 			}
 
 			if( alert.options.title )
@@ -744,6 +749,7 @@
 			'closeOnClick': false, //close the alert when you click anywhere
 			'closeOnEsc': true, //close the alert when you click the escape key
 			'closeBtn': true, //adds a button to the top right of the alert that allows you to close it
+			'closeBtnAlt': false, //alternative close button
 			'btns': false, //adds buttons to the popup at the bottom. Pass an object for a single button, or an object of objects for many
 			/*
 				Variety of buttons you could create (also, an example of how to pass the object
