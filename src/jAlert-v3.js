@@ -127,7 +127,12 @@
 		{
 			alert.options.content = "<div class='ja_media_wrap'>"+
 										loader+
-										"<img src='"+alert.options.image+"' class='ja_img' "+onload+">"+
+										"<img src='"+alert.options.image+"' class='ja_img' "+onload+"'";
+			if( alert.options.imageWidth )
+			{
+				alert.options.content += " style='width: "+alert.options.imageWidth+"'";
+			}
+			alert.options.content += ">"+
 									"</div>";
 		}
 		else if( alert.options.video )
@@ -639,7 +644,8 @@
 	$.fn.jAlert.defaults = {
 			'title': false, //title for the popup (false = don't show)
 			'content': false, //html for the popup (replaced if you use image, ajax, or iframe)
-			'image': false, //adds a centered img tag with max-width: 100%; width: auto;
+			'image': false, //adds a centered img tag
+			'imageWidth': 'auto', //defaults to max-width: 100%; width: auto;
 			'video': false, //adds a responsive iframe video - value is the "src" of the iframe
 			'ajax': false, //uses ajax call to get contents
 			'onAjaxFail': function(alert, errorThrown){ //callback for when ajax fails
