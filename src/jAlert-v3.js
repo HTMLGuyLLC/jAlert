@@ -21,9 +21,7 @@
 
 	    /* Block Multiple Instances by running jAlert for each one */
 	    if (alert.length > 1){
-	    	$.fn.jAlert.debug('Multiple elements passed.');
 	        alert.each(function() { 
-	        	$.fn.jAlert.debug( 'Re-instantiating with one element' );
 	        	$(this).jAlert(alert.options);
 	        });
 	        return this;
@@ -31,16 +29,13 @@
 
 		/* Combine user alert.options with default */
 		alert.options = $.extend({}, $.fn.jAlert.defaults, options);
-		$.fn.jAlert.debug('Options for this popup: ' + JSON.stringify(alert.options) );
 		
 		alert.instance = false;
 
 		if( alert.options.type == 'confirm' )
 		{
-			$.fn.jAlert.debug('Type is confirm');
 			if( !alert.options.content )
 			{
-				$.fn.jAlert.debug('No content passed. Defaulting to "'+alert.options.confirmQuestion+'"');
 				alert.options.content = alert.options.confirmQuestion;
 			}
 
@@ -49,11 +44,7 @@
 				{ 'text': alert.options.denyBtnText, 'theme': 'red', 'class': 'denyBtn', 'closeAlert': true, 'onClick': alert.options.onDeny }
 			];
 
-			$.fn.jAlert.debug('Creating buttons');
-
 			alert.options.autofocus = alert.options.confirmAutofocus;
-
-			$.fn.jAlert.debug('Autofocus set to .confirmBtn');
 		}
 
 		/* Add theme class */
@@ -64,36 +55,28 @@
 		}
 
 		classes.push('ja_'+alert.options.theme);
-		$.fn.jAlert.debug( 'Added theme to classes: ' + JSON.stringify(alert.options.theme) );
 
 		/* If they didn't set an id, just create a random one */
 		if( !alert.options.id )
 		{
 			var unique = Date.now().toString() + Math.floor(Math.random() * 100000);
 			alert.options.id = 'ja_' + unique;
-			$.fn.jAlert.debug( 'No ID set. Creating unique: '+alert.options.id);
 		}
 
 		/* If they set custom classes */
 		if( alert.options.class )
 		{
-			$.fn.jAlert.debug( 'Applying your custom class(es): '+JSON.stringify(alert.options.class) );
 			classes.push(alert.options.class);
-			$.fn.jAlert.debug( 'Classes: '+JSON.stringify(classes) );
 		}
 		if( alert.options.classes )
 		{
-			$.fn.jAlert.debug( 'Applying your custom class(es): '+JSON.stringify(alert.options.classes) );
 			classes.push(alert.options.classes);
-			$.fn.jAlert.debug( 'Classes: '+JSON.stringify(classes) );
 		}
 
 		/* If no title, add class */
 		if( !alert.options.title )
 		{
-			$.fn.jAlert.debug( 'No title set. Adding noTitle class' );
 			classes.push( 'ja_noTitle' );
-			$.fn.jAlert.debug( 'Classes: '+JSON.stringify(classes) );
 		}
 
 		/* if it's set and it's not in the array of sizes OR it's an object and it's missing width/height */
@@ -105,24 +88,18 @@
 		/* If it's not set, set to md */
 		else if( !alert.options.size )
 		{
-			$.fn.jAlert.debug( 'No size indicated. Set to sm.' );
 			classes.push('ja_sm');
-			$.fn.jAlert.debug( 'Classes: '+JSON.stringify(classes) );
 		}
 		/* If it's set and it's an object */
 		else if( typeof alert.options.size == 'object' )
 		{
-			$.fn.jAlert.debug( 'Height/Width defined. Adding to styles.' );
 			styles.push('width: '+alert.options.size.width+';');
 			styles.push('height: '+alert.options.size.height+';');
-			$.fn.jAlert.debug( 'Style: '+JSON.stringify(styles) );
 		}
 		/* If it's set and it's not an object */
 		else
 		{
-			$.fn.jAlert.debug( 'Setting size to '+alert.options.sizes );
 			classes.push('ja_'+alert.options.size);
-			$.fn.jAlert.debug( 'Classes: '+JSON.stringify(classes) );
 		}
 
 		/* Add background color class */
@@ -133,13 +110,11 @@
 		}
 
 
-		backgroundClasses.push('ja_'+alert.options.backgroundColor);	
-		$.fn.jAlert.debug( 'Adding background color '+alert.options.backgroundColor );
+		backgroundClasses.push('ja_'+alert.options.backgroundColor);
 
 		/* If there are button(s), then you obviously don't want to hide the div when you alert anywhere or they'll be useless...SAME with autofocus */
 		if( (typeof alert.options.btns == 'object' || typeof alert.options.btns == 'array') || alert.options.autofocus ){
 			alert.options.closeOnClick = false;
-			$.fn.jAlert.debug( 'closeOnClick disabled due to having buttons or autofocus' );
 		}
 
 		alert.options.onOpen = [ alert.options.onOpen ];
@@ -150,7 +125,6 @@
 		/* Creates content */
 		if( alert.options.image )
 		{
-			$.fn.jAlert.debug( 'Adding Image' );
 			alert.options.content = "<div class='ja_media_wrap'>"+
 										loader+
 										"<img src='"+alert.options.image+"' class='ja_img' "+onload+">"+
@@ -158,8 +132,6 @@
 		}
 		else if( alert.options.video )
 		{
-
-			$.fn.jAlert.debug( 'Adding Video' );
 			alert.options.content = "<div class='ja_media_wrap'>"+
 										loader+
 										"<div class='ja_video'>"+
@@ -192,7 +164,6 @@
 				alert.options.iframeHeight = $(window).height() * 0.9+'px';
 			}
 			
-			$.fn.jAlert.debug( 'Adding iFrame with height: '+alert.options.iframeHeight );
 			alert.options.content = "<div class='ja_media_wrap'>"+
 										loader+
 									"</div>";
@@ -230,7 +201,6 @@
 
 			/* Overwrite the onOpen to be the ajax call */
 			alert.options.onOpen = [function(alert){
-				$.fn.jAlert.debug( 'Getting content from '+alert.options.ajax );
 				$.ajax(alert.options.ajax, {
 					async: true,
 					complete: function(jqXHR, textStatus)
@@ -269,12 +239,7 @@
 			if( $('.ja_background').length < 1 )
 			{
 				var zIndex = alert.maxZIndex + 1;
-				$.fn.jAlert.debug( 'Adding background with z-index: '+zIndex+'.' );
 				$('body').append('<div class="ja_background '+backgroundClasses.join(' ')+'" style="z-index: '+zIndex+'"></div>').fadeIn(alert.options.backgroundFadeSpeed);
-			}
-			else
-			{
-				$.fn.jAlert.debug( 'Background already exists.' );
 			}
 		}
 
@@ -293,8 +258,6 @@
 				alertHeight = alert.instance.height(),
 				diff = viewportHeight - alertHeight;
 
-				$.fn.jAlert.debug( 'Centering alert. viewportHeight: '+viewportHeight+' alertHeight: '+alertHeight+' diff: '+diff );
-
 				var top = diff / 2;
 	
 				if( top > 200 )
@@ -306,20 +269,16 @@
 				{
 					top = 0;
 				}
-
-				$.fn.jAlert.debug( 'Setting margin-top '+top+'px' );
 		
 				alert.instance.css('margin-top', top+'px');
 			
 			if( diff > 5 )
 			{
-				$.fn.jAlert.debug( 'Diff is greater than 5px. Setting wrapper as position: fixed and body as overflow: hidden' );
 				alert.instance.parents('.ja_wrap').css('position', 'fixed');
 				$('body').css('overflow', 'hidden');
 			}
 			else
 			{
-				$.fn.jAlert.debug( 'Diff is less than 5px. Setting wrapper as position: absolute (default) and body as overflow: auto (hopefully your default. Otherwise this can create issues)' );
 				alert.instance.parents('.ja_wrap').css('position', 'absolute');
 				$('body').css('overflow', 'auto');
 		
@@ -335,13 +294,10 @@
 		var animateAlert = function(which, thisAlert){
 			if( which == 'hide' )
 			{
-				$.fn.jAlert.debug( 'Hiding alert: '+thisAlert.attr('id') );
-
 				thisAlert.removeClass(alert.options.showAnimation).addClass(alert.options.hideAnimation);
 			}
 			else
 			{
-				$.fn.jAlert.debug( 'Centering + Showing alert: '+thisAlert.attr('id') );
 				thisAlert.centerAlert();
 				thisAlert.addClass(alert.options.showAnimation).removeClass(alert.options.hideAnimation).show();
 			}
@@ -384,8 +340,6 @@
 
 				});
 
-			$.fn.jAlert.debug( 'Creating button ');
-
 			return "<a href='"+btn.href+"' id='"+btn.id+"' target='"+btn.target+"' class='ja_btn "+btn.class+"'>"+btn.text+"</a> ";
 		}
 
@@ -394,11 +348,8 @@
 
 	    	var alertInstance = $(this);
 
-	    	$.fn.jAlert.debug( '- - - - CLOSING ALERT - - - -'+alertInstance.attr('id') );
-
 	    	if( remove != false )
 	    	{
-	    		$.fn.jAlert.debug( 'Remove != false, so default remove to true: '+alertInstance.attr('id') );
 	    		remove = true;
 	    	}
 	    	
@@ -415,33 +366,26 @@
 
 					if( remove )
 					{
-						$.fn.jAlert.debug( 'Remove is true, so removing the alert\'s wrapper + alert: '+alertInstance.attr('id') );
 						alertWrap.remove();
 					}
 					else
 					{
-						$.fn.jAlert.debug( 'Remove is false, so hiding the alert\'s wrapper + alert: '+alertInstance.attr('id') );
 						alertWrap.hide();
 					}
 
 					if(typeof onClose == 'function')
 					{ 
-						$.fn.jAlert.debug( 'Running onClose callback (passed into closeAlert): '+alertInstance.attr('id') );
 						onClose(alertInstance); 
 					}
 					else if(typeof alert.options.onClose == 'function')
 					{ 
-						$.fn.jAlert.debug( 'Running onClose callback (set in options): '+alertInstance.attr('id') );
 						alert.options.onClose(alertInstance); 
 					}
 			
 					if( anyAlertsVisible() < 1)
 					{
-						$.fn.jAlert.debug( 'No alerts are visible: '+alertInstance.attr('id') );
 						hideBackground();
 					}
-
-					$.fn.jAlert.debug( '- - - - DONE HIDING ALERT - - - -'+alertInstance.attr('id')  );
 
 				}, alert.options.animationTimeout);
 			
@@ -454,12 +398,9 @@
 		alert.showAlert = function(replaceOthers, removeOthers, onOpen, onClose){
 
 			var alertInstance = $(this);
-
-			$.fn.jAlert.debug( '- - - - SHOWING Alert - - - -'+alertInstance.attr('id') );
 			
 			if( replaceOthers != false )
 			{ 
-				$.fn.jAlert.debug( 'replaceOthers != false, so default to true: '+alertInstance.attr('id'));
 				replaceOthers = true; 
 			}
 			
@@ -470,7 +411,6 @@
 			
 			if( replaceOthers )
 			{
-				$.fn.jAlert.debug( 'Run closeAlert on all open alerts: '+alertInstance.attr('id'));
 				$('.jAlert:visible').closeAlert(removeOthers);
 			}
 			
@@ -479,8 +419,6 @@
 			/* Put this one above the last one */
 			var zIndex = alert.maxZIndex + 1,
 				wrap = alertInstance.parents('.ja_wrap');
-
-			$.fn.jAlert.debug( 'Setting z-index on wrapper to '+zIndex+' and showing it: '+alertInstance.attr('id') );
 			
 			wrap.css('z-index', zIndex).show();
 			
@@ -488,7 +426,6 @@
 			
 			if( typeof onClose == 'function' )
 			{
-				$.fn.jAlert.debug( 'Setting options onClose to one passed to showAlert: '+alertInstance.attr('id') );
 				alert.options.onClose = onClose;
 			}
 
@@ -496,11 +433,8 @@
 				
 				if(typeof onOpen == 'function')
 				{ 
-					$.fn.jAlert.debug( 'Running onOpen callback (passed to showAlert): '+alertInstance.attr('id') );
 					onOpen(alertInstance); 
 				}
-
-				$.fn.jAlert.debug( '- - - - DONE SHOWING ALERT - - - -'+alertInstance.attr('id') );
 
 			}, alert.options.animationTimeout);
 			
@@ -509,15 +443,11 @@
 		/* Adds a new alert to the dom */
 		var addAlert = function(content){
 
-			$.fn.jAlert.debug( '- - - - ADDING ALERT - - - -'+alert.options.id );
-
 			var html = '',
 				topMost = $('.ja_wrap:last')[0];
 
 			/* Put this one above the last one */
 			var zIndex =alert.maxZIndex + 1;
-
-			$.fn.jAlert.debug( 'Setting z-index to '+zIndex+' : '+alert.options.id );
 
 			html += '<div class="ja_wrap" style="z-index: '+zIndex+';">'+
 						'<div class="jAlert '+classes.join(' ')+ '" style="' +styles.join(' ')+ '" id="' +alert.options.id+ '">'+
@@ -525,7 +455,6 @@
 
 			if( alert.options.closeBtn )
 			{
-				$.fn.jAlert.debug( 'Adding close button: '+alert.options.id );
 				html += 		"<div class='closejAlert ja_close";
 				if( alert.options.closeBtnAlt )
 				{
@@ -536,7 +465,6 @@
 
 			if( alert.options.title )
 			{
-				$.fn.jAlert.debug( 'Adding title: '+alert.options.id );
 				html += 		"<div class='ja_title'><div>"+alert.options.title+"</div></div>";
 			}
 
@@ -545,12 +473,10 @@
 
 	  		if( alert.options.btns )
 	  		{
-	  			$.fn.jAlert.debug( 'Adding buttons: '+alert.options.id );
 	  			html += 			'<div class="ja_btn_wrap ';
 
 	  			if( alert.options.btnBackground )
 	  			{
-	  				$.fn.jAlert.debug( 'Adding button background: '+alert.options.id);
 	  				html += 		'optBack';
 	  			}
 
@@ -591,7 +517,6 @@
 
 			if( alert.options.replaceOtherAlerts )
 			{
-				$.fn.jAlert.debug( 'Replacing other alerts if any visible: '+alert.options.id);
 				$('.jAlert:visible').closeAlert();
 			}
 
@@ -603,8 +528,6 @@
 
 			if( alert.options.closeBtn ){
 
-				$.fn.jAlert.debug( 'Adding closeBtn handler: '+alert.options.id );
-
 			  	alert.instance.on('click', '.closejAlert', function(e){
 			  		e.preventDefault();
 					$(this).parents('.jAlert').closeAlert();
@@ -615,8 +538,6 @@
 			
 			/* Bind mouseup handler to document if this alert has closeOnClick enabled */
 			if( alert.options.closeOnClick ){
-
-				$.fn.jAlert.debug( 'Adding closeOnClick handler: '+alert.options.id );
 				
 				/* Unbind any other mouseup */
 				$(document).off('mouseup');
@@ -642,8 +563,6 @@
 
 			/* Bind on keydown handler to document and if esc was pressed, find all visible jAlerts with that close option enabled and close them */
 			if( alert.options.closeOnEsc ){
-
-				$.fn.jAlert.debug( 'Adding closeOnEsc handler: '+alert.options.id );
 				
 				$(document).off('keydown');
 
@@ -671,7 +590,6 @@
 			/* If there are onOpen callbacks, run them. */
 			if( alert.options.onOpen )
 			{ 
-				$.fn.jAlert.debug( 'Running onOpen callback(s): '+alert.options.id );
 				$.each(alert.options.onOpen, function(index, onOpen){
 					onOpen(alert.instance); 
 				});
@@ -680,7 +598,6 @@
 			/* If the alert has an element that should be focused by default */
 			if( alert.options.autofocus )
 			{
-				$.fn.jAlert.debug( 'Autofocusing on element: '+alert.options.id );
 				alert.instance.find(alert.options.autofocus).focus();
 			}
 
@@ -712,8 +629,6 @@
 		}
 
 		alert.initialize();
-
-		$.fn.jAlert.debug( '- - - - DONE ADDING ALERT - - - -' );
 		
 		return alert;
 
@@ -722,7 +637,6 @@
 
     /* Default alert.options */
 	$.fn.jAlert.defaults = {
-			'debug': false, //turn on debug mode which console logs each action
 			'title': false, //title for the popup (false = don't show)
 			'content': false, //html for the popup (replaced if you use image, ajax, or iframe)
 			'image': false, //adds a centered img tag with max-width: 100%; width: auto;
@@ -814,14 +728,6 @@
 			return false;
 		});
 	}
-
-	/* Shows a crap-load (technical term) of messages as it goes through the process of building and displaying an alert */
-	$.fn.jAlert.debug = function(msg){
-		if( $.fn.jAlert.defaults.debug )
-		{
-			console.log('jAlert: '+msg);
-		}
-	};
 
 	/* Slowed window resize function */
 	var $jAlertResizeTimeout;
