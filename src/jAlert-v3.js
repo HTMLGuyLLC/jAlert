@@ -1,12 +1,3 @@
-/*
-	TopZIndex 1.2 (October 21, 2010) plugin for jQuery
-	http://topzindex.googlecode.com/
-	Copyright (c) 2009-2011 Todd Northrop
-	http://www.speednet.biz/
-	Licensed under GPL 3, see  <http://www.gnu.org/licenses/>
-*/
-;(function(a){a.topZIndex=function(b){return Math.max(0,Math.max.apply(null,a.map((b||"*")==="*"?a.makeArray(document.getElementsByTagName("*")):a(b),function(b){return parseFloat(a(b).css("z-index"))||null})))};a.fn.topZIndex=function(b){if(this.length===0)return this;b=a.extend({increment:1},b);var c=a.topZIndex(b.selector),d=b.increment;return this.each(function(){this.style.zIndex=c+=d})}})(jQuery);
-
 /* 
 	*
 	*
@@ -277,7 +268,7 @@
 
 			if( $('.ja_background').length < 1 )
 			{
-				var zIndex = $.topZIndex("*") + 1;
+				var zIndex = alert.maxZIndex + 1;
 				$.fn.jAlert.debug( 'Adding background with z-index: '+zIndex+'.' );
 				$('body').append('<div class="ja_background '+backgroundClasses.join(' ')+'" style="z-index: '+zIndex+'"></div>').fadeIn(alert.options.backgroundFadeSpeed);
 			}
@@ -285,6 +276,14 @@
 			{
 				$.fn.jAlert.debug( 'Background already exists.' );
 			}
+		}
+
+		alert.maxZIndex = function(){
+			Math.max.apply(null, $.map($('body > *'), function(e,n){
+				if($(e).css('position')=='absolute')
+					return parseInt($(e).css('z-index'))||1;
+				})
+			);
 		}
 
 		alert.centerAlert = function()
@@ -478,7 +477,7 @@
 			showBackground();
 			
 			/* Put this one above the last one */
-			var zIndex = $.topZIndex("*") + 1,
+			var zIndex = alert.maxZIndex + 1,
 				wrap = alertInstance.parents('.ja_wrap');
 
 			$.fn.jAlert.debug( 'Setting z-index on wrapper to '+zIndex+' and showing it: '+alertInstance.attr('id') );
@@ -516,7 +515,7 @@
 				topMost = $('.ja_wrap:last')[0];
 
 			/* Put this one above the last one */
-			var zIndex = $.topZIndex("*") + 1;
+			var zIndex =alert.maxZIndex + 1;
 
 			$.fn.jAlert.debug( 'Setting z-index to '+zIndex+' : '+alert.options.id );
 
