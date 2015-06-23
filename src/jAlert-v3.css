@@ -12,33 +12,6 @@ html,body
 }
 
  /* 
-	 BACKGROUNDS
-*/
-.ja_background
-{
-	width: 100%;
-	height: 100%;
-	position: fixed;
-	top: 0px; 
-	left: 0px;
-	z-index: 99998;
-}
-
-.ja_background.ja_white
-{
-	background: white;
-	background: rgba(255,255,255,.75);
-	border: 3px solid white;
-}
-
-.ja_background.ja_black
-{
-	background: black;
-	background: rgba(0,0,0,.75);
-	border: 3px solid black;
-}
-
- /* 
 	 WRAPPER
 */
 .ja_wrap
@@ -54,6 +27,20 @@ html,body
    -webkit-user-select: none;
    -o-user-select: none;
    user-select: none;
+}
+
+.ja_wrap.ja_wrap_white
+{
+	background: white;
+	background: rgba(255,255,255,.75);
+	border: 3px solid white;
+}
+
+.ja_wrap.ja_wrap_black
+{
+	background: black;
+	background: rgba(0,0,0,.75);
+	border: 3px solid black;
 }
 
  /* 

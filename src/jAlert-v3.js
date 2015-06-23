@@ -110,7 +110,7 @@
 		}
 
 
-		backgroundClasses.push('ja_'+alert.options.backgroundColor);
+		backgroundClasses.push('ja_wrap_'+alert.options.backgroundColor);
 
 		/* If there are button(s), then you obviously don't want to hide the div when you alert anywhere or they'll be useless...SAME with autofocus */
 		if( (typeof alert.options.btns == 'object' || typeof alert.options.btns == 'array') || alert.options.autofocus ){
@@ -224,27 +224,6 @@
 				});
 			}];
 
-		}
-
-
-		/* Helper function that determines whether or not to hide the background while closing an alert */
-		var anyAlertsVisible = function(){
-			return $('.jAlert:visible').length;
-		}
-
-		var hideBackground = function(){
-			$('.ja_background').fadeOut(alert.options.backgroundFadeSpeed, function(){
-				$(this).remove();
-				$('body').css('overflow', 'auto');
-			});
-		}
-
-		var showBackground = function(){
-
-			if( $('.ja_background').length < 1 )
-			{
-				$('body').append('<div class="ja_background '+backgroundClasses.join(' ')+'"></div>').fadeIn(alert.options.backgroundFadeSpeed);
-			}
 		}
 
 		alert.centerAlert = function()
@@ -377,11 +356,6 @@
 					{ 
 						alert.options.onClose(alertInstance); 
 					}
-			
-					if( anyAlertsVisible() < 1)
-					{
-						hideBackground();
-					}
 
 				}, alert.options.animationTimeout);
 			
@@ -409,8 +383,6 @@
 			{
 				$('.jAlert:visible').closeAlert(removeOthers);
 			}
-			
-			showBackground();
 			
 			/* Put this one above the last one by moving to end of dom */
 			var wrap = alertInstance.parents('.ja_wrap');
@@ -440,7 +412,7 @@
 
 			var html = '';
 
-			html += '<div class="ja_wrap">'+
+			html += '<div class="ja_wrap '+backgroundClasses.join(' ')+'">'+
 						'<div class="jAlert '+classes.join(' ')+ '" style="' +styles.join(' ')+ '" id="' +alert.options.id+ '">'+
 							'<div>';
 
@@ -503,8 +475,6 @@
 	  			'</div>';
 
 	  		var alertHTML = $(html);
-
-			showBackground();
 
 			if( alert.options.replaceOtherAlerts )
 			{
@@ -638,8 +608,7 @@
 			'id': false, //adds an ID to the jAlert
 			'showAnimation': 'bounceIn',
 			'hideAnimation': 'bounceOut',
-			'backgroundFadeSpeed': 100, //speed to fade in and out the background
-			'animationTimeout': 600, //approx duration of animation to wait until hiding/showing background
+			'animationTimeout': 600, //approx duration of animation to wait until onClose
 			'theme': 'default', // red, green, blue, black, default
 			'backgroundColor': 'black', //white, black
 			'size': false, //false = css default, xsm, sm, md, lg, xlg, full, { height: 200, width: 200 }
