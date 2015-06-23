@@ -243,17 +243,8 @@
 
 			if( $('.ja_background').length < 1 )
 			{
-				var zIndex = alert.maxZIndex + 1;
-				$('body').append('<div class="ja_background '+backgroundClasses.join(' ')+'" style="z-index: '+zIndex+'"></div>').fadeIn(alert.options.backgroundFadeSpeed);
+				$('body').append('<div class="ja_background '+backgroundClasses.join(' ')+'"></div>').fadeIn(alert.options.backgroundFadeSpeed);
 			}
-		}
-
-		alert.maxZIndex = function(){
-			Math.max.apply(null, $.map($('body > *'), function(e,n){
-				if($(e).css('position')=='absolute')
-					return parseInt($(e).css('z-index'))||1;
-				})
-			);
 		}
 
 		alert.centerAlert = function()
@@ -422,10 +413,7 @@
 			showBackground();
 			
 			/* Put this one above the last one */
-			var zIndex = alert.maxZIndex + 1,
-				wrap = alertInstance.parents('.ja_wrap');
-			
-			wrap.css('z-index', zIndex).show();
+			var wrap = alertInstance.parents('.ja_wrap');
 			
 			animateAlert('show', alertInstance);
 			
@@ -448,13 +436,9 @@
 		/* Adds a new alert to the dom */
 		var addAlert = function(content){
 
-			var html = '',
-				topMost = $('.ja_wrap:last')[0];
+			var html = '';
 
-			/* Put this one above the last one */
-			var zIndex =alert.maxZIndex + 1;
-
-			html += '<div class="ja_wrap" style="z-index: '+zIndex+';">'+
+			html += '<div class="ja_wrap">'+
 						'<div class="jAlert '+classes.join(' ')+ '" style="' +styles.join(' ')+ '" id="' +alert.options.id+ '">'+
 							'<div>';
 
