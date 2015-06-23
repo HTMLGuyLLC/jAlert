@@ -412,8 +412,10 @@
 			
 			showBackground();
 			
-			/* Put this one above the last one */
+			/* Put this one above the last one by moving to end of dom */
 			var wrap = alertInstance.parents('.ja_wrap');
+			
+			$('body').append(wrap);
 			
 			animateAlert('show', alertInstance);
 			
@@ -534,17 +536,13 @@
 				/* Bind mouseup */
 				$(document).on('mouseup', function(e){
 				
-					/* Find each visible jAlert and see if it has closeOnClick enabled */
-					$('.jAlert:visible').each(function(){
-						
-					   var alert = $(this);
+					/* Find top visible jAlert and see if it has closeOnClick enabled */
+					var lastVisibleAlert = $('.jAlert:visible:last');
 					   
-					   if( alert.options.closeOnClick )
-					   {
-						   alert.closeAlert();
-					   }
-					   
-				    });
+				    if( lastVisibleAlert.options.closeOnClick )
+				    {
+					   lastVisibleAlert.closeAlert();
+				    }
 				    
 				}); 
 
@@ -558,17 +556,14 @@
 				$(document).on('keydown', function(e){
 
 				    if(e.keyCode === 27){
-					    
-					    $('.jAlert:visible').each(function(){
-						    
-						   var alert = $(this);
+
+					    /* Find top visible jAlert and see if it has closeOnClick enabled */
+						var lastVisibleAlert = $('.jAlert:visible:last');
 						   
-						   if( alert.options.closeOnEsc )
-						   {
-							   alert.closeAlert();
-						   } 
-						    
-					    });
+					    if( lastVisibleAlert.options.closeOnEsc )
+					    {
+						   lastVisibleAlert.closeAlert();
+					    }
 					    
 				    }
 
