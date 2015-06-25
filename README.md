@@ -45,7 +45,7 @@ Include the JS file from the src folder before the `</body>`:
   warningAlert('Warning', 'Warning!'); //yellow alert
 ```
 ```javascript 
-  blackAlert('Warning', 'Warning!'); //blue alert
+  blackAlert('Warning', 'Warning!'); //black alert (obviously)
 ```
 ```javascript 
   imageAlert('http://mydomain.com/myimg.jpg'); //optional second param is the image width (defaults to auto)
