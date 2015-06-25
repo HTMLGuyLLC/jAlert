@@ -800,3 +800,51 @@ function blackAlert(title, msg)
 
 	showAlert(title, msg, 'black');
 }
+
+function imageAlert(img, imgWidth)
+{
+	if( typeof imgWidth == 'auto' )
+	{
+		iframeHeight = false;
+	}
+
+	$.jAlert({
+		'image': img,
+		'imageWidth': imgWidth
+	});
+}
+
+function videoAlert(video)
+{
+	$.jAlert({
+		'video': video
+	});
+}
+
+function iframeAlert(iframe, iframeHeight)
+{
+	if( typeof iframeHeight == 'undefined' )
+	{
+		iframeHeight = false;
+	}
+
+	$.jAlert({
+		'iframe': iframe,
+		'iframeHeight': iframeHeight
+	});
+}
+
+function ajaxAlert(url, onOpen)
+{
+	if( typeof onOpen == 'undefined' )
+	{
+		onOpen = function(alert){ //on open call back. Fires just after the alert has finished rendering
+				return false;
+			};
+	}
+
+	$.jAlert({
+		'ajax': url,
+		'onOpen': onOpen
+	});
+}
