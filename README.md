@@ -28,20 +28,36 @@ Include the JS file from the src folder before the `</body>`:
 <script src="jAlert-master/src/jAlert-functions.min.js"></script> <!-- COMPLETELY OPTIONAL -->
 ```
 
-### Basic Use (functions require jAlert-functions.js!!!)
+### Quick Use (requires jAlert-functions.js!!!)
 =======
 ```javascript
   alert('hi'); //override is enabled by default works in code in console you get the default behavior and undefined
 ```
 ```javascript
-  successAlert('Success!', 'You did it!'); //green alert
+  successAlert('Success', 'You did it!'); //green alert
 ```
 ```javascript 
-  errorAlert('Error!', 'It didn\'t work!'); //red alert
+  errorAlert('Error', 'It didn\'t work!'); //red alert
 ```
 ```javascript 
-  infoAlert('Info!', 'Information!'); //blue alert
+  infoAlert('Info', 'Information!'); //blue alert
 ```
+```javascript 
+  warningAlert('Warning', 'Warning!'); //yellow alert
+```
+```javascript 
+  blackAlert('Warning', 'Warning!'); //blue alert
+```
+```javascript 
+  imageAlert('http://mydomain.com/myimg.jpg'); //optional second param is the image width (defaults to auto)
+```
+```javascript 
+  ajaxAlert('http://mydomain.com/myfile.php'); //optional second param is onOpen callback which gets passed the instance of jAlert
+```
+```javascript 
+  iframeAlert('http://mydomain.com'); //optional second param is height (defaults to fill the viewport height)
+```
+
 ```javascript   
   confirm(function(){ //override is enabled by default
     console.log('confirmed!');
