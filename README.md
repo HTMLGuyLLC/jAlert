@@ -59,9 +59,8 @@ Include the JS file from the src folder before the `</body>`:
 ```javascript 
   iframeAlert('http://mydomain.com'); //optional second param is height (defaults to fill the viewport height)
 ```
-
 ```javascript   
-  confirm(function(){ //override is enabled by default
+  confirm(function(){
     console.log('confirmed!');
   }, function(){
     console.log('denied');
