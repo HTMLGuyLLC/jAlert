@@ -27,7 +27,7 @@ Include the JS file from the src folder before the `</body>`:
 <script src="jAlert-master/src/jAlert-v3.min.js"></script>
 ```
 
-Basic Use
+### Basic Use (functions require jAlert-functions.js!!!)
 =======
 ```javascript
   alert('hi'); //override is enabled by default works in code in console you get the default behavior and undefined
@@ -48,6 +48,8 @@ Basic Use
     console.log('denied');
   });
 ```
+### This is the default usage. Doesn't require jAlert-functions.js
+======
 ```javascript   
   $.jAlert({ //this is the normal usage
     'title': 'Test',
