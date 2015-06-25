@@ -30,13 +30,16 @@ Include the JS file from the src folder before the `</body>`:
 Basic Use
 =======
 ```javascript
-  alert('hi'); //override is enabled by default
+  alert('hi'); //override is enabled by default works in code in console you get the default behavior and undefined
 ```
 ```javascript
   successAlert('Success!', 'You did it!'); //green alert
 ```
 ```javascript 
-  errorAlert('Error!', 'It didn't work!'); //red alert
+  errorAlert('Error!', 'It didn\'t work!'); //red alert
+```
+```javascript 
+  infoAlert('Info!', 'Information!'); //blue alert
 ```
 ```javascript   
   confirm(function(){ //override is enabled by default
