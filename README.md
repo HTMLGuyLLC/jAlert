@@ -29,7 +29,6 @@ Include the JS file from the src folder before the `</body>`:
 ```
 
 ### Quick Use (requires jAlert-functions.js!!!)
-=======
 ```javascript
   alert('hi'); //override is enabled by default works in code in console you get the default behavior and undefined
 ```
@@ -69,7 +68,6 @@ Include the JS file from the src folder before the `</body>`:
   });
 ```
 ### This is the default usage. Doesn't require jAlert-functions.js
-======
 ```javascript   
   $.jAlert({ //this is the normal usage
     'title': 'Test',
