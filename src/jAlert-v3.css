@@ -127,6 +127,19 @@ html,body
 	border: 3px solid #1D8D11;
 }
 
+.ja_yellow
+{
+	background: #ffff88;
+	background: -moz-linear-gradient(top,  #ffff88 0%, #ffff88 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffff88), color-stop(100%,#ffff88));
+	background: -webkit-linear-gradient(top,  #ffff88 0%,#ffff88 100%);
+	background: -o-linear-gradient(top,  #ffff88 0%,#ffff88 100%);
+	background: -ms-linear-gradient(top,  #ffff88 0%,#ffff88 100%);
+	background: linear-gradient(to bottom,  #ffff88 0%,#ffff88 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffff88', endColorstr='#ffff88',GradientType=0 );
+	border: 3px solid #FFEE00;
+}
+
 .ja_black
 {
 	background: #535353;
@@ -177,6 +190,11 @@ html,body
 .ja_red .ja_title > div
 { 
 	color: white !important; 
+}
+
+.ja_yellow .ja_title > div
+{
+	color: #515151 !important;
 }
 
  /* 

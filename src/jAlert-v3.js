@@ -12,7 +12,7 @@
 	$.fn.jAlert = function(options) {
 
 		var alert = this,
-			themes = ['default', 'green', 'red', 'black', 'blue'],
+			themes = ['default', 'green', 'red', 'black', 'blue','yellow'],
 			sizes = ['xsm', 'sm', 'md', 'lg', 'xlg', 'full'],
 			backgroundColors = ['white', 'black'],
 			styles = [], //array of styles that gets joined together with a space between in a style tag on the jalert div
