@@ -52,6 +52,9 @@ Include the JS file from the src folder before the `</body>`:
   imageAlert('http://mydomain.com/myimg.jpg'); //optional second param is the image width (defaults to auto)
 ```
 ```javascript 
+  videoAlert('http://youtube.com/viddk35k');
+```
+```javascript 
   ajaxAlert('http://mydomain.com/myfile.php'); //optional second param is onOpen callback which gets passed the instance of jAlert
 ```
 ```javascript 
