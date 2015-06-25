@@ -717,12 +717,6 @@
 /* END OF ON JQUERY LOAD */
 })(jQuery);
 
-/* Optional: Overwrites javascript's built-in confirm function (DANGER: operates differently - returns true every time and doesn't stop execution!) - You must provide a callback */
-function confirm(confirmCallback, denyCallback)
-{
-	$.jAlert({'type': 'confirm', 'onConfirm': confirmCallback, 'onDeny': denyCallback });
-}
-
 /* Optional: Overwrites javascript's built-in alert function */
 function alert(title, msg){
 	if( typeof msg == 'undefined' )
@@ -736,30 +730,73 @@ function alert(title, msg){
 	});
 }
 
-/* Optional */
-function successAlert(title, msg){
+/* Optional: Overwrites javascript's built-in confirm function (DANGER: operates differently - returns true every time and doesn't stop execution!) - You must provide a callback */
+function confirm(confirmCallback, denyCallback)
+{
+	$.jAlert({'type': 'confirm', 'onConfirm': confirmCallback, 'onDeny': denyCallback });
+}
+
+/* Optional Alert shortcuts based on color */
+function showAlert(title, msg, theme)
+{
+	$.jAlert({
+		'title': title,
+		'content': msg,
+		'theme': theme
+	});		
+}
+
+function successAlert(title, msg)
+{
 	if( typeof msg == 'undefined' )
 	{
 		msg = title;
 		title = 'Success';
 	}
-	$.jAlert({
-		'title': title,
-		'content': msg,
-		'theme': 'green'
-	});	
+
+	showAlert(title, msg, 'green');
 }
 
-/* Optional */
-function errorAlert(title, msg){
+function errorAlert(title, msg)
+{
 	if( typeof msg == 'undefined' )
 	{
 		msg = title;
 		title = 'Error';
 	}
-	$.jAlert({
-		'title': title,
-		'content': msg,
-		'theme': 'red'
-	});	
+
+	showAlert(title, msg, 'red');
+}
+
+function infoAlert(title, msg)
+{
+	if( typeof msg == 'undefined' )
+	{
+		msg = title;
+		title = 'Info';
+	}
+
+	showAlert(title, msg, 'blue');
+}
+
+function warningAlert(title, msg)
+{
+	if( typeof msg == 'undefined' )
+	{
+		msg = title;
+		title = 'Warning';
+	}
+
+	showAlert(title, msg, 'yellow');
+}
+
+function blackAlert(title, msg)
+{
+	if( typeof msg == 'undefined' )
+	{
+		msg = title;
+		title = 'Warning';
+	}
+
+	showAlert(title, msg, 'black');
 }
