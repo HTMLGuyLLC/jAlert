@@ -179,9 +179,9 @@ html,body
 	border: 3px solid #981717;
 }
 
-.ja_default > div
+.ja_default > div, .ja_yellow .ja_title > div
 {
-	color: #DDD !important;
+	color: #3D3D3D !important;
 }
 
 .ja_green .ja_title > div, 
@@ -190,11 +190,6 @@ html,body
 .ja_red .ja_title > div
 { 
 	color: white !important; 
-}
-
-.ja_yellow .ja_title > div
-{
-	color: #808080 !important;
 }
 
  /* 
