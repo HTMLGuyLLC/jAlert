@@ -356,6 +356,15 @@
 					{ 
 						alert.options.onClose(alertInstance); 
 					}
+					
+					if( $('.jAlert').length > 0 )
+					{
+						$('.jAlert:last').centerAlert();
+					}
+					else
+					{
+						$('body').css('overflow', 'auto');
+					}
 
 				}, alert.options.animationTimeout);
 			
