@@ -246,16 +246,16 @@
 				}
 		
 				alert.instance.css('margin-top', top+'px');
+
+				$('body').css('overflow', 'hidden');
 			
 			if( diff > 5 )
 			{
 				alert.instance.parents('.ja_wrap').css('position', 'fixed');
-				$('body').css('overflow', 'hidden');
 			}
 			else
 			{
 				alert.instance.parents('.ja_wrap').css('position', 'absolute');
-				$('body').css('overflow', 'auto');
 		
 				/* Scroll to alert */
 				$('html, body').animate({
