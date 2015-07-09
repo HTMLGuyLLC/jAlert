@@ -509,44 +509,22 @@
 			/* Bind mouseup handler to document if this alert has closeOnClick enabled */
 			if( alert.options.closeOnClick ){
 				
-				/* Unbind any other mouseup */
-				$(document).off('mouseup');
+				/* Unbind if already exists */
+				$(document).off('mouseup', $.fn.jAlert.onMouseUp);
 				
 				/* Bind mouseup */
-				$(document).on('mouseup', function(e){
-				
-					/* Find top visible jAlert and see if it has closeOnClick enabled */
-					var lastVisibleAlert = $('.jAlert:visible:last');
-					   
-				    if( lastVisibleAlert.options.closeOnClick )
-				    {
-					   lastVisibleAlert.closeAlert();
-				    }
-				    
-				}); 
+				$(document).on('mouseup', $.fn.jAlert.onMouseUp);
 
 			}
 
 			/* Bind on keydown handler to document and if esc was pressed, find all visible jAlerts with that close option enabled and close them */
 			if( alert.options.closeOnEsc ){
 				
-				$(document).off('keydown');
+				/* Unbind if already exists */
+				$(document).off('keydown', $.fn.jAlert.onEscKeyDown);
 
-				$(document).on('keydown', function(e){
-
-				    if(e.keyCode === 27){
-
-					    /* Find top visible jAlert and see if it has closeOnClick enabled */
-						var lastVisibleAlert = $('.jAlert:visible:last');
-						   
-					    if( lastVisibleAlert.options.closeOnEsc )
-					    {
-						   lastVisibleAlert.closeAlert();
-					    }
-					    
-				    }
-
-				});
+				/* Bind keydown */
+				$(document).on('keydown', $.fn.jAlert.onEscKeyDown);
 
 			}
 
@@ -666,6 +644,37 @@
 				return false;
 			}
 		}
+
+	/* Mouseup on document */
+	$.fn.jAlert.onMouseUp = function(e){
+				
+		/* Find top visible jAlert and see if it has closeOnClick enabled */
+		var lastVisibleAlert = $('.jAlert:visible:last');
+		   
+	    if( lastVisibleAlert.options.closeOnClick )
+	    {
+		   lastVisibleAlert.closeAlert();
+	    }
+	    
+	}; 
+
+	/* Keydown on document (escape key) */
+	$.fn.jAlert.onEscKeyDown = function(e){
+
+	    /* Escape = 27 */
+	    if(e.keyCode === 27){
+
+		    /* Find top visible jAlert and see if it has closeOnClick enabled */
+			var lastVisibleAlert = $('.jAlert:visible:last');
+			   
+		    if( lastVisibleAlert.options.closeOnEsc )
+		    {
+			   lastVisibleAlert.closeAlert();
+		    }
+		    
+	    }
+
+	};
 	
 	/* If you're not using the DOM (aka, you're not hiding or showing a specific alert, you can just use $.jAlert */
 	$.jAlert = function(options){
