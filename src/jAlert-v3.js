@@ -593,8 +593,8 @@
 			'class': '', //adds a class to the jAlert (add as many as you want space delimited)
 			'classes': '', //add classes to the jAlert (space delimited)
 			'id': false, //adds an ID to the jAlert
-			'showAnimation': 'bounceIn',
-			'hideAnimation': 'bounceOut',
+			'showAnimation': 'fadeInUp',
+			'hideAnimation': 'fadeOutDown',
 			'animationTimeout': 600, //approx duration of animation to wait until onClose
 			'theme': 'default', // red, green, blue, black, default
 			'backgroundColor': 'black', //white, black
