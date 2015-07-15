@@ -148,7 +148,13 @@
 				var iframe = document.createElement("iframe");
 				iframe.src = alert.options.video;
 
-				if (iframe.attachEvent){
+				if(iframe.addEventListener)
+				{
+					iframe.addEventListener('load', function(){
+						$.fn.jAlert.mediaLoaded($(this));
+					}, true)
+				}
+				else if (iframe.attachEvent){
 				    iframe.attachEvent("onload", function(){
 				        $.fn.jAlert.mediaLoaded($(this));
 				    });
@@ -180,7 +186,13 @@
 				iframe.height = alert.options.iframeHeight;
 				iframe.className = 'ja_iframe';
 
-				if (iframe.attachEvent){
+				if(iframe.addEventListener)
+				{
+					iframe.addEventListener('load', function(){
+						$.fn.jAlert.mediaLoaded($(this));
+					}, true)
+				}
+				else if (iframe.attachEvent){
 				    iframe.attachEvent("onload", function(){
 				        $.fn.jAlert.mediaLoaded($(this));
 				    });
