@@ -32,16 +32,20 @@ html,body
 
 .ja_wrap.ja_wrap_white
 {
-	background: white;
 	background: rgba(255,255,255,.75);
 	border: 3px solid white;
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=1, StartColorStr='#BFFFFFFF', EndColorStr='#BFFFFFFF')";
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=1, StartColorStr='#BFFFFFFF', EndColorStr='#BFFFFFFF');
+	zoom: 1!important;
 }
 
 .ja_wrap.ja_wrap_black
 {
-	background: black;
 	background: rgba(0,0,0,.75);
 	border: 3px solid black;
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=1, StartColorStr='#BF000000', EndColorStr='#BF000000')";
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=1, StartColorStr='#BF000000', EndColorStr='#BF000000');
+	zoom: 1!important;
 }
 
  /* 

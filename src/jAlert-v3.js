@@ -9,6 +9,11 @@
 */
 ;(function($) {
 
+	if(!Date.now)
+		Date.now = function(){
+			return +new Date();
+		};
+
 	$.fn.jAlert = function(options) {
 
 		var alert = this,
