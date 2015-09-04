@@ -571,6 +571,10 @@
 			{
 				alert.instance.find(alert.options.autofocus).focus();
 			}
+			else
+			{
+				alert.instance.focus();
+			}
 
 			alert.instance.bind("DOMSubtreeModified", function(){
 				alert.instance.centerAlert();
