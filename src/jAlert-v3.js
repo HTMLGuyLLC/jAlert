@@ -9,6 +9,8 @@
 */
 ;(function($) {
 
+    var $jAlertSelectedOpts = {};
+
 	if(!Date.now)
 		Date.now = function(){
 			return +new Date();
@@ -16,8 +18,7 @@
 
 	$.fn.jAlert = function(options) {
 
-		var alert = this,
-			themes = ['default', 'green', 'red', 'black', 'blue','yellow'],
+		var themes = ['default', 'green', 'red', 'black', 'blue','yellow'],
 			sizes = ['xsm', 'sm', 'md', 'lg', 'xlg', 'full'],
 			backgroundColors = ['white', 'black'],
 			styles = [], //array of styles that gets joined together with a space between in a style tag on the jalert div
@@ -33,7 +34,26 @@
 	    }
 
 		/* Combine user alert.options with default */
-		alert.options = $.extend({}, $.fn.jAlert.defaults, options);
+		options = $.extend({}, $.fn.jAlert.defaults, options);
+
+		/* If they didn't set an id, just create a random one */
+		if( !options.id )
+		{
+			var unique = Date.now().toString() + Math.floor(Math.random() * 100000);
+			var alert_id = 'ja_' + unique;
+		}
+		else
+		{
+			var alert_id = options.id;
+		}
+
+		$jAlertSelectedOpts[alert_id] = {};
+
+		alert = $jAlertSelectedOpts[alert_id];
+
+		alert.options = options;
+
+		alert.options.id = alert_id;
 		
 		alert.instance = false;
 
@@ -60,13 +80,6 @@
 		}
 
 		classes.push('ja_'+alert.options.theme);
-
-		/* If they didn't set an id, just create a random one */
-		if( !alert.options.id )
-		{
-			var unique = Date.now().toString() + Math.floor(Math.random() * 100000);
-			alert.options.id = 'ja_' + unique;
-		}
 
 		/* If they set custom classes */
 		if( alert.options.class )
@@ -243,7 +256,7 @@
 
 		}
 
-		alert.centerAlert = function()
+		this.centerAlert = function()
 		{
 			
 			var viewportHeight = $(window).height(),
@@ -286,12 +299,12 @@
 		var animateAlert = function(which, thisAlert){
 			if( which == 'hide' )
 			{
-				thisAlert.removeClass(alert.options.showAnimation).addClass(alert.options.hideAnimation);
+				thisAlert.removeClass($jAlertSelectedOpts[thisAlert.attr('id')].options.showAnimation).addClass($jAlertSelectedOpts[thisAlert.attr('id')].options.hideAnimation);
 			}
 			else
 			{
 				thisAlert.centerAlert();
-				thisAlert.addClass(alert.options.showAnimation).removeClass(alert.options.hideAnimation).show();
+				thisAlert.addClass($jAlertSelectedOpts[thisAlert.attr('id')].options.showAnimation).removeClass($jAlertSelectedOpts[thisAlert.attr('id')].options.hideAnimation).show();
 			}
 		}
 
@@ -336,7 +349,7 @@
 		}
 
 	    /* Hides an alert and optionally removes it */
-	    alert.closeAlert = function(remove, onClose){
+	    this.closeAlert = function(remove, onClose){
 
 	    	var alertInstance = $(this);
 
@@ -369,9 +382,9 @@
 					{ 
 						onClose(alertInstance); 
 					}
-					else if(typeof alert.options.onClose == 'function')
+					else if(typeof $jAlertSelectedOpts[alertInstance.attr('id')].options.onClose == 'function')
 					{ 
-						alert.options.onClose(alertInstance); 
+						$jAlertSelectedOpts[alertInstance.attr('id')].options.onClose(alertInstance); 
 					}
 					
 					if( $('.jAlert').length > 0 )
@@ -383,7 +396,7 @@
 						$('body').css('overflow', 'auto');
 					}
 
-				}, alert.options.animationTimeout);
+				}, $jAlertSelectedOpts[alertInstance.attr('id')].options.animationTimeout);
 			
 			}
 
@@ -391,7 +404,7 @@
 		}
 
 		/* Shows an alert that already exists */
-		alert.showAlert = function(replaceOthers, removeOthers, onOpen, onClose){
+		this.showAlert = function(replaceOthers, removeOthers, onOpen, onClose){
 
 			var alertInstance = $(this);
 			
@@ -419,7 +432,7 @@
 			
 			if( typeof onClose == 'function' )
 			{
-				alert.options.onClose = onClose;
+				$jAlertSelectedOpts[alertInstance.attr('id')].options.onClose = onClose;
 			}
 
 			window.setTimeout(function(){
@@ -429,7 +442,7 @@
 					onOpen(alertInstance); 
 				}
 
-			}, alert.options.animationTimeout);
+			}, $jAlertSelectedOpts[alertInstance.attr('id')].options.animationTimeout);
 			
 		}
 
@@ -568,7 +581,7 @@
 		};
 
 		/* Shows an alert based on content type */  
-		alert.initialize = function(){
+		this.initialize = function(){
 
 			if( !alert.options.content && !alert.options.image && !alert.options.video && !alert.options.iframe && !alert.options.ajax )
 			{
@@ -586,9 +599,9 @@
 
 		}
 
-		alert.initialize();
+		this.initialize();
 		
-		return alert;
+		return this;
 
 	/* END OF PLUGIN */
 	};
@@ -667,8 +680,8 @@
 				
 		/* Find top visible jAlert and see if it has closeOnClick enabled */
 		var lastVisibleAlert = $('.jAlert:visible:last');
-		   
-	    if( lastVisibleAlert.options.closeOnClick )
+
+	    if( $jAlertSelectedOpts[lastVisibleAlert.attr('id')].options.closeOnClick )
 	    {
 		   lastVisibleAlert.closeAlert();
 	    }
@@ -684,7 +697,7 @@
 		    /* Find top visible jAlert and see if it has closeOnClick enabled */
 			var lastVisibleAlert = $('.jAlert:visible:last');
 			   
-		    if( lastVisibleAlert.options.closeOnEsc )
+		    if( $jAlertSelectedOpts[lastVisibleAlert.attr('id')].options.closeOnEsc )
 		    {
 			   lastVisibleAlert.closeAlert();
 		    }

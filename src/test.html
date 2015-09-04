@@ -1,0 +1,25 @@
+	<link rel='stylesheet' href='jAlert-v3.css'>
+	<script src='../vendor/jquery-1.11.3.min.js'></script>
+	<script src='jAlert-v3.js'></script>
+
+	<script>
+		$(function(){
+			$.jAlert({
+				'title': 'nada',
+				'content': 'nada',
+				'closeOnEsc': false,
+				'closeOnClick': false
+			});
+			$.jAlert({
+				'title': 'click',
+				'content': 'click',
+				'closeOnClick': true
+			});
+			$.jAlert({
+				'title': 'esc',
+				'content': 'esc',
+				'closeBtn': false,
+				'closeOnEsc': true
+			});
+		});
+	</script>
