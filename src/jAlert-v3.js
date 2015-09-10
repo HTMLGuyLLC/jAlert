@@ -26,9 +26,9 @@
 			backgroundClasses = []; //array of classes that get joined together with a space between on the jalert background div
 
 	    /* Block Multiple Instances by running jAlert for each one */
-	    if (alert.length > 1){
-	        alert.each(function() { 
-	        	$(this).jAlert(alert.options);
+	    if (this.length > 1){
+	        this.each(function() { 
+	        	$(this).jAlert(options);
 	        });
 	        return this;
 	    }
