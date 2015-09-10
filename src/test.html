@@ -1,6 +1,7 @@
 	<link rel='stylesheet' href='jAlert-v3.css'>
 	<script src='../vendor/jquery-1.11.3.min.js'></script>
 	<script src='jAlert-v3.js'></script>
+	<script src='jAlert-functions.js'></script>
 
 	<script>
 		$(function(){
@@ -21,5 +22,8 @@
 				'closeBtn': false,
 				'closeOnEsc': true
 			});
+			errorAlert('test alert');
+			successAlert('Hi!', 'You did it!');
+			alert('test alert');
 		});
 	</script>

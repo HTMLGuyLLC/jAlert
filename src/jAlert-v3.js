@@ -33,7 +33,7 @@
 	        return this;
 	    }
 
-		/* Combine user alert.options with default */
+		/* Combine user options with default */
 		options = $.extend({}, $.fn.jAlert.defaults, options);
 
 		/* If they didn't set an id, just create a random one */
@@ -49,122 +49,122 @@
 
 		$jAlertSelectedOpts[alert_id] = {};
 
-		alert = $jAlertSelectedOpts[alert_id];
+		thisAlert = $jAlertSelectedOpts[alert_id];
 
-		alert.options = options;
+		thisAlert.options = options;
 
-		alert.options.id = alert_id;
+		thisAlert.options.id = alert_id;
 		
-		alert.instance = false;
+		thisAlert.instance = false;
 
-		if( alert.options.type == 'confirm' )
+		if( thisAlert.options.type == 'confirm' )
 		{
-			if( !alert.options.content )
+			if( !thisAlert.options.content )
 			{
-				alert.options.content = alert.options.confirmQuestion;
+				thisAlert.options.content = thisAlert.options.confirmQuestion;
 			}
 
-			alert.options.btns = [
-				{ 'text': alert.options.confirmBtnText, 'theme': 'green', 'class': 'confirmBtn', 'closeAlert': true, 'onClick': alert.options.onConfirm },
-				{ 'text': alert.options.denyBtnText, 'theme': 'red', 'class': 'denyBtn', 'closeAlert': true, 'onClick': alert.options.onDeny }
+			thisAlert.options.btns = [
+				{ 'text': thisAlert.options.confirmBtnText, 'theme': 'green', 'class': 'confirmBtn', 'closeAlert': true, 'onClick': thisAlert.options.onConfirm },
+				{ 'text': thisAlert.options.denyBtnText, 'theme': 'red', 'class': 'denyBtn', 'closeAlert': true, 'onClick': thisAlert.options.onDeny }
 			];
 
-			alert.options.autofocus = alert.options.confirmAutofocus;
+			thisAlert.options.autofocus = thisAlert.options.confirmAutofocus;
 		}
 
 		/* Add theme class */
-		if( $.inArray(alert.options.theme, themes) == -1 )
+		if( $.inArray(thisAlert.options.theme, themes) == -1 )
 		{
 			console.log('jAlert Config Error: Invalid theme selection.');
 			return false;
 		}
 
-		classes.push('ja_'+alert.options.theme);
+		classes.push('ja_'+thisAlert.options.theme);
 
 		/* If they set custom classes */
-		if( alert.options.class )
+		if( thisAlert.options.class )
 		{
-			classes.push(alert.options.class);
+			classes.push(thisAlert.options.class);
 		}
-		if( alert.options.classes )
+		if( thisAlert.options.classes )
 		{
-			classes.push(alert.options.classes);
+			classes.push(thisAlert.options.classes);
 		}
 
 		/* If no title, add class */
-		if( !alert.options.title )
+		if( !thisAlert.options.title )
 		{
 			classes.push( 'ja_noTitle' );
 		}
 
 		/* if it's set and it's not in the array of sizes OR it's an object and it's missing width/height */
-		if( alert.options.size && ((typeof alert.options.size == 'string' && $.inArray(alert.options.size, sizes) == -1) || (typeof alert.options.size == 'object' && (typeof alert.options.size.width == 'undefined' || typeof alert.options.size.height == 'undefined'))) )
+		if( thisAlert.options.size && ((typeof thisAlert.options.size == 'string' && $.inArray(thisAlert.options.size, sizes) == -1) || (typeof thisAlert.options.size == 'object' && (typeof thisAlert.options.size.width == 'undefined' || typeof thisAlert.options.size.height == 'undefined'))) )
 		{
 			console.log('jAlert Config Error: Invalid size selection (try a preset or make sure you\'re including height and width in your size object).');
 			return false;
 		}
 		/* If it's not set, set to md */
-		else if( !alert.options.size )
+		else if( !thisAlert.options.size )
 		{
 			classes.push('ja_sm');
 		}
 		/* If it's set and it's an object */
-		else if( typeof alert.options.size == 'object' )
+		else if( typeof thisAlert.options.size == 'object' )
 		{
-			styles.push('width: '+alert.options.size.width+';');
-			styles.push('height: '+alert.options.size.height+';');
+			styles.push('width: '+thisAlert.options.size.width+';');
+			styles.push('height: '+thisAlert.options.size.height+';');
 		}
 		/* If it's set and it's not an object */
 		else
 		{
-			classes.push('ja_'+alert.options.size);
+			classes.push('ja_'+thisAlert.options.size);
 		}
 
 		/* Add background color class */
-		if( $.inArray(alert.options.backgroundColor, backgroundColors) == -1 )
+		if( $.inArray(thisAlert.options.backgroundColor, backgroundColors) == -1 )
 		{
 			console.log('jAlert Config Error: Invalid background color selection.');
 			return false;
 		}
 
 
-		backgroundClasses.push('ja_wrap_'+alert.options.backgroundColor);
+		backgroundClasses.push('ja_wrap_'+thisAlert.options.backgroundColor);
 
 		/* If there are button(s), then you obviously don't want to hide the div when you alert anywhere or they'll be useless...SAME with autofocus */
-		if( (typeof alert.options.btns == 'object' || typeof alert.options.btns == 'array') || alert.options.autofocus ){
-			alert.options.closeOnClick = false;
+		if( (typeof thisAlert.options.btns == 'object' || typeof thisAlert.options.btns == 'array') || thisAlert.options.autofocus ){
+			thisAlert.options.closeOnClick = false;
 		}
 
-		alert.options.onOpen = [ alert.options.onOpen ];
+		thisAlert.options.onOpen = [ thisAlert.options.onOpen ];
 		
 		var onload = "onload='$.fn.jAlert.mediaLoaded($(this))'",
 			loader = "<div class='ja_loader'>Loading...</div>";
 
 		/* Creates content */
-		if( alert.options.image )
+		if( thisAlert.options.image )
 		{
-			alert.options.content = "<div class='ja_media_wrap'>"+
+			thisAlert.options.content = "<div class='ja_media_wrap'>"+
 										loader+
-										"<img src='"+alert.options.image+"' class='ja_img' "+onload+"'";
-			if( alert.options.imageWidth )
+										"<img src='"+thisAlert.options.image+"' class='ja_img' "+onload+"'";
+			if( thisAlert.options.imageWidth )
 			{
-				alert.options.content += " style='width: "+alert.options.imageWidth+"'";
+				thisAlert.options.content += " style='width: "+thisAlert.options.imageWidth+"'";
 			}
-			alert.options.content += ">"+
+			thisAlert.options.content += ">"+
 									"</div>";
 		}
-		else if( alert.options.video )
+		else if( thisAlert.options.video )
 		{
-			alert.options.content = "<div class='ja_media_wrap'>"+
+			thisAlert.options.content = "<div class='ja_media_wrap'>"+
 										loader+
 										"<div class='ja_video'>"+
 										"</div>"+
 									"</div>";
 
 			/* Add to the onOpen callbacks array to append the iframe and attach the onload callback in a crossbrowser compatible way (IE is a bizitch). */
-			alert.options.onOpen.unshift( function(alert){
+			thisAlert.options.onOpen.unshift( function(alert){
 				var iframe = document.createElement("iframe");
-				iframe.src = alert.options.video;
+				iframe.src = thisAlert.options.video;
 
 				if(iframe.addEventListener)
 				{
@@ -182,26 +182,26 @@
 				    };
 				}
 
-				alert.find('.ja_video').append(iframe);
+				thisAlert.find('.ja_video').append(iframe);
 			});
 
 		}
-		else if( alert.options.iframe )
+		else if( thisAlert.options.iframe )
 		{
-			if( !alert.options.iframeHeight )
+			if( !thisAlert.options.iframeHeight )
 			{
-				alert.options.iframeHeight = $(window).height() * 0.9+'px';
+				thisAlert.options.iframeHeight = $(window).height() * 0.9+'px';
 			}
 			
-			alert.options.content = "<div class='ja_media_wrap'>"+
+			thisAlert.options.content = "<div class='ja_media_wrap'>"+
 										loader+
 									"</div>";
 
 			/* Add to the onOpen callbacks array to append the iframe and attach the onload callback in a crossbrowser compatible way (IE is a bizitch). */
-			alert.options.onOpen.unshift( function(alert){
+			thisAlert.options.onOpen.unshift( function(alert){
 				var iframe = document.createElement("iframe");
-				iframe.src = alert.options.iframe;
-				iframe.height = alert.options.iframeHeight;
+				iframe.src = thisAlert.options.iframe;
+				iframe.height = thisAlert.options.iframeHeight;
 				iframe.className = 'ja_iframe';
 
 				if(iframe.addEventListener)
@@ -220,27 +220,27 @@
 				    };
 				}
 
-				alert.find('.ja_media_wrap').append(iframe);
+				thisAlert.find('.ja_media_wrap').append(iframe);
 			});
 
 		}
-		else if( alert.options.ajax )
+		else if( thisAlert.options.ajax )
 		{
 
-			alert.options.content = "<div class='ja_media_wrap'>"+
+			thisAlert.options.content = "<div class='ja_media_wrap'>"+
 										loader+
 									"</div>";
 				
 			/* Store as another var */					
-			onAjaxCallbacks = alert.options.onOpen;
+			onAjaxCallbacks = thisAlert.options.onOpen;
 
 			/* Overwrite the onOpen to be the ajax call */
-			alert.options.onOpen = [function(alert){
-				$.ajax(alert.options.ajax, {
+			thisAlert.options.onOpen = [function(alert){
+				$.ajax(thisAlert.options.ajax, {
 					async: true,
 					complete: function(jqXHR, textStatus)
 					{
-						alert.find('.ja_media_wrap').replaceWith(jqXHR.responseText);
+						thisAlert.find('.ja_media_wrap').replaceWith(jqXHR.responseText);
 						
 						/* Run onOpen callbacks here */
 						$.each(onAjaxCallbacks, function(index, onAjax){
@@ -249,7 +249,7 @@
 					},
 					error: function(jqXHR, textStatus, errorThrown)
 					{
-						alert.options.onAjaxFail(alert, 'Error getting content: Code: '+jqXHR.status+ ' : Msg: '+jqXHR.statusText);
+						thisAlert.options.onAjaxFail(alert, 'Error getting content: Code: '+jqXHR.status+ ' : Msg: '+jqXHR.statusText);
 					}
 				});
 			}];
@@ -260,7 +260,7 @@
 		{
 			
 			var viewportHeight = $(window).height(),
-				alertHeight = alert.instance.height(),
+				alertHeight = thisAlert.instance.height(),
 				diff = viewportHeight - alertHeight;
 
 				var top = diff / 2;
@@ -275,17 +275,17 @@
 					top = 0;
 				}
 		
-				alert.instance.css('margin-top', top+'px');
+				thisAlert.instance.css('margin-top', top+'px');
 
 				$('body').css('overflow', 'hidden');
 			
 			if( diff > 5 )
 			{
-				alert.instance.parents('.ja_wrap').css('position', 'fixed');
+				thisAlert.instance.parents('.ja_wrap').css('position', 'fixed');
 			}
 			else
 			{
-				alert.instance.parents('.ja_wrap').css('position', 'absolute');
+				thisAlert.instance.parents('.ja_wrap').css('position', 'absolute');
 		
 				/* Scroll to alert */
 				$('html, body').animate({
@@ -452,32 +452,32 @@
 			var html = '';
 
 			html += '<div class="ja_wrap '+backgroundClasses.join(' ')+'">'+
-						'<div class="jAlert '+classes.join(' ')+ '" style="' +styles.join(' ')+ '" id="' +alert.options.id+ '">'+
+						'<div class="jAlert '+classes.join(' ')+ '" style="' +styles.join(' ')+ '" id="' +thisAlert.options.id+ '">'+
 							'<div>';
 
-			if( alert.options.closeBtn )
+			if( thisAlert.options.closeBtn )
 			{
 				html += 		"<div class='closejAlert ja_close";
-				if( alert.options.closeBtnAlt )
+				if( thisAlert.options.closeBtnAlt )
 				{
 					html += ' ja_close_alt';
 				}
 				html += "'>X</div>"; //closejAlert has a close handler attached, ja_close is for styling
 			}
 
-			if( alert.options.title )
+			if( thisAlert.options.title )
 			{
-				html += 		"<div class='ja_title'><div>"+alert.options.title+"</div></div>";
+				html += 		"<div class='ja_title'><div>"+thisAlert.options.title+"</div></div>";
 			}
 
 			html += 			'<div class="ja_body">'+content;
 
 
-	  		if( alert.options.btns )
+	  		if( thisAlert.options.btns )
 	  		{
 	  			html += 			'<div class="ja_btn_wrap ';
 
-	  			if( alert.options.btnBackground )
+	  			if( thisAlert.options.btnBackground )
 	  			{
 	  				html += 		'optBack';
 	  			}
@@ -485,25 +485,25 @@
 	  			html += 			'">';
 	  		}
 
-	  		if( typeof alert.options.btns[0] == 'object' )
+	  		if( typeof thisAlert.options.btns[0] == 'object' )
 	  		{
-	  			$.each(alert.options.btns, function(index, btn){
+	  			$.each(thisAlert.options.btns, function(index, btn){
 	  				if( typeof btn == 'object' )
 	  				{
 	  					html += 		getBtnHTML(btn);
 	  				}
 	  			});
 	  		}
-	  		else if( typeof alert.options.btns == 'object' )
+	  		else if( typeof thisAlert.options.btns == 'object' )
 	  		{
-	  			html += 				getBtnHTML(alert.options.btns);
+	  			html += 				getBtnHTML(thisAlert.options.btns);
 	  		}
-	  		else if( alert.options.btns )
+	  		else if( thisAlert.options.btns )
 	  		{
-	  			console.log('jAlert Config Error: Incorrect value for btns (must be object or array of objects): '+alert.options.btns);
+	  			console.log('jAlert Config Error: Incorrect value for btns (must be object or array of objects): '+thisAlert.options.btns);
 	  		}
 
-	  		if( alert.options.btns )
+	  		if( thisAlert.options.btns )
 	  		{
 	  			html += 			'</div>';
 	  		}
@@ -515,20 +515,20 @@
 
 	  		var alertHTML = $(html);
 
-			if( alert.options.replaceOtherAlerts )
+			if( thisAlert.options.replaceOtherAlerts )
 			{
 				$('.jAlert:visible').closeAlert();
 			}
 
 			$('body').append(alertHTML);
 
-			alert.instance = $('#'+alert.options.id);
+			thisAlert.instance = $('#'+thisAlert.options.id);
 
-			animateAlert('show', alert.instance);
+			animateAlert('show', thisAlert.instance);
 
-			if( alert.options.closeBtn ){
+			if( thisAlert.options.closeBtn ){
 
-			  	alert.instance.on('click', '.closejAlert', function(e){
+			  	thisAlert.instance.on('click', '.closejAlert', function(e){
 			  		e.preventDefault();
 					$(this).parents('.jAlert').closeAlert();
 					return false;
@@ -537,7 +537,7 @@
 			}
 			
 			/* Bind mouseup handler to document if this alert has closeOnClick enabled */
-			if( alert.options.closeOnClick ){
+			if( thisAlert.options.closeOnClick ){
 				
 				/* Unbind if already exists */
 				$(document).off('mouseup', $.fn.jAlert.onMouseUp);
@@ -548,7 +548,7 @@
 			}
 
 			/* Bind on keydown handler to document and if esc was pressed, find all visible jAlerts with that close option enabled and close them */
-			if( alert.options.closeOnEsc ){
+			if( thisAlert.options.closeOnEsc ){
 				
 				/* Unbind if already exists */
 				$(document).off('keydown', $.fn.jAlert.onEscKeyDown);
@@ -559,46 +559,46 @@
 			}
 
 			/* If there are onOpen callbacks, run them. */
-			if( alert.options.onOpen )
+			if( thisAlert.options.onOpen )
 			{ 
-				$.each(alert.options.onOpen, function(index, onOpen){
-					onOpen(alert.instance); 
+				$.each(thisAlert.options.onOpen, function(index, onOpen){
+					onOpen(thisAlert.instance); 
 				});
 			}
 
 			/* If the alert has an element that should be focused by default */
-			if( alert.options.autofocus )
+			if( thisAlert.options.autofocus )
 			{
-				alert.instance.find(alert.options.autofocus).focus();
+				thisAlert.instance.find(thisAlert.options.autofocus).focus();
 			}
 			else
 			{
-				alert.instance.focus();
+				thisAlert.instance.focus();
 			}
 
-			alert.instance.bind("DOMSubtreeModified", function(){
-				alert.instance.centerAlert();
+			thisAlert.instance.bind("DOMSubtreeModified", function(){
+				thisAlert.instance.centerAlert();
 			});
 
-			return alert.instance;
+			return thisAlert.instance;
 
 		};
 
 		/* Shows an alert based on content type */  
 		this.initialize = function(){
 
-			if( !alert.options.content && !alert.options.image && !alert.options.video && !alert.options.iframe && !alert.options.ajax )
+			if( !thisAlert.options.content && !thisAlert.options.image && !thisAlert.options.video && !thisAlert.options.iframe && !thisAlert.options.ajax )
 			{
 				console.log('jAlert potential error: No content defined');
 				return addAlert('');
 			}
 			else
 			{
-				if( !alert.options.content )
+				if( !thisAlert.options.content )
 				{
-					alert.options.content = '';
+					thisAlert.options.content = '';
 				}
-				return addAlert(alert.options.content);
+				return addAlert(thisAlert.options.content);
 			}
 
 		}
@@ -610,7 +610,7 @@
 	/* END OF PLUGIN */
 	};
 
-    /* Default alert.options */
+    /* Default thisAlert.options */
 	$.fn.jAlert.defaults = {
 			'title': false, //title for the popup (false = don't show)
 			'content': false, //html for the popup (replaced if you use image, ajax, or iframe)
@@ -619,7 +619,7 @@
 			'video': false, //adds a responsive iframe video - value is the "src" of the iframe
 			'ajax': false, //uses ajax call to get contents
 			'onAjaxFail': function(alert, errorThrown){ //callback for when ajax fails
-				alert.closeAlert();
+				thisAlert.closeAlert();
 				errorAlert(errorThrown);
 			},
 			'iframe': false, //uses iframe as content
