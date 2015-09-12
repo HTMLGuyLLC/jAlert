@@ -182,7 +182,7 @@
 				    };
 				}
 
-				thisAlert.find('.ja_video').append(iframe);
+				alert.find('.ja_video').append(iframe);
 			});
 
 		}
@@ -220,7 +220,7 @@
 				    };
 				}
 
-				thisAlert.find('.ja_media_wrap').append(iframe);
+				alert.find('.ja_media_wrap').append(iframe);
 			});
 
 		}
@@ -240,7 +240,7 @@
 					async: true,
 					complete: function(jqXHR, textStatus)
 					{
-						thisAlert.find('.ja_media_wrap').replaceWith(jqXHR.responseText);
+						alert.find('.ja_media_wrap').replaceWith(jqXHR.responseText);
 						
 						/* Run onOpen callbacks here */
 						$.each(onAjaxCallbacks, function(index, onAjax){
