@@ -6,24 +6,25 @@
 	<script>
 		$(function(){
 			$.jAlert({
-				'title': 'nada',
-				'content': 'nada',
+				'title': 'Normal',
+				'content': 'Normal = Boring',
 				'closeOnEsc': false,
 				'closeOnClick': false
 			});
 			$.jAlert({
-				'title': 'click',
-				'content': 'click',
+				'title': 'Click to Hide',
+				'content': 'Click anywhere outside this alert to close',
 				'closeOnClick': true
 			});
 			$.jAlert({
-				'title': 'esc',
-				'content': 'esc',
+				'title': 'Hit "ESC" to Hide',
+				'content': 'Click the "ESC" key to close this alert.',
 				'closeBtn': false,
 				'closeOnEsc': true
 			});
-			errorAlert('test alert');
-			successAlert('Hi!', 'You did it!');
-			alert('test alert');
+			errorAlert('ERROR WILL ROBINSON, ERROR!');
+			successAlert('Success!', 'You did it!');
+            infoAlert('Info', 'Something interesting to read.');
+			alert('Boring regular alert..');
 		});
 	</script>
