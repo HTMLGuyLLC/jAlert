@@ -18,6 +18,10 @@
 
 	$.fn.jAlert = function(options) {
 
+        //remove focus from current element so you can't just hit enter a bunch to popup the same alert over and over again
+        $('body').focus();
+        $('body').blur();
+
 		var themes = ['default', 'green', 'red', 'black', 'blue','yellow'],
 				sizes = ['xsm', 'sm', 'md', 'lg', 'xlg', 'full'],
 				backgroundColors = ['white', 'black'],
