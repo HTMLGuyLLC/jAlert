@@ -127,13 +127,7 @@
 			return false;
 		}
 
-
 		backgroundClasses.push('ja_wrap_'+thisAlert.options.backgroundColor);
-
-		/* If there are button(s), then you obviously don't want to hide the div when you alert anywhere or they'll be useless...SAME with autofocus */
-		if( (typeof thisAlert.options.btns == 'object' || typeof thisAlert.options.btns == 'array') || thisAlert.options.autofocus ){
-			thisAlert.options.closeOnClick = false;
-		}
 
 		thisAlert.options.onOpen = [ thisAlert.options.onOpen ];
 
@@ -681,13 +675,19 @@
 
 	/* Mouseup on document */
 	$.fn.jAlert.onMouseUp = function(e){
+        //cross browser
+        var target = e.target ? e.target : e.srcElement;
 
 		/* Find top visible jAlert and see if it has closeOnClick enabled */
 		var lastVisibleAlert = $('.jAlert:visible:last');
 
 		if( $jAlertSelectedOpts[lastVisibleAlert.attr('id')].options.closeOnClick )
 		{
-			lastVisibleAlert.closeAlert();
+			//close only if clicked outside
+            if( !$(target).is('.jAlert *') )
+            {
+                lastVisibleAlert.closeAlert();
+            }
 		}
 
 	};
