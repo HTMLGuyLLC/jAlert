@@ -289,7 +289,6 @@
 				$('html, body').animate({
 					scrollTop: top - 50
 				}, 200);
-
 			}
 
 		}
@@ -460,7 +459,11 @@
 				{
 					html += ' ja_close_alt';
 				}
-				html += "'>X</div>"; //closejAlert has a close handler attached, ja_close is for styling
+                else if( thisAlert.options.closeBtnRound )
+                {
+                    html += ' ja_close_round';
+                }
+				html += "'>&times;</div>"; //closejAlert has a close handler attached, ja_close is for styling
 			}
 
 			if( thisAlert.options.title )
@@ -636,6 +639,7 @@
 		'closeOnEsc': true, //close the alert when you click the escape key
 		'closeBtn': true, //adds a button to the top right of the alert that allows you to close it
 		'closeBtnAlt': false, //alternative close button
+        'closeBtnRound': true, //alternative close button to be round
 		'btns': false, //adds buttons to the popup at the bottom. Pass an object for a single button, or an object of objects for many
 		/*
 		 Variety of buttons you could create (also, an example of how to pass the object
