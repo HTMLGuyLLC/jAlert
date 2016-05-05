@@ -92,7 +92,19 @@ html,body
 
 .ja_noTitle .ja_body
 {
-	border-radius: 3px;
+	border-radius: 5px;
+}
+
+.ja_noTitle .ja_close_round
+{
+    right: -11px;
+    top: -11px;
+    background: rgba(0, 0, 0, 0.7) none repeat scroll 0% 0%;
+}
+
+.ja_noTitle .ja_close_round:hover
+{
+    background: black;
 }
 
 .ja_title
@@ -254,20 +266,19 @@ html,body
 */
 .ja_close{
 	position: absolute; 
-	top: 3px; 
-	right: 3px; 
-	border-top-right-radius: 1px; 
-	border-bottom-left-radius: 5px; 
-	background: #F3F3F3; 
-	color: #555; 
-	padding: 5px 10px 5px 10px; 
-	cursor: pointer; 
-	font-weight: bold;
-	z-index: 99999;
+	top: 3px;
+    right: 3px;
+    border-top-right-radius: 1px;
+    border-bottom-left-radius: 5px;
+    background: #F3F3F3;
+    color: #555;
+    padding: 5px 10px 5px 10px;
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 99999;
 }
 
-.ja_close_round
-{
+.ja_close_round {
     border-radius: 50%;
     background: rgba(0, 0, 0, 0.3);
     color: #FFFFFF;
