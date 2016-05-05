@@ -82,6 +82,63 @@ html,body
 .ja_xlg{ width: 1200px; } 
 .ja_full{ width: 100%; }
 
+/*
+    CLOSE BTN
+*/
+.ja_close{
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    border-top-right-radius: 1px;
+    border-bottom-left-radius: 5px;
+    background: #F3F3F3;
+    color: #555;
+    padding: 5px 10px 5px 10px;
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 99999;
+}
+
+.ja_close_round {
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.3);
+    color: #FFFFFF;
+    padding: 5px 7px;
+    right: 10px;
+    top: 6px;
+    border: 0px;
+    line-height: 13px;
+    font-size: 18px;
+}
+
+.ja_default .ja_close_round
+{
+    color: #FFF;
+    background: rgba(0, 0, 0, 0.3) none repeat scroll 0% 0%;
+}
+
+.ja_close_alt
+{
+    border-radius: 50%;
+    background: #D51C1C;
+    color: rgb(255, 255, 255);
+    top: -16px;
+    right: -18px;
+    border: 1px solid rgb(55, 55, 55);
+    padding: 3px 8px;
+}
+.ja_close:hover{
+    background: #d4d4d4;
+}
+.ja_close_alt:hover{
+    background: #DF2020;
+}
+.ja_close_round:hover, .ja_close_round:active
+{
+    color: #FFF;
+    background: rgba(0,0,0,.5);
+}
+
 /* 
 	 TITLE
 */
@@ -259,63 +316,6 @@ html,body
 	max-width: 100%;
 	display: inline-block;
 	display: none;
-}
-
- /* 
-	 CLOSE BTN
-*/
-.ja_close{
-	position: absolute; 
-	top: 3px;
-    right: 3px;
-    border-top-right-radius: 1px;
-    border-bottom-left-radius: 5px;
-    background: #F3F3F3;
-    color: #555;
-    padding: 5px 10px 5px 10px;
-    cursor: pointer;
-    font-weight: bold;
-    z-index: 99999;
-}
-
-.ja_close_round {
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.3);
-    color: #FFFFFF;
-    padding: 5px 7px;
-    right: 10px;
-    top: 6px;
-    border: 0px;
-    line-height: 13px;
-    font-size: 18px;
-}
-
-.ja_default .ja_close_round
-{
-    color: #FFF;
-    background: rgba(0, 0, 0, 0.3) none repeat scroll 0% 0%;
-}
-
-.ja_close_alt
-{
-  border-radius: 50%;
-  background: #D51C1C;
-  color: rgb(255, 255, 255);
-  top: -16px;
-  right: -18px;
-  border: 1px solid rgb(55, 55, 55);
-  padding: 3px 8px;
-}
-.ja_close:hover{
-	background: #d4d4d4;
-}
-.ja_close_alt:hover{
-	background: #DF2020;
-}
-.ja_close_round:hover, .ja_close_round:active
-{
-    color: #FFF;
-    background: rgba(0,0,0,.5);
 }
 
  /* 
