@@ -81,6 +81,7 @@ html,body
 .ja_lg{ width: 850px; } 
 .ja_xlg{ width: 1200px; } 
 .ja_full{ width: 100%; }
+.ja_auto{ width: auto; }
 
 /*
     CLOSE BTN

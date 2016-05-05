@@ -23,7 +23,7 @@
         $('body').blur();
 
 		var themes = ['default', 'green', 'red', 'black', 'blue','yellow'],
-				sizes = ['xsm', 'sm', 'md', 'lg', 'xlg', 'full'],
+				sizes = ['xsm', 'sm', 'md', 'lg', 'xlg', 'full', 'auto'],
 				backgroundColors = ['white', 'black'],
 				styles = [], //array of styles that gets joined together with a space between in a style tag on the jalert div
 				classes = ['animated'], //array of classes that get joined together with a space between on the jalert div
