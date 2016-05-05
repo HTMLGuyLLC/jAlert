@@ -54,6 +54,7 @@ html,body
 */
 .jAlert
 {
+    text-align: left;
 	background: white; 
 	border-radius: 5px;
 	max-width: 96%; 
