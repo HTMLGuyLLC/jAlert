@@ -344,97 +344,82 @@ html,body
 
 .ja_btn_default, .ja_btn_default:link, .ja_btn_default:visited
 {
-  border: 1px solid #EEE;
   color: #575757;
   background: #f3f3f3;
 }
 
 .ja_btn_default:hover
 {
-	border: 1px solid #F3F3F3;
 	background: #FBFBFB;
 }
 
  .ja_btn_default:active
  {
- 	border: 1px solid #EEE;
  	background: #EEE;
  }
 
 .ja_btn_green, .ja_btn_green:link, .ja_btn_green:visited
 {
 	background: #20A711;
-	border: 1px solid #259818;
 	color: white;
 }
 
 .ja_btn_green:hover
 {
-	border: 1px solid #2EAF1F;
 	background: #2EB71F;
 }
 
  .ja_btn_green:active
  {
 	background: #259818;
-	border: 1px solid #259818;
  }
 
 .ja_btn_red, .ja_btn_red:link, .ja_btn_red:visited
 {
 	background: #af2222;
-	border: 1px solid #801818;
 	color: white;
 }
 
 .ja_btn_red:hover
 {
-	border: 1px solid #9F2020;
 	background: #D62828;
 }
 
  .ja_btn_red:active
  {
 	background: #9F2020;
-	border: 1px solid #801818;
  }
 
 .ja_btn_black, .ja_btn_black:link, .ja_btn_black:visited
 {
 	background: #535353;
-	border: 1px solid #444444;
 	color: white;
 }
 
 .ja_btn_black:hover
 {
-	border: 1px solid #424242;
 	background: #666666;
 }
 
  .ja_btn_black:active
  {
 	background: #444444;
-	border: 1px solid #444444;
  }
 
 .ja_btn_blue, .ja_btn_blue:link, .ja_btn_blue:visited
 {
 	background: #0684ce;
-	border: 1px solid #0684ce;
 	color: white;
 }
 
 .ja_btn_blue:hover
 {
-	border: 1px solid #097DC1;
 	background: #0896E9;
 }
 
  .ja_btn_blue:active
  {
 	background: #056FAD;
-	border: 1px solid #0684ce;
  }
  
  /* 
