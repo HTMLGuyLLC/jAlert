@@ -22,7 +22,7 @@
         $('body').focus();
         $('body').blur();
 
-		var themes = ['default', 'green', 'red', 'black', 'gray', 'blue','yellow'],
+		var themes = ['default', 'green', 'red', 'black', 'brown', 'gray', 'blue','yellow'],
 				sizes = ['xsm', 'sm', 'md', 'lg', 'xlg', 'full', 'auto'],
 				backgroundColors = ['white', 'black'],
 				styles = [], //array of styles that gets joined together with a space between in a style tag on the jalert div

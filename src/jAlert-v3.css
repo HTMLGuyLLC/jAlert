@@ -206,6 +206,11 @@ html,body
 	background: #535353;
 }
 
+.ja_brown
+{
+    background: #633824;
+}
+
 .ja_black
 {
     background: #232323;
@@ -233,6 +238,7 @@ html,body
 
 .ja_green .ja_title > div, 
 .ja_gray .ja_title > div,
+.ja_brown .ja_title > div,
 .ja_black .ja_title > div,
 .ja_blue .ja_title > div, 
 .ja_red .ja_title > div
