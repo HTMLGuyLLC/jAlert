@@ -193,71 +193,47 @@ html,body
 
 .ja_green
 {
-	background: #00C600;
-	background: -moz-linear-gradient(top,  #00C600 0%, #1d8d11 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#00C600), color-stop(100%,#1d8d11));
-	background: -webkit-linear-gradient(top,  #00C600 0%,#1d8d11 100%);
-	background: -o-linear-gradient(top,  #00C600 0%,#1d8d11 100%);
-	background: -ms-linear-gradient(top,  #00C600 0%,#1d8d11 100%);
-	background: linear-gradient(to bottom,  #00C600 0%,#1d8d11 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00C600', endColorstr='#1d8d11',GradientType=0 );
+	background: #189818;
 }
 
 .ja_yellow
 {
 	background: #FFFF54;
-	background: -moz-linear-gradient(top,  #FFFF54 0%, #FFFF32 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFF54), color-stop(100%,#FFFF32));
-	background: -webkit-linear-gradient(top,  #FFFF54 0%,#FFFF32 100%);
-	background: -o-linear-gradient(top,  #FFFF54 0%,#FFFF32 100%);
-	background: -ms-linear-gradient(top,  #FFFF54 0%,#FFFF32 100%);
-	background: linear-gradient(to bottom,  #FFFF54 0%,#FFFF32 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFF54', endColorstr='#FFFF32',GradientType=0 );
+}
+
+.ja_gray
+{
+	background: #535353;
 }
 
 .ja_black
 {
-	background: #535353;
-	background: -moz-linear-gradient(top,  #535353 0%, #000000 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#535353), color-stop(100%,#000000));
-	background: -webkit-linear-gradient(top,  #535353 0%,#000000 100%);
-	background: -o-linear-gradient(top,  #535353 0%,#000000 100%);
-	background: -ms-linear-gradient(top,  #535353 0%,#000000 100%);
-	background: linear-gradient(to bottom,  #535353 0%,#000000 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#535353', endColorstr='#000000',GradientType=0 );
+    background: #000;
 }
 
 .ja_blue
 {
 	background: #0684ce;
-	background: -moz-linear-gradient(top,  #0684ce 0%, #1e5799 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#0684ce), color-stop(100%,#1e5799));
-	background: -webkit-linear-gradient(top,  #0684ce 0%,#1e5799 100%);
-	background: -o-linear-gradient(top,  #0684ce 0%,#1e5799 100%);
-	background: -ms-linear-gradient(top,  #0684ce 0%,#1e5799 100%);
-	background: linear-gradient(to bottom,  #0684ce 0%,#1e5799 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0684ce', endColorstr='#1e5799',GradientType=0 );
 }
 
 .ja_red
 {
 	background: #af2222;
-	background: -moz-linear-gradient(top,  #af2222 0%, #981717 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#af2222), color-stop(100%,#981717));
-	background: -webkit-linear-gradient(top,  #af2222 0%,#981717 100%);
-	background: -o-linear-gradient(top,  #af2222 0%,#981717 100%);
-	background: -ms-linear-gradient(top,  #af2222 0%,#981717 100%);
-	background: linear-gradient(to bottom,  #af2222 0%,#981717 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#af2222', endColorstr='#981717',GradientType=0 );
 }
 
-.ja_default > div, .ja_yellow .ja_title > div
+.ja_default > div
 {
-	color: #3D3D3D !important;
+    color: #505050 !important;
+}
+
+.ja_yellow .ja_title > div
+{
+	color: #636363 !important;
 }
 
 .ja_green .ja_title > div, 
-.ja_black .ja_title > div, 
+.ja_gray .ja_title > div,
+.ja_black .ja_title > div,
 .ja_blue .ja_title > div, 
 .ja_red .ja_title > div
 { 
