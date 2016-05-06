@@ -193,7 +193,7 @@ html,body
 
 .ja_green
 {
-	background: #009A00;
+	background: #00B700;
 }
 
 .ja_dark_green
@@ -228,7 +228,7 @@ html,body
 
 .ja_blue
 {
-	background: #0085D4;
+	background: #008FE4;
 }
 
 .ja_dark_blue
@@ -390,7 +390,7 @@ html,body
 
 .ja_btn_green, .ja_btn_green:link, .ja_btn_green:visited
 {
-	background: #009A00;
+	background: #00B700;
 	color: white;
 }
 
@@ -438,7 +438,7 @@ html,body
 
 .ja_btn_blue, .ja_btn_blue:link, .ja_btn_blue:visited
 {
-	background: #0085D4;
+	background: #008FE4;
 	color: white;
 }
 
