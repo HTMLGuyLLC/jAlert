@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /*
-	jAlert v.3
+	jAlert v.4
 	Made with love by Versatility Werks (http://flwebsites.biz)
 	MIT Licensed 
 */
@@ -54,6 +54,7 @@ html,body
 */
 .jAlert
 {
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
     text-align: left;
     word-wrap: break-word;
 	background: white; 
@@ -78,11 +79,11 @@ html,body
  /* 
 	 SIZES
 */
-.ja_xsm{ width: 250px; } 
-.ja_sm{ width: 350px; } 
-.ja_md{ width: 550px; } 
-.ja_lg{ width: 850px; } 
-.ja_xlg{ width: 1200px; } 
+.ja_xsm{ width: 250px; }
+.ja_sm{ width: 350px; }
+.ja_md{ width: 550px; }
+.ja_lg{ width: 850px; }
+.ja_xlg{ width: 1200px; }
 .ja_full{ width: 100%; }
 .ja_auto{ width: auto; }
 
@@ -93,8 +94,7 @@ html,body
     position: absolute;
     top: 3px;
     right: 3px;
-    border-top-right-radius: 1px;
-    border-bottom-left-radius: 5px;
+    border-radius: 5px;
     background: #F3F3F3;
     color: #555;
     padding: 5px 10px 5px 10px;
@@ -131,6 +131,7 @@ html,body
     border: 1px solid rgb(55, 55, 55);
     padding: 3px 8px;
 }
+
 .ja_close:hover{
     background: #d4d4d4;
 }
