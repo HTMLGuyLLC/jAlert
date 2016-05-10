@@ -278,6 +278,12 @@
 			alert.autofocus = alert.confirmAutofocus;
 		}
 
+        /* If used the alias color, swap to theme */
+        if( alert.color )
+        {
+            alert.theme = alert.color;
+        }
+
         /**
          * Make sure theme is a real class
          */
