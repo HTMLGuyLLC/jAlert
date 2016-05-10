@@ -1,4 +1,4 @@
-jAlert v3
+jAlert v4
 ======
 by Versatility Werks http://flwebsites.biz
 
@@ -19,7 +19,7 @@ Setup
 ======
 Include the CSS files from the src folder in the head section:
 ```html
-<link rel="stylesheet" href="jAlert-master/src/jAlert-v3.css">
+<link rel="stylesheet" href="jAlert-master/src/jAlert-v4.css">
 ```
 
 Include the JS file from the src folder before the `</body>`:
