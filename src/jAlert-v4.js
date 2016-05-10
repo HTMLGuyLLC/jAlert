@@ -813,6 +813,12 @@
 
 	};
 
+    $.fn.attachjAlert = function(e){
+        e.preventDefault();
+        $.jAlert($(this).data());
+        return false;
+    };
+
 	/* If you're not using the DOM (aka, you're not hiding or showing a specific alert, you can just use $.jAlert */
 	$.jAlert = function(options){
 
@@ -836,11 +842,10 @@
         if( options == 'attach' )
         {
             /* If there are data attributes for showing jAlerts, add the click handler */
-            $('[data-jAlert]').on('click', function(e){
-                e.preventDefault();
-                $.jAlert($(this).data());
-                return false;
-            });
+            $('[data-jAlert]').off('click', $.fn.attachjAlert);
+            $('[data-jAlert]').on('click', $.fn.attachjAlert);
+            $('[data-jalert]').off('click', $.fn.attachjAlert);
+            $('[data-jalert]').on('click', $.fn.attachjAlert);
 
             return false;
         }
