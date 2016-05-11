@@ -294,6 +294,7 @@ html,body
 .jAlert.ja_setheight .ja_body
 {
     height: 100%;
+    height: calc(100% - 40px);
 }
 
  /* 
