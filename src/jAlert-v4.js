@@ -621,6 +621,9 @@
             //attach alert object to dom element
             alert.instance[0]['jAlert'] = alert;
 
+            //doing this now will prevent it from happening mid-animation
+            $('body').css('overflow', 'hidden');
+
             //show the new alert
 			alert.animateAlert('show');
 
