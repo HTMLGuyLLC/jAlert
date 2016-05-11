@@ -28,6 +28,26 @@ Include the JS file from the src folder before the `</body>`:
 <script src="jAlert-master/src/jAlert-functions.min.js"></script> <!-- COMPLETELY OPTIONAL -->
 ```
 
+To use the 'data-jAlert' attributes, you must attach the handlers (must be re-attached for newly added dynamic content):
+```html
+<a href='#' data-jAlert data-title='New jAlert!' data-content='Great job!'>Click Me</a>
+```
+```javascript
+$(function(){
+  $.jAlert('attach');
+});
+```
+
+### This is the default usage. Doesn't require jAlert-functions.js
+```javascript   
+  $.jAlert({ //this is the normal usage
+    'title': 'Test',
+    'content': 'Howdy',
+    'theme': 'green',
+    'size': 'xsm'
+  });
+```
+
 ### Quick Use (requires jAlert-functions.js!!!)
 ```javascript
   alert('hi'); //override is enabled by default works in code in console you get the default behavior and undefined
@@ -64,15 +84,6 @@ Include the JS file from the src folder before the `</body>`:
     console.log('confirmed!');
   }, function(){
     console.log('denied');
-  });
-```
-### This is the default usage. Doesn't require jAlert-functions.js
-```javascript   
-  $.jAlert({ //this is the normal usage
-    'title': 'Test',
-    'content': 'Howdy',
-    'theme': 'green',
-    'size': 'xsm'
   });
 ```
 ```javascript   
