@@ -74,6 +74,7 @@ html,body
 */
 .jAlert > div{
 	position: relative;
+    height: 100%;
 }
 
  /* 
@@ -286,6 +287,8 @@ html,body
     user-select: text;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+    height: auto;
+    height: calc(100% - 40px);
 }
 
  /* 
