@@ -50,7 +50,7 @@ $(function(){
 
 ### Quick Use (requires jAlert-functions.js!!!)
 ```javascript
-  alert('hi'); //override is enabled by default works in code in console you get the default behavior and undefined
+  alert('hi'); //override is enabled by default 
 ```
 ```javascript
   successAlert('Success', 'You did it!'); //green alert
