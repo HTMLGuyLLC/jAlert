@@ -7,6 +7,8 @@ by Versatility Werks http://flwebsites.biz
 Demo & Detailed Docs
 =======
 http://flwebsites.biz/jAlert/
+===
+YOU SHOULD REALLY GO TO THE DOCUMENTATION LINK ABOVE. IT'S ALWAYS UPDATED AND HAS MUCH MORE INFORMATION AVAILABLE.
 
 What is it?
 =======
@@ -28,10 +30,31 @@ Include the JS file from the src folder before the `</body>`:
 <script src="jAlert-master/src/jAlert-functions.min.js"></script> <!-- COMPLETELY OPTIONAL -->
 ```
 
+To use the 'data-jAlert' attributes, you must attach the handlers (must be re-attached for newly added dynamic content):
+```html
+<a href='#' data-jAlert data-title='New jAlert!' data-content='Great job!'>Click Me</a>
+```
+```javascript
+$(function(){
+  $.jAlert('attach');
+});
+```
+
+### This is the default usage. Doesn't require jAlert-functions.js
+```javascript   
+  $.jAlert({ //this is the normal usage
+    'title': 'Test',
+    'content': 'Howdy',
+    'theme': 'green',
+    'size': 'xsm'
+  });
+```
+
 ### Quick Use (requires jAlert-functions.js!!!)
 ```javascript
-  alert('hi'); //override is enabled by default works in code in console you get the default behavior and undefined
+  alert('hi'); //override is enabled by default 
 ```
+Note: When you run alert() in your console, it works as expected but will return "undefined"...ignore that. It's just because the function doesn't return anything. Had to add this disclaimer because people got confused..lol..
 ```javascript
   successAlert('Success', 'You did it!'); //green alert
 ```
@@ -64,15 +87,6 @@ Include the JS file from the src folder before the `</body>`:
     console.log('confirmed!');
   }, function(){
     console.log('denied');
-  });
-```
-### This is the default usage. Doesn't require jAlert-functions.js
-```javascript   
-  $.jAlert({ //this is the normal usage
-    'title': 'Test',
-    'content': 'Howdy',
-    'theme': 'green',
-    'size': 'xsm'
   });
 ```
 ```javascript   
