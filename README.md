@@ -52,6 +52,7 @@ $(function(){
 ```javascript
   alert('hi'); //override is enabled by default 
 ```
+Note: When you run alert() in your console, it works as expected but will return "undefined"...ignore that. It's just because the function doesn't return anything. Had to add this disclaimer because people got confused..lol..
 ```javascript
   successAlert('Success', 'You did it!'); //green alert
 ```
