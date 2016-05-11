@@ -75,6 +75,10 @@ html,body
 .jAlert > div{
 	position: relative;
 }
+.jAlert.ja_setheight > div
+{
+    height: 100%;
+}
 
  /* 
 	 SIZES
@@ -286,6 +290,10 @@ html,body
     user-select: text;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+}
+.jAlert.ja_setheight .ja_body
+{
+    height: 100%;
 }
 
  /* 

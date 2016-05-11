@@ -335,6 +335,7 @@
 		{
 			styles.push('width: '+alert.size.width+';');
 			styles.push('height: '+alert.size.height+';');
+            classes.push('ja_setheight');
 		}
 		/* If it's set and it's not an object */
 		else
