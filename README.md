@@ -2,7 +2,7 @@ jAlert v4
 ======
 by Versatility Werks http://flwebsites.biz
 
-![logo](http://flwebsites.biz/jAlert/index-assets/github-img.jpg)
+![logo](http://flwebsites.biz/jAlert/index-assets/img/logo.png)
 
 Demo & Detailed Docs
 =======
