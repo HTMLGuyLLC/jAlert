@@ -26,7 +26,7 @@ Include the CSS files from the src folder in the head section:
 
 Include the JS file from the src folder before the `</body>`:
 ```html
-<script src="jAlert-master/src/jAlert-v4.036.min.js"></script>
+<script src="jAlert-master/src/jAlert.min.js"></script>
 <script src="jAlert-master/src/jAlert-functions.min.js"></script> <!-- COMPLETELY OPTIONAL -->
 ```
 
