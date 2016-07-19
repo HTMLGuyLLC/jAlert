@@ -70,9 +70,6 @@ body.ja_blur > *:not(.ja_wrap)
 	margin-top: 100px;
 	margin-bottom: 100px;
 	display: inline-block;
-	-webkit-box-shadow: 0px 0px 20px 0px rgba(50, 50, 50, 0.8);
-	-moz-box-shadow: 0px 0px 20px 0px rgba(50, 50, 50, 0.8);
-	box-shadow: 0px 0px 20px 0px rgba(50, 50, 50, 0.8);
 }
 
  /*
@@ -157,11 +154,6 @@ body.ja_blur > *:not(.ja_wrap)
 /*
 	 TITLE
 */
-.ja_noTitle
-{
-	border: 2px solid #555;
-}
-
 .ja_noTitle .ja_body
 {
 	border-radius: 5px;
