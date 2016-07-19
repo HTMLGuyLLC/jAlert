@@ -320,6 +320,11 @@
 			classes.push(alert.classes);
 		}
 
+		if( alert.noPadContent )
+        {
+            classes.push('ja_no_pad');
+        }
+
 		/* If no title, add class */
 		if( !alert.title )
 		{
@@ -731,6 +736,7 @@
 	$.fn.jAlert.defaults = {
 		'title': false, //title for the popup (false = don't show)
 		'content': false, //html for the popup (replaced if you use image, ajax, or iframe)
+        'noPadContent': false, //remove padding from
 		'image': false, //adds a centered img tag
 		'imageWidth': 'auto', //defaults to max-width: 100%; width: auto;
 		'video': false, //adds a responsive iframe video - value is the "src" of the iframe
