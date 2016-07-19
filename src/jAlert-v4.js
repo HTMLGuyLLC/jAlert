@@ -97,13 +97,15 @@
                 var viewportHeight = $(window).height(),
                     alertHeight = alert.instance.height(),
                     diff = viewportHeight - alertHeight;
-    
-                var top = diff / 2;
 
-                top = top > 200 ? top - 100 : top;
-                top = top <= 0 ? 0 : top;
+                var margin = diff / 2;
 
-                alert.instance.css('margin-top', top+'px');
+                margin = margin > 200 ? margin - 100 : margin;
+                margin = margin <= 0 ? 0 : margin;
+                margin = margin - 1; //make up for border if any - just brings it up a bit anyway.
+
+                alert.instance.css('margin-top', margin+'px');
+                alert.instance.css('margin-bottom', '0px');
 
                 $('body').css('overflow', 'hidden');
 
@@ -126,10 +128,20 @@
             animateAlert: function(which){
                 if( which == 'hide' )
                 {
+                    if( alert.instance.jAlert().blurBackground )
+                    {
+                        $('body').removeClass('ja_blur');
+                    }
+
                     alert.instance.removeClass(alert.showAnimation).addClass(alert.hideAnimation);
                 }
                 else
                 {
+                    if( alert.instance.jAlert().blurBackground )
+                    {
+                        $('body').addClass('ja_blur');
+                    }
+
                     alert.centerAlert();
                     alert.instance.addClass(alert.showAnimation).removeClass(alert.hideAnimation).show();
                 }
@@ -441,7 +453,6 @@
 			alert.onOpen.unshift( function(elem){
 				var iframe = document.createElement("iframe");
 				iframe.src = elem.jAlert().iframe;
-				iframe.height = elem.jAlert().iframeHeight;
 				iframe.className = 'ja_iframe';
 
 				if(iframe.addEventListener)
@@ -643,10 +654,10 @@
 			if( alert.closeOnClick ){
 
 				/* Unbind if already exists */
-				$(document).off('mouseup', $.fn.jAlert.onMouseUp);
+				$(document).off('mouseup touchstart', $.fn.jAlert.onMouseUp);
 
 				/* Bind mouseup */
-				$(document).on('mouseup', $.fn.jAlert.onMouseUp);
+				$(document).on('mouseup touchstart', $.fn.jAlert.onMouseUp);
 
 			}
 
@@ -738,6 +749,7 @@
 		'animationTimeout': 600, //approx duration of animation to wait until onClose
 		'theme': 'default', // red, green, blue, black, default
 		'backgroundColor': 'black', //white, black
+        'blurBackground': false, //blurs background elements
 		'size': false, //false = css default, xsm, sm, md, lg, xlg, full, { height: 200, width: 200 }
 		'replaceOtherAlerts': false, //if there's already an open jAlert, remove it first
 		'closeOnClick': false, //close the alert when you click anywhere
@@ -901,7 +913,9 @@
 	/* Onload callback for iframe, img, etc */
 	$.fn.jAlert.mediaLoaded = function(elem){
 		var wrap = elem.parents('.ja_media_wrap'),
-				vid_wrap = wrap.find('.ja_video');
+			vid_wrap = wrap.find('.ja_video'),
+            alert = elem.parents('.jAlert:first'),
+            jalert = alert.jAlert();
 
 		wrap.find('.ja_loader').remove();
 
@@ -914,7 +928,14 @@
 			elem.fadeIn('fast');
 		}
 
-		elem.parents('.jAlert').jAlert().centerAlert();
+		//if iframe, add height after load and set display: block
+		if( typeof jalert.iframeHeight !== 'undefined' && jalert.iframeHeight )
+        {
+            elem.css('display', 'block');
+            elem.height(jalert.iframeHeight);
+        }
+
+        jalert.centerAlert();
 
 	};
 
