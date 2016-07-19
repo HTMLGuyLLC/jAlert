@@ -1,7 +1,7 @@
 /* 
  *
  *
- jAlert v.4
+ jAlert version 4
  Made with love by Versatility Werks (http://flwebsites.biz)
  MIT Licensed
  *
