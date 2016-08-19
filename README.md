@@ -1,3 +1,7 @@
+ [![Packagist](https://img.shields.io/badge/License-MIT-green.svg)]()
+ [![Codeship](https://img.shields.io/badge/Build-Failing-red.svg)]()
+ [![npm](https://img.shields.io/badge/NPM-v4.0.36-blue.svg)]()
+ 
 jAlert v4
 ======
 by Versatility Werks http://flwebsites.biz
