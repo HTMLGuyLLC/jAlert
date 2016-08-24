@@ -24,13 +24,13 @@ Setup
 ======
 Include the CSS files from the src folder in the head section:
 ```html
-<link rel="stylesheet" href="jAlert-master/src/jAlert-v4.css">
+<link rel="stylesheet" href="jAlert-master/dist/jAlert.css">
 ```
 
 Include the JS file from the src folder before the `</body>`:
 ```html
-<script src="jAlert-master/src/jAlert.min.js"></script>
-<script src="jAlert-master/src/jAlert-functions.min.js"></script> <!-- COMPLETELY OPTIONAL -->
+<script src="jAlert-master/dist/jAlert.min.js"></script>
+<script src="jAlert-master/dist/jAlert-functions.min.js"></script> <!-- COMPLETELY OPTIONAL -->
 ```
 
 To use the 'data-jAlert' attributes, you must attach the handlers (must be re-attached for newly added dynamic content):
