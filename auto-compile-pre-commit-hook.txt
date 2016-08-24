@@ -1,0 +1,8 @@
+#!/bin/sh
+
+cp "src/jAlert.css" "dist/jAlert.css" #copy the CSS file
+
+uglifyjs "src/jAlert.js" -c -o "dist/jAlert.min.js" #minify the JS
+uglifyjs "src/jAlert-functions.js" -c -o "dist/jAlert-functions.min.js" #minify the functions JS
+
+git add -A #add to the current commit

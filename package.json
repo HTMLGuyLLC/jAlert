@@ -1,6 +1,6 @@
 {
   "name": "jAlert",
-  "version": "4.036",
+  "version": "4.5",
   "description": "Simple jQuery (Modal | Popup | Lightbox | Alert) Plugin",
   "repository": {
     "type": "git",
@@ -12,6 +12,6 @@
   "homepage": "http://flwebsites.biz/jAlert/",
   "private": false,
   "dependencies": {
-    "jquery": "^1.7.1",
+    "jquery": "^1.7.1"
   }
 }

@@ -85,6 +85,7 @@
         <a href="javascript:infoAlert('hi')" class="btn">infoAlert()</a>
         <a href="#" class="openClose btn">Open then close after 2 seconds</a>
         <a href="#" class="getTopClose btn">$.jAlert('current').closeAlert() after 2 seconds</a>
+        <a href="#" class="buttonsWithCallbacks btn">buttons with callbacks</a>
     </div>
     <script>
 		$(function(){
@@ -125,6 +126,15 @@
                         $.jAlert('current').closeAlert();
                     }, 2000);
                 }
+            });
+
+            $.alertOnClick('.buttonsWithCallbacks', {
+                'title':'DO IT',
+                'content':'Click \'em',
+                'btns': [
+                    {'text':'Console Hi', 'closeAlert':false, 'onClick': function(){console.log('hi'); }},
+                    {'text':'Alert Hi', 'closeAlert':false, 'onClick': function(){alert('hi'); }}
+                ]
             });
 		});
 	</script>

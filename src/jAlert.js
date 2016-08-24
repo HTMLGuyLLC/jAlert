@@ -1,7 +1,7 @@
 /* 
  *
  *
- jAlert version 4.035
+ jAlert version 4.5
  Made with love by Versatility Werks (http://flwebsites.biz)
  MIT Licensed
  *
@@ -518,6 +518,8 @@
 			if(typeof btn.id == 'undefined'){ var unique = Date.now().toString() + Math.floor(Math.random() * 100000); btn.id = 'ja_btn_' + unique; }
 			if(typeof btn.target == 'undefined'){ btn.target = '_self'; }
 			if(typeof btn.closeAlert == 'undefined'){ btn.closeAlert = true; }
+
+			$('body').off('click', '#'+btn.id); //remove handler before adding it to remove dupe handlers
 
 			/* Attach on click handler */
 			$('body').on('click', '#'+btn.id, function(e){

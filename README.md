@@ -12,7 +12,6 @@ Demo & Detailed Docs
 =======
 http://flwebsites.biz/jAlert/
 ===
-YOU SHOULD REALLY GO TO THE DOCUMENTATION LINK ABOVE. IT'S ALWAYS UPDATED AND HAS MUCH MORE INFORMATION AVAILABLE.
 
 What is it?
 =======
