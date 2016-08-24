@@ -19,6 +19,12 @@ Simple jQuery (Modal | Popup | Lightbox | Alert) Plugin
 
 Whether you call it a lightbox, modal, popup, or window, jAlert is an excellent replacement / alternative for Simple Modal, FancyBox, or Reveal.
 
+Getting the files
+=======
+Using NPM:
+```html
+npm install jAlert
+```
 
 Setup
 ======
