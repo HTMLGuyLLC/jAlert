@@ -1,6 +1,6 @@
  [![Packagist](https://img.shields.io/badge/License-MIT-blue.svg)]()
  [![Codeship](https://img.shields.io/badge/Build-Passing-green.svg)]()
- [![npm](https://img.shields.io/badge/NPM-v4.0.36-blue.svg)]()
+ [![npm](https://img.shields.io/badge/NPM-v4.5-blue.svg)]()
  
 jAlert v4
 ======
