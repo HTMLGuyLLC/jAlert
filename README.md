@@ -1,6 +1,6 @@
  [![Packagist](https://img.shields.io/badge/License-MIT-blue.svg)](http://flwebsites.biz/jAlert/#license)
  [![Codeship](https://img.shields.io/badge/Build-Passing-green.svg)]()
- [![npm](https://img.shields.io/badge/NPM-v4.5.0-blue.svg)](https://npmjs.com/package/jAlert)
+ [![npm](https://img.shields.io/badge/NPM-v4.5.1-blue.svg)](https://npmjs.com/package/jAlert)
  
 jAlert v4
 ======
