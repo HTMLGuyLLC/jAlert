@@ -1,11 +1,10 @@
+ [![Join the chat at https://gitter.im/jAlert/Lobby](https://badges.gitter.im/jAlert/Lobby.svg)](https://gitter.im/jAlert/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
  [![Packagist](https://img.shields.io/badge/License-MIT-blue.svg)](http://flwebsites.biz/jAlert/#license)
  [![Codeship](https://img.shields.io/badge/Build-Passing-green.svg)]()
  [![npm](https://img.shields.io/badge/NPM-v4.5.1-blue.svg)](https://npmjs.com/package/jAlert)
  
 jAlert v4
 ======
-
-[![Join the chat at https://gitter.im/jAlert/Lobby](https://badges.gitter.im/jAlert/Lobby.svg)](https://gitter.im/jAlert/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 by Versatility Werks http://flwebsites.biz
 
 ![logo](http://flwebsites.biz/jAlert/index-assets/img/logo.png)
