@@ -28,12 +28,12 @@ npm install jAlert
 
 Setup
 ======
-Include the CSS files from the src folder in the head section:
+Include the CSS files from the folder in the head section:
 ```html
 <link rel="stylesheet" href="jAlert-master/dist/jAlert.css">
 ```
 
-Include the JS file from the src folder before the `</body>`:
+Include the JS file from the folder before the `</body>`:
 ```html
 <script src="jAlert-master/dist/jAlert.min.js"></script>
 <script src="jAlert-master/dist/jAlert-functions.min.js"></script> <!-- COMPLETELY OPTIONAL -->
