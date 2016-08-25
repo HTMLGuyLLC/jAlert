@@ -1,7 +1,7 @@
 /* 
  *
  *
- jAlert version 4.5
+ jAlert version 4.5.1
  Made with love by Versatility Werks (http://flwebsites.biz)
  MIT Licensed
  *
@@ -320,6 +320,13 @@
 			classes.push(alert.classes);
 		}
 
+		//if fullscreen, add class
+		if( alert.fullscreen )
+        {
+            classes.push('ja_fullscreen');
+        }
+
+        //if no padding on the content
 		if( alert.noPadContent )
         {
             classes.push('ja_no_pad');
@@ -447,7 +454,7 @@
 		{
 			if( !alert.iframeHeight )
 			{
-				alert.iframeHeight = $(window).height() * 0.9+'px';
+				alert.iframeHeight = $(window).height() +'px';
 			}
 
 			alert.content = "<div class='ja_media_wrap'>"+
@@ -567,6 +574,10 @@
 				{
 					html += ' ja_close_alt';
 				}
+                else if( alert.closeBtnRoundWhite )
+                {
+                    html += ' ja_close_round_white';
+                }
                 else if( alert.closeBtnRound )
                 {
                     html += ' ja_close_round';
@@ -738,7 +749,8 @@
 	$.fn.jAlert.defaults = {
 		'title': false, //title for the popup (false = don't show)
 		'content': false, //html for the popup (replaced if you use image, ajax, or iframe)
-        'noPadContent': false, //remove padding from
+        'noPadContent': false, //remove padding from the body
+        'fullscreen': false, //make the jAlert completely fullscreen
 		'image': false, //adds a centered img tag
 		'imageWidth': 'auto', //defaults to max-width: 100%; width: auto;
 		'video': false, //adds a responsive iframe video - value is the "src" of the iframe
@@ -764,7 +776,8 @@
 		'closeOnEsc': true, //close the alert when you click the escape key
 		'closeBtn': true, //adds a button to the top right of the alert that allows you to close it
 		'closeBtnAlt': false, //alternative close button
-        'closeBtnRound': true, //alternative close button to be round
+        'closeBtnRound': true, //alternative round close button
+        'closeBtnRoundWhite': false, //alternative round close button (in white)
 		'btns': false, //adds buttons to the popup at the bottom. Pass an object for a single button, or an object of objects for many
 		/*
 		 Variety of buttons you could create (also, an example of how to pass the object

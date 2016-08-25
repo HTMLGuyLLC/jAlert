@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /*
-	jAlert version 4.5
+	jAlert version 4.5.1
 	Made with love by Versatility Werks (http://flwebsites.biz)
 	MIT Licensed
 */
@@ -113,10 +113,10 @@ body.ja_blur > *:not(.ja_wrap)
     z-index: 99999;
 }
 
-.ja_close_round {
+.ja_close_round, .ja_close_round_white {
     border-radius: 50%;
-    background: rgba(0, 0, 0, 0.3);
-    color: #FFFFFF;
+    background: #e0e0e0;
+    color: #232323;
     padding: 5px 7px;
     right: 10px;
     top: 6px;
@@ -125,7 +125,7 @@ body.ja_blur > *:not(.ja_wrap)
     font-size: 18px;
 }
 
-.ja_default .ja_close_round
+.ja_default .ja_close_round, .ja_default .ja_close_round_white
 {
     color: #FFF;
     background: rgba(0, 0, 0, 0.3) none repeat scroll 0% 0%;
@@ -139,7 +139,7 @@ body.ja_blur > *:not(.ja_wrap)
     top: -16px;
     right: -18px;
     border: 1px solid rgb(55, 55, 55);
-    padding: 3px 8px;
+    padding: 3px 8px 1px 7px;
 }
 
 .ja_close:hover{
@@ -152,6 +152,10 @@ body.ja_blur > *:not(.ja_wrap)
 {
     color: #FFF;
     background: rgba(0,0,0,.5);
+}
+.ja_close_round_white:hover, .ja_close_round_white:active
+{
+    background: white;
 }
 
 /*
@@ -173,6 +177,16 @@ body.ja_blur > *:not(.ja_wrap)
 {
     background: black;
 }
+
+.ja_noTitle .ja_close_round_white
+{
+    background: #e0e0e0;
+    color: #232323;
+}
+.ja_noTitle .ja_close_round_white:hover
+ {
+     background: white;
+ }
 
 .ja_title
 {
@@ -340,6 +354,35 @@ body.ja_blur > *:not(.ja_wrap)
 	max-width: 100%;
 	display: inline-block;
 	display: none;
+}
+
+/**
+    Full Screen
+*/
+.ja_fullscreen
+{
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    border-radius: 0px;
+    margin-top: 0px !important;
+}
+.ja_fullscreen .ja_title
+{
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+.ja_fullscreen .ja_body
+{
+    height: 100%;
+}
+.ja_fullscreen .ja_close_round
+{
+    right: 5px;
+    top: 5px;
 }
 
  /*
