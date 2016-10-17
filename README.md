@@ -27,6 +27,10 @@ Using NPM:
 npm install jAlert
 ```
 
+Dependencies
+=======
+jQuery 1.7+
+
 Setup
 ======
 Include the CSS files from the folder in the head section:
@@ -144,8 +148,3 @@ Note: When you run alert() in your console, it works as expected but will return
     'ajax': 'my-ajax-content.php'
   });
 ```
-
-
-Dependencies
-=======
-jQuery 1.7+
