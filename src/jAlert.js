@@ -707,7 +707,25 @@
 			{
 				alert.instance.focus();
 			}
+            /*
+            	Set Auto
+            	usage $.jAlert({
+            		autoClose : true,
+            		closeTime : 4500
+            	});
+             */
+            if(alert.autoClose)
+            {
+                setTimeout(function()
+				{
+                    var currentAlert = $.jAlert('current');
+                    if(currentAlert !== false)
+                    {
+                        currentAlert.closeAlert();
+                    }
 
+                }, alert.closeTime);
+            }
 			alert.instance.bind("DOMSubtreeModified", function(){
 				alert.centerAlert();
 			});
