@@ -64,6 +64,18 @@ $(function(){
   });
 ```
 
+### Auto Close after period of time
+```javascript   
+  $.jAlert({ //this is the normal usage
+    'title': 'Test',
+    'content': 'Howdy',
+    'theme': 'green',
+    'size': 'xsm'
+    'autoClose' : true,
+    'closeTime' : 3500
+  });
+```
+
 ### Quick Use (requires jAlert-functions.js!!!)
 ```javascript
   alert('hi'); //override is enabled by default 
