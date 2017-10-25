@@ -797,6 +797,8 @@
         'closeBtnRound': true, //alternative round close button
         'closeBtnRoundWhite': false, //alternative round close button (in white)
 		'btns': false, //adds buttons to the popup at the bottom. Pass an object for a single button, or an object of objects for many
+        'autoClose' : false, // Set default autoClose
+        'closeTime' : 3000,   // Set 3 sec on autoclose
 		/*
 		 Variety of buttons you could create (also, an example of how to pass the object
 
