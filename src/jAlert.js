@@ -768,7 +768,7 @@
             clearTimeout (timer);
             timer = setTimeout(callback, ms);
         };
-    });
+    })(jQuery);
 
 	/* Default alert */
 	$.fn.jAlert.defaults = {
