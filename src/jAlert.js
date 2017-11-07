@@ -715,15 +715,14 @@
              */
             if(alert.autoClose)
             {
-                setTimeout(function()
+                $.fn.closeTimer(function()
 				{
                     var currentAlert = $.jAlert('current');
                     if(currentAlert !== false)
                     {
                         currentAlert.closeAlert();
                     }
-
-                }, alert.autoClose);
+				}, alert.autoClose);
             }
 			alert.instance.bind("DOMSubtreeModified", function(){
 				alert.centerAlert();
@@ -761,6 +760,15 @@
 
 		/* END OF PLUGIN */
 	};
+
+	/* set closeTimer for preventing on dublicate */
+    $.fn.closeTimer = (function(){
+        var timer = 0;
+        return function(callback, ms){
+            clearTimeout (timer);
+            timer = setTimeout(callback, ms);
+        };
+    });
 
 	/* Default alert */
 	$.fn.jAlert.defaults = {
