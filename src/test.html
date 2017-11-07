@@ -90,6 +90,8 @@
         <a href="#" class="openClose btn">Open then close after 2 seconds</a>
         <a href="#" class="getTopClose btn">$.jAlert('current').closeAlert() after 2 seconds</a>
         <a href="#" class="buttonsWithCallbacks btn">buttons with callbacks</a>
+
+        <button id="autoclose" class="btn"> Auto Close on autClose method</button>
     </div>
     <script>
 		$(function(){
@@ -139,6 +141,11 @@
                     {'text':'Console Hi', 'closeAlert':false, 'onClick': function(){console.log('hi'); }},
                     {'text':'Alert Hi', 'closeAlert':false, 'onClick': function(){alert('hi'); }}
                 ]
+            });
+            $.alertOnClick('#autoclose', {
+               'title': "Auto Close",
+               'content': "This notification will be close after 3 secounds",
+               'autoClose': 3000
             });
 		});
 	</script>
