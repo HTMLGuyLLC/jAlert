@@ -71,8 +71,7 @@ $(function(){
     'content': 'Howdy',
     'theme': 'green',
     'size': 'xsm'
-    'autoClose' : true,
-    'closeTime' : 3500
+    'autoClose' : 3000,
   });
 ```
 
