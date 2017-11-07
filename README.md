@@ -70,8 +70,8 @@ $(function(){
     'title': 'Test',
     'content': 'Howdy',
     'theme': 'green',
-    'size': 'xsm'
-    'autoClose' : 3000,
+    'size': 'xsm',
+    'autoClose' : 3000
   });
 ```
 
