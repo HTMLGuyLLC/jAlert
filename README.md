@@ -11,7 +11,7 @@ by Versatility Werks
 
 Demo & Detailed Docs
 =======
-http://flwebsites.biz/jAlert/
+http://versatilitywerks.github.io/jAlert/
 ===
 
 What is it?
