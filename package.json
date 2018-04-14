@@ -12,6 +12,6 @@
   "homepage": "http://flwebsites.biz/jAlert/",
   "private": false,
   "dependencies": {
-    "jquery": "^1.7.1"
+    "jquery": "^3.0.0"
   }
 }
