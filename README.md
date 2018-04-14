@@ -5,9 +5,9 @@
  
 jAlert v4
 ======
-by Versatility Werks http://flwebsites.biz
+by Versatility Werks 
 
-![logo](http://flwebsites.biz/jAlert/index-assets/img/logo.png)
+![logo](http://versatilitywerks.github.io/jAlert/index-assets/img/logo.png)
 
 Demo & Detailed Docs
 =======
