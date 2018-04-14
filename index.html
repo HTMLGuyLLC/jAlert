@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Responsive jQuery Modal / Lightbox Alert | jAlert</title>
+<meta name="description" content="Add powerful, styled confirmation tooltips to any site quickly, and easily!">
+<meta name="author" content="Versatility Werks (http://flwebsites.biz)">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Styles -->
+<link href="index-assets/css/bootstrap.css" rel="stylesheet">
+<link href="index-assets/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="index-assets/css/style.css" rel="stylesheet">
+<link href="index-assets/css/font-awesome.min.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300|Bree+Serif" rel="stylesheet" type="text/css">
+<link href="index-assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+<!--[if IE]>
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:600italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:700italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:600" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Bree+Serif:400" rel="stylesheet" type="text/css">
+    <![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+<!--[if IE 7]>
+	  <link rel="stylesheet" href="index-assets/css/font-awesome-ie7.css">
+	<![endif]-->
+	
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="index-assets/js/jquery.js"></script>
+	<script src="index-assets/js/bootstrap.min.js"></script>
+	<script src="index-assets/js/google-code-prettify/prettify.js"></script>
+	<script type="text/javascript" src="index-assets/js/respond.js"></script>
+	
+	<!-- PLUGIN -->
+	<script src="src/jAlert.js"></script>
+	<script src="src/jAlert-functions.js"></script>
+	<link href="src/jAlert.css" rel="stylesheet">
+		
+	<script type="text/javascript">
+	$(function(){
+		//Load Goodle Code Pretiffy		   
+		window.prettyPrint && prettyPrint();
+		//Tab function
+		$('#pluginTab a').click(function (e) {
+			e.preventDefault();
+			$(this).tab('show');
+		});
+		//tooltip init
+		$("a.tip").tooltip();	
+		//footer link to got top
+		gotoTop();
+		function gotoTop(){
+			 // scroll body to 0px on click
+				$('a#top').on('click',function () {
+					$('body,html').animate({
+						scrollTop: 0
+					}, 800);
+					return false;
+				});
+		 };
+		  
+	});
+	</script>
+</head>
+<body>
+	
+<header class="masthead">
+	<div class="container"> 
+		<div class="row" style="margin-top: 50px">
+			<div class="span6">
+				<a href='#' class='jlogo'><img src='index-assets/img/logo.png' alt='jAlert jQuery Modal Alert Popup'></a>
+			    <script>
+				$('.jlogo').alertOnClick({"theme":"green","size":"sm","title":"Success! You did it!", "content":"You found the best jQuery modal plugin on the interwebz"});
+				</script>
+			</div>
+			<div class="span6">
+				<br>
+			    <h1 class="font-bree-serif">jAlert Version 4</h1>
+			    <p class="font-open-sans-normal">Simple jQuery Modal | Popup | Lightbox | Alert Plugin</p>
+			    <p style='margin: 10px auto; margin-top: 20px; background: white;padding:20px; border-radius: 20px;'>Whether you call it a lightbox, modal, popup, or window, jAlert is an excellent replacement / alternative for Simple Modal, FancyBox, or whatever plugin you're used to.</p>
+			    
+			    <p class="jumbo"> <a href="https://github.com/VersatilityWerks/jAlert" class="btn btn-inverse btn-large font-open-sans-normal"><strong>View Plugin on GitHub</strong></a> <a href="https://github.com/VersatilityWerks/jAlert/archive/master.zip" class="btn btn-success btn-large font-open-sans-normal"><strong>Download Plugin </strong><small>(v4)</small></a> </p>
+			    
+			    <p class="share"> <a href="https://twitter.com/intent/tweet?screen_name=verswerks" class="twitter-mention-button" data-related="verswerks">Tweet to @verswerks</a>
+			      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+			      <a href="https://twitter.com/share" class="twitter-share-button" data-via="verswerks">Tweet</a>
+			      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+			    </p>
+			</div>
+		</div>
+  </div><!--end container-->  
+</header>
+  
+  <div class="main-content">
+  <div class="container">
+  	<div class="row" id="content">
+    <div class="span12">
+      <div class="tabbable">
+        <ul class="nav nav-tabs" id="pluginTab">
+          <li class="active"><a href="#overview">Overview</a></li>
+          <li><a href="#howtouse">How To Use</a></li>
+          <li><a href="#examples">Examples</a></li>
+          <li><a href="#documentation">Documentation</a></li>
+          <li><a href="#roadmap">Roadmap and changelog</a></li>
+          <li><a href='#license'>License</a></li>
+          <li><a href="https://github.com/VersatilityWerks/jAlert/issues" onclick="window.location.href = $(this).attr('href'); return false;">Submit Issues</a></li>
+        </ul>
+          <script>
+              /* Load page based on hash */
+              $(function() {
+                  if (window.location.hash.replace('#', '').length > 0) {
+                      $('a[href="' + window.location.hash + '"]').click();
+                  }
+              });
+          </script>
+        <div class="tab-content">
+        <!-- 
+          =====================================
+          Overview Tab Content
+          =====================================
+          -->
+          <div class="tab-pane active" id="overview">
+            <h1 class="font-bree-serif align-center">The BEST jQuery Modal, Alert, Popup, Lightbox Plugin</h1>
+            <h4 class="align-center font-open-sans-normal-italic">jAlert is really easy, and really powerful! See why below:</h4>
+            <div class="row features">
+              <div class="span4">
+                <h3><i class="fa fa-expand"></i> Plenty-o Sizes</h3>
+                <p>Completely responsive (just under full width on small screens), but for tablets and desktops, you have a lot of control over how large the alert is.</p>
+ 	                <a href='#' class='btn btn-primary jsize'>xsm</a>
+	                <a href='#' class='btn btn-primary jsize'>sm</a>
+	                <a href='#' class='btn btn-primary jsize'>md</a>
+	                <a href='#' class='btn btn-primary jsize'>lg</a>
+	                <a href='#' class='btn btn-primary jsize'>xlg</a>
+	                <a href='#' class='btn btn-primary jsize'>full</a>
+                    <a href='#' class='btn btn-primary jsize'>auto</a>
+                    <a href='#' class='btn btn-primary jsize'>20%</a>
+                    <a href='#' class='btn btn-primary jsize'>600px</a>
+                    <a href='#' class='btn btn-primary jsize2'>{'height':'100px', 'width':'300px'}</a>
+                    <a href='#' class='btn btn-primary jsize3'>{'height':'400px', 'width':'300px'}</a>
+	                <script>
+		            $('.jsize').on('click', function(e){
+			           e.preventDefault();
+			           var btn = $(this),
+			           	   size = btn.text();
+			           	   
+			           $.jAlert({
+				          'title': 'Nice Size',
+				          'content': 'This is the '+size+' sized alert',
+				          'size': size,
+                           'theme':'blue',
+				          'closeOnClick': true 
+			           });
+			           return false; 
+		            });
+
+                        $('.jsize2').on('click', function(e){
+                            e.preventDefault();
+                            var btn = $(this),
+                                    size = btn.text();
+
+                            $.jAlert({
+                                'title': 'Nice Size',
+                                'content': 'This is the '+size+' sized alert. Overflow is not set to hidden, so the container will go taller to fit the content.',
+                                'size': {'height':'100px', 'width':'300px'},
+                                'theme':'blue',
+                                'closeOnClick': true
+                            });
+                            return false;
+                        });
+
+                    $('.jsize3').on('click', function(e){
+                        e.preventDefault();
+                        var btn = $(this),
+                                size = btn.text();
+
+                        $.jAlert({
+                            'title': 'Nice Size',
+                            'content': 'This is the '+size+' sized alert.',
+                            'size': {'height':'400px', 'width':'300px'},
+                            'theme':'blue',
+                            'closeOnClick': true
+                        });
+                        return false;
+                    });
+				  </script>               
+              </div>
+              <!--end span4-->
+              <div class="span4">
+                <h3><i class="fa fa-paint-brush"></i> Sweet Themes</h3>
+                <p>When used correctly, a user may not even need to read your message to know what it pertains to. Red alert = error. Green = success. You can use the default black background, or optional white one.</p>
+            	<a href='#' class='btn btn-small btn-primary jtheme'>default</a>
+                <a href='#' class='btn btn-small btn-primary jtheme'>red</a>
+                <a href='#' class='btn btn-small btn-primary jtheme'>dark_red</a>
+                <a href='#' class='btn btn-small btn-primary jtheme'>green</a>
+                <a href='#' class='btn btn-small btn-primary jtheme'>dark_green</a>
+                <a href='#' class='btn btn-small btn-primary jtheme'>blue</a>
+                <a href='#' class='btn btn-small btn-primary jtheme'>dark_blue</a>
+                <a href='#' class='btn btn-small btn-primary jtheme'>yellow</a>
+                <a href='#' class='btn btn-small btn-primary jtheme'>brown</a>
+                <a href='#' class='btn btn-small btn-primary jtheme'>gray</a>
+                <a href='#' class='btn btn-small btn-primary jtheme'>dark_gray</a>
+                <a href='#' class='btn btn-small btn-primary jtheme'>black</a>
+                <script>
+	            $('.jtheme').on('click', function(e){
+		           e.preventDefault();
+		           var btn = $(this),
+		           	   theme = btn.text();
+		           	   
+		           $.jAlert({
+			          'title': 'Nice Theme',
+			          'content': 'This is a '+theme+' alert',
+			          'theme': theme,
+			          'closeOnClick': true 
+		           });
+		           return false; 
+	            });
+			  </script>
+			  <br>
+                  <a href='#' class='btn btn-small btn-primary jtheme2'>default</a>
+                  <a href='#' class='btn btn-small btn-primary jtheme2'>red</a>
+                  <a href='#' class='btn btn-small btn-primary jtheme2'>dark_red</a>
+                  <a href='#' class='btn btn-small btn-primary jtheme2'>green</a>
+                  <a href='#' class='btn btn-small btn-primary jtheme2'>dark_green</a>
+                  <a href='#' class='btn btn-small btn-primary jtheme2'>blue</a>
+                  <a href='#' class='btn btn-small btn-primary jtheme2'>dark_blue</a>
+                  <a href='#' class='btn btn-small btn-primary jtheme2'>yellow</a>
+                  <a href='#' class='btn btn-small btn-primary jtheme2'>brown</a>
+                  <a href='#' class='btn btn-small btn-primary jtheme2'>gray</a>
+                  <a href='#' class='btn btn-small btn-primary jtheme2'>dark_gray</a>
+                  <a href='#' class='btn btn-small btn-primary jtheme2'>black</a>
+                <script>
+	            $('.jtheme2').on('click', function(e){
+		           e.preventDefault();
+		           var btn = $(this),
+		           	   theme = btn.text();
+		           	   
+		           $.jAlert({
+			          'title': 'Nice Theme',
+			          'content': 'This is a '+theme+' alert',
+			          'theme': theme,
+			          'closeOnClick': true,
+			          'backgroundColor': 'white'
+		           });
+		           return false; 
+	            });
+			  </script>
+              </div>
+              <!--end span4-->
+              <div class="span4">
+                <h3><i class="fa fa-picture-o"></i> Responsive Lightbox(es)</h3>
+                Need to show a video, image, iframe, or something fetched via AJAX? It's dead-simple and beautiful using jAlert:<br><br>
+                <a href='#' class='jimg btn btn-primary'>Image</a>
+                  <a href='#' class='jimgnopad btn btn-primary'>Image no Pad</a>
+                  <a href='#' class='jvid btn btn-primary'>Video</a>
+                  <a href='#' class='jvidnopad btn btn-primary'>Video no Pad</a>
+                  <a href='#' class='jframe btn btn-primary'>iFrame</a>
+                  <a href='#' class='jframenopad btn btn-primary'>iFrame no Pad</a>
+                  <a href='#' class='btn btn-primary' data-jAlert data-iframe="https://nomoreagent.com" data-noPadContent="true" data-fullscreen="true">iFrame fullscreen, no Pad</a>
+                  <a href='#' class='jajax btn btn-primary'>AJAX</a>
+
+                <script>
+                    $('.jimg').alertOnClick({
+                        'image': 'http://s2.quickmeme.com/img/c6/c676de4842e508242361c7a0aa2fe13a2e1191b58546d1554d5c128c404216d9.jpg',
+                        'imageWidth': '100%',
+                        'size': 'lg'
+                    });
+                    $('.jimgnopad').alertOnClick({
+                        'image': 'http://s2.quickmeme.com/img/c6/c676de4842e508242361c7a0aa2fe13a2e1191b58546d1554d5c128c404216d9.jpg',
+                        'imageWidth': '100%',
+                        'size': 'lg',
+                        'noPadContent':true
+                    });
+	                $('.jvid').alertOnClick({
+		                'video': 'https://www.youtube.com/embed/u3oqwk6UmQI',
+		                'size': 'lg'
+	                });
+                    $('.jvidnopad').alertOnClick({
+                        'video': 'https://www.youtube.com/embed/u3oqwk6UmQI',
+                        'size': 'lg',
+                        'noPadContent':true
+                    });
+	                $('.jframe').alertOnClick({
+		               'iframe': 'https://nomoreagent.com',
+		               'size': 'xlg' 
+	                });
+                    $('.jframenopad').alertOnClick({
+                        'iframe': 'https://nomoreagent.com',
+                        'size': 'xlg',
+                        'noPadContent':true
+                    });
+	                $('.jajax').alertOnClick({
+		               'ajax': 'ajax-dummy.html',
+		               'size': 'sm' 
+	                });
+	            </script>
+                  <h3 style="margin-top:20px"><i class="fa fa-adjust"></i>Blurred Background</h3>
+                  Popup an alert and blur all the background elements:<br><br>
+                  <a href='#' class='jblur btn btn-primary'>Image</a>
+
+                  <script>
+                      $('.jblur').alertOnClick({
+                          'image': 'http://s2.quickmeme.com/img/c6/c676de4842e508242361c7a0aa2fe13a2e1191b58546d1554d5c128c404216d9.jpg',
+                          'imageWidth': '100%',
+                          'size': 'lg',
+                          'blurBackground': true
+                      });
+                  </script>
+              </div>
+              <!--end span4-->
+            </div>
+            <!--end row-->
+            <div class="row features">
+              <div class="span4">
+	              
+                <h3><i class="fa fa-bolt"></i> CSS Animations</h3>
+                <p>In version 3, <a href='https://daneden.github.io/animate.css/' target='_blank'>Animate.css</a> was integrated.</p>
+                
+             	<a href='#' class='btn btn-primary janim' data-show='fadeInUp' data-hide='fadeOutDown'>default</a>
+             	<a href='#' class='btn btn-primary janim' data-show='fadeInDown' data-hide='fadeOutUp'>fade</a>
+             	<a href='#' class='btn btn-primary janim' data-show='bounceIn' data-hide='bounceOut'>bounce</a>
+             	<a href='#' class='btn btn-primary janim' data-show='flipInX' data-hide='flipOutX'>flip x</a>
+             	<a href='#' class='btn btn-primary janim' data-show='flipInY' data-hide='flipOutY'>flip y</a>
+             	<a href='#' class='btn btn-primary janim' data-show='zoomInDown' data-hide='zoomOutUp'>zoom</a>
+                <script>
+	            $('.janim').on('click', function(e){
+		           e.preventDefault();
+		           var btn = $(this),
+		           	   show = btn.data('show'),
+		           	   hide = btn.data('hide');
+		           	   
+		           $.jAlert({
+			          'title': 'Awesome',
+			          'content': "I'll close on my own..",
+                       'theme':'blue',
+			          'showAnimation': show,
+			          'hideAnimation': hide,
+			          'closeOnClick': true,
+			          'onOpen': function(alert)
+			          {
+				          setTimeout(function(){
+					          alert.closeAlert();
+				          }, 400);
+			          }
+		           });
+		           return false; 
+	            });
+			  </script>     
+			  <br><br>
+			  These are just a few. Checkout <a href='https://daneden.github.io/animate.css/' target='_blank'>Animate.css</a> for the full list (must choose ones that hide/show the element).
+
+              </div>
+              <!--end span4-->
+              <div class="span4">
+                <h3><i class="fa fa-close"></i> Closing Options</h3>
+				<p>When it comes to closing jAlert, you have a few options (all of which can be disabled)</p>
+	         
+				  <a href='#' class='btn btn-primary jtopr'>top-right btn</a>
+				  <script>
+				  $('.jtopr').alertOnClick({'title': 'Top-Right', 'theme':'blue', 'content': 'Hit the button on the top-right corner to hide me'});
+			      </script>
+			      <a href='#' class='btn btn-primary jtopralt'>alt</a>
+				  <script>
+				  $('.jtopralt').alertOnClick({'title': 'Top-Right', 'theme':'blue', 'closeBtnAlt': true, 'content': 'Hit the button on the top-right corner to hide me'});
+			      </script>
+			      <a href='#' class='btn btn-primary jesc'>esc key</a>
+				  <script>
+				  $('.jesc').alertOnClick({'title': 'Escape', 'theme':'blue', 'content': 'Hit ESC to hide me'});
+			      </script>
+				  <a href='#' class='btn btn-primary janywhere'>anywhere</a>
+				  <script>
+				  $('.janywhere').alertOnClick({
+					  'title':'Click somewhere!',
+                      'theme':'blue',
+                      'content':'Clicking anywhere closes this alert!',
+					  'closeOnClick': true
+				  });
+			      </script>
+			      <a href='#' class='btn btn-primary jnone'>none</a>
+				  <script>
+				  $('.jnone').alertOnClick({'title': ':(', 'theme':'blue', 'content': 'Gotta refresh to close this one.', 'closeBtn':false, 'closeOnClick': false, 'closeOnEsc': false});
+			      </script>
+              </div>
+              <!--end span4-->
+              <div class="span4">
+                <h3><i class="fa fa-hand-o-up"></i> Buttons</h3>
+                <p>Additionally: With or without the background (btnBackground: boolean)</p>
+	                <a href='#' class='btn btn-primary jbtn' data-theme='default'>default</a> 
+	                <a href='#' class='btn btn-primary jbtn' data-theme='red'>red</a> 
+	                <a href='#' class='btn btn-primary jbtn' data-theme='green'>green</a> 
+					<a href='#' class='btn btn-primary jbtn' data-theme='blue'>blue</a> 
+					<a href='#' class='btn btn-primary jbtn' data-theme='black'>black</a> 
+	                <script>
+		            $('.jbtn').on('click', function(e){
+			            e.preventDefault();
+			            
+			            var btn = $(this),
+			            	theme = btn.data('theme');
+			            	
+			            $.jAlert({
+			                'title':theme+' Button',
+                            'theme':'blue',
+                            'content':'Wouldya look at that?',
+					        'btns': [
+						        		{'text':'Close', 'theme':theme}
+							        ]
+				  		});
+				  });
+				  </script>
+				  <br>
+				  <a href='#' class='btn btn-primary jbtn2' data-theme='default'>default</a> 
+	                <a href='#' class='btn btn-primary jbtn2' data-theme='red'>red</a> 
+	                <a href='#' class='btn btn-primary jbtn2' data-theme='green'>green</a> 
+					<a href='#' class='btn btn-primary jbtn2' data-theme='blue'>blue</a> 
+					<a href='#' class='btn btn-primary jbtn2' data-theme='black'>black</a> 
+	                <script>
+		            $('.jbtn2').on('click', function(e){
+			            e.preventDefault();
+			            
+			            var btn = $(this),
+			            	theme = btn.data('theme');
+			            	
+			            $.jAlert({
+			                'title':theme+' Button',
+                            'theme':'blue',
+                            'content':'Wouldya look at that?',
+				            'btnBackground': false, 
+					        'btns': [
+						        		{'text':'Close', 'theme':theme}
+							        ]
+				  		});
+				  });
+				  </script>
+				  <br>
+              </div>
+              <!--end span4-->
+            </div>
+            <!--end row-->
+            <div class="row features">
+              <div class="span4">
+	              
+                <h3><i class="fa fa-check"></i> Confirmation</h3>
+                <p>In version 3, a confirmation was added with callbacks for onConfirm and onDeny.</p>
+                
+             	<a href='#' class='btn btn-primary jconfirm'>confirm</a>
+                <script>
+	            $('.jconfirm').on('click', function(e){
+		           e.preventDefault();
+		           confirm( function(){
+			           successAlert('Confirmed');
+		           }, function(){
+			           errorAlert('Denied');
+		           });
+		           return false; 
+	            });
+			  </script>     
+			  <br><br>
+
+              </div>
+              <!--end span4-->
+              <div class="span4">
+                <h3><i class="fa fa-retweet"></i> Easy Callbacks</h3>
+				<p>There are callbacks for: alert "onOpen", alert "onClose", alert "onAjaxFail", and btn "onClick".</p>
+	                <a href='#' class='btn btn-primary jonopen'>onOpen</a>
+	                <a href='#' class='btn btn-primary jonclose'>onClose</a> 
+	                <a href='#' class='btn btn-primary jonfail'>onAjaxFail</a> 
+	                <a href='#' class='btn btn-primary jonclick'>onClick</a> 
+	                <script>
+		            $('.jonopen').alertOnClick({
+			           'title':'onOpen',
+                        'theme':'blue',
+                        'content': 'Hi there. Another alert should be above me that was triggered by the onOpen callback',
+			           'onOpen': function(alertElem){
+				           alert("It's Open!");
+			           },
+			           'theme': 'green',
+			           'btns': {'text':'Yup, it did!', 'theme': 'green'}
+		            });
+		            $('.jonclose').alertOnClick({
+			           'title':'onClose',
+                        'theme':'blue',
+                        'content': 'Hi there. Another alert should be triggered by the onClose callback when you leave this',
+			           'onClose': function(alertElem){
+				           alert("It's Closed!");
+			           },
+			           'theme': 'green',
+			           'btns': {'text':'Let\'s see!', 'theme': 'green'}
+		            });
+		            $('.jonfail').alertOnClick({
+			           'title':'onAjaxFail',
+			           'ajax': 'http://fsdjkfsdlk.com',
+			           'onAjaxFail': function(alertElem){
+				           alertElem.closeAlert();
+				           alert("Ajax failed :(");
+			           },
+			           'theme': 'red',
+			           'btns': {'text':'Ok'}
+		            });
+		            $('.jonclick').alertOnClick({
+			           'title':'onClick',
+			           'content': 'Click below',
+			           'theme': 'blue',
+			           'btns': {'text':'Sing to me', 'theme': 'blue', 'onClick': function(e, btn){
+				           e.preventDefault();
+				           alert('LA LA LA LA LA');
+				           return false;
+			           }}
+		            });
+		            </script>
+		            <br>
+              </div>
+              <!--end span4-->
+              <div class="span4">
+                <h3><i class="fa fa-legal"></i> MIT Licensed</h3>
+                <p>Go ahead and use jAlert in any commercial project you'd like. Just leave the MIT license intact to give credit where credit's due. If you really like jAlert, consider buying me a new car! (or like...a beer or something..) Thank you in advance! <form action="https://www.paypal.com/cgi-bin/webscr" id='paypal' method="post" target="_blank" style="font-size: .85em; line-height: 1.4em; margin-bottom: 10px;"><input type="hidden" name="cmd" value="_s-xclick"><input type="hidden" name="hosted_button_id" value="9H3AX8KJJWS6J"><a href='#' onclick="javascript:getElementById('paypal').submit();" class='btn btn-success btn-sm'><i class='fa fa-beer'></i> Donations are appreciated (via PayPal)</a></form></p>
+              </div>
+              <!--end span4-->
+            </div>
+            <!--end row-->
+            <hr class="soften"/>
+            
+            <!--
+            <h1 class="font-bree-serif align-center">Showcase</h1>
+            <h4 class="align-center font-open-sans-normal-italic">Websites using this plugin. Check Out</h4>
+            <ul class="thumbnails">
+              <li class="span3"> <a href="https://nomoreagent.com/" class="thumbnail"><img src="index-assets/showcase/nma.jpg" alt="nma"></a> </li>
+              <li class="span3"> <a href="https://farfromboring.com/" class="thumbnail"><img src="index-assets/showcase/ffb.jpg" alt="ffb"></a> </li>
+              <li class="span3"> <a href="https://1pass4.me/" class="thumbnail"><img src="index-assets/showcase/1p4m.jpg" alt="ffb"></a> </li>
+              <li class="span3"> <a href="https://chargebacks911.com/" class="thumbnail"><img src="index-assets/showcase/cb911.jpg" alt="cb911"></a> </li>
+            </ul>
+            -->
+            <!--end thumbnails-->
+          </div>
+          <!--end overview-content-->
+          <!-- 
+          =====================================
+          Examples
+          =====================================
+          -->
+          <div class="tab-pane" id="examples">
+          <h2 class="font-bree-serif">Examples & Use-Cases</h2>
+            <p>Instead of just giving you more of what's on the homepage, here are some advanced examples and use-cases that show how you can take full advantage of jAlert's functionality to build awesome apps.</p>
+            <div class="row">
+             <div class="span6">
+                <ul class="thumbnails">
+                  <li class="span4"> <a href="http://codepen.io/VersatilityWerks/pen/yNXLNB/" target="_blank" class="thumbnail"> <img src="index-assets/examples/prodlist.jpg" alt="Product List Example"> </a> </li>
+                  <li class="span2"> <a href="http://codepen.io/VersatilityWerks/pen/MwoWVy/" target="_blank" class="thumbnail"> <img src="index-assets/examples/login.jpg" alt="Login Example"> </a> </li>
+                  <li class="span2"> <a href="http://codepen.io/VersatilityWerks/pen/MwoWBe/" target="_blank" class="thumbnail"> <img src="index-assets/examples/pageblocker.jpg" alt="Page Blocker"> </a> </li>
+                </ul>
+                <ul class="thumbnails">
+                  <li class="span2"> <a href="http://codepen.io/VersatilityWerks/pen/ZGyEVL/" target="_blank" class="thumbnail"> <img src="index-assets/examples/help.jpg" alt="Help Video Popup"> </a> </li>
+                  <li class="span2"> <a href="http://codepen.io/VersatilityWerks/pen/LVLYqm/" target="_blank" class="thumbnail"> <img src="index-assets/examples/contact.jpg" alt="Contact Us"> </a> </li>
+                  <li class="span2"> <a href="http://codepen.io/VersatilityWerks/pen/pJwoBb/" target="_blank" class="thumbnail"> <img src="index-assets/examples/tech.jpg" alt="Tech Support"> </a> </li>
+                </ul>
+              </div>
+              <!--end span6-->
+              <div class="span6">
+              	<section class="sec-header">
+                <h3 class="font-bree-serif">Shortcut Functions (<b>requires jAlert-functions.js</b>)</h3>
+<pre class='prettyprint'>
+alert('For your info...', '...you rock!');
+alert('...you rock!'); //default is to not display a title</pre>
+
+                Need to show a success message?<br>
+                <pre class='prettyprint'>
+successAlert('Success!', 'Saved your profile.');
+successAlert('Saved your profile.'); //default title is Success</pre>
+
+
+                How about an error?<br>
+                <pre class='prettyprint'>
+errorAlert('Error!', 'Could not save your profile.');
+errorAlert('Could not save your profile.'); //default title is Error</pre>
+
+Info anyone?<br>
+                <pre class='prettyprint'>
+infoAlert('Info', 'I like your shirt.');
+infoAlert('I like your shirt.'); //default title is Info</pre>
+
+Warning?<br>
+                <pre class='prettyprint'>
+warningAlert('Warning', 'Your shirt is not yellow!');
+warningAlert('Your shirt is not yellow!'); //default title is Warning</pre>
+
+Black (like your ex wife's heart)<br>
+                <pre class='prettyprint'>
+blackAlert('Warning', 'It\'s still got that new car smell.');
+blackAlert('It\'s still got that new car smell.'); //default title is Warning</pre>
+
+
+                Confirmation anyone?<br>
+                <pre class='prettyprint'>
+confirm(function(e,btn){ //event + button clicked
+    e.preventDefault();
+    successAlert('Confirmed!');
+}, function(e,btn){
+    e.preventDefault();
+    errorAlert('Denied!');
+});
+errorAlert('Could not save your profile.'); //default title is Error!</pre>
+			</section>
+              </div><!--end span6-->             
+            </div><!--end row-->
+          </div><!--end examples-content-->
+          <!-- 
+          =====================================
+          How to Use Tab Content
+          =====================================
+          -->
+          <div class="tab-pane" id="howtouse">
+                    	<section class="sec-header">
+                <h3 class="font-bree-serif">Link Css</h3>
+                <p>Move the <strong>plugin CSS</strong> file to your server and link to it in the <code><abbr title="<head>">head</abbr></code> section of your document.</p>
+				<pre class="prettyprint linenums">&lt;link rel="stylesheet" href="jAlert-master/dist/jAlert.css" /&gt;</pre>
+			</section>
+            <section class="sec-header">
+                <h3 class="font-bree-serif">Link JS</h3>
+                <p>Move the <strong>plugin JS</strong> file to your server and link to it before the closing <code><abbr title="<body>">body</abbr></code> tag.</p>
+                <p>Please note that you must include jQuery (v1.7 or later) before the jAlert JS file.</p>
+				<pre class="prettyprint linenums">
+&lt;script src="jquery-1.7.1.min.js"&gt;&lt;/script&gt;
+&lt;script src="jAlert-master/dist/jAlert.min.js"&gt;&lt;/script&gt;
+&lt;script src="jAlert-master/dist/jAlert-functions.min.js"&gt; //optional!!&lt;/script&gt;
+</pre>
+			</section>
+<section class="sec-header">
+                <h3 class="font-bree-serif">Call Plugin</h3>
+                <p>Just before the closing <code><abbr title="<body>">body</abbr></code> tag (after any JS file includes), call the plugin with code below:</p>
+                <pre class="prettyprint linenums">
+&lt;script&gt;
+$(document).ready(function () {
+      $.jAlert({
+        'title': 'It works!',
+        'content': 'YAY!',
+        'theme': 'green',
+        'btns': { 'text': 'close' }
+      });
+});
+&lt;/script&gt;</pre>
+                <h3 class="font-bree-serif">To use "data-jAlert" attributes to toggle jAlerts, use the attach function</h3>
+                <p>This means you can add a button like this: &lt;a href='#' data-jAlert data-title='Hi' data-content='I opened!'>Click me&lt;/a></p>
+                <pre class="prettyprint linenums">
+&lt;script&gt;
+$(document).ready(function () {
+    $.jAlert('attach');
+});
+&lt;/script&gt;</pre>
+                <div class="alert alert-danger"><b>Warning!</b> The attach function binds to the current DOM. If you add elements dynamically, you must run attach again!</div>
+</section>
+          </div><!--end howtouse-content-->
+          <!-- 
+          =====================================
+          Documentation Tab Content
+          =====================================
+          -->
+          <div class="tab-pane" id="documentation">
+             <section class="sec-header">
+                <h3 class="font-bree-serif">jAlert Settings</h3>
+                How to set options when calling jAlert:
+                <pre class='prettyprint linenums'>
+$.jAlert({
+  'title': 'Set It',
+  'content': 'Set',
+  'theme': 'green',
+  'size': 'md',
+  'showAnimation': 'fadeInUp',
+  'hideAnimation': 'fadeOutDown'
+});</pre>
+If you're using the data-jAlert attributes (every options can be set this way, however, some (like callbacks) may not work):
+<pre class="prettyprint linenums">&lt;a href='#' data-jAlert data-title="Set It" data-content="Set" data-theme="green" data-size="md" data-showAnimation="fadeInUp" data-hideAnimation="fadeOutDown">
+   Click Me
+&lt;/a></pre>
+                How to get the current top-most visible jAlert:
+                 <pre class="prettyprint linenums">var currentAlert = $.jAlert('current');
+//now that you've got it, you can get it's properties, center it, or close it.
+console.log(currentAlert);
+currentAlert.centerAlert();
+currentAlert.closeAlert();</pre>
+                How to override defaults:
+                <pre class='prettyprint linenums'>
+$.fn.jAlert.defaults.size = 'lg';
+$.fn.jAlert.defaults.theme = 'blue';
+$.fn.jAlert.defaults.showAnimation = 'fadeInUp';
+$.fn.jAlert.defaults.hideAnimation = 'fadeOutDown';</pre>
+                 <b>Full list of available options</b>
+                <table class="table table-bordered settings">
+                <thead>
+                <tr>
+                	<th><strong>Property</strong></th>
+                    <th><strong>Default</strong></th>
+                    <th><strong>Options</strong></th>
+                    <th><strong>Description</strong></th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>title</td>
+                        <td>false</td>
+                        <td>string, false</td>
+                        <td>This is the title of the modal. If false, a title bar isn't shown.</td>
+                    </tr>
+                    <tr>
+                        <td>content</td>
+                        <td>false</td>
+                        <td>string, false</td>
+                        <td>Content is ignored if you're using image, iframe, ajax, or video. If content is false and you don't provide one of those, an error will be console logged.</td>
+                    </tr>
+                    <tr>
+                        <td>noPadContent</td>
+                        <td>false</td>
+                        <td>boolean</td>
+                        <td>By default, the content of an alert has padding. You may choose to remove this by setting this param to true. This is useful in situations where you want something like an Iframe to be the full size without padding.</td>
+                    </tr>
+                    <tr>
+                        <td>fullscreen</td>
+                        <td>false</td>
+                        <td>boolean</td>
+                        <td>This option makes jAlert stretch to the full height and width of the current window. Useful for fullscreen iframes, images, or other content.</td>
+                    </tr>
+                    <tr>
+                        <td>image</td>
+                        <td>false</td>
+                        <td>string (url), false</td>
+                        <td>Displays an image centered with a max-width: 100% (of the alert's width). Shows a loader until the image has loaded.</td>
+                    </tr>
+                    <tr>
+                        <td>imageWidth</td>
+                        <td>'auto'</td>
+                        <td>string (include % or px)</td>
+                        <td>Defines the width of the image. max-width is always 100%.</td>
+                    </tr>
+                    <tr>
+                        <td>ajax</td>
+                        <td>false</td>
+                        <td>string (url), false</td>
+                        <td>Does a $.get request and puts the content in the alert. Shows a loader until the content has been put in the DOM. onOpen is called AFTER the content is retrieved.</td>
+                    </tr>
+                    <tr>
+                        <td>onAjaxFail</td>
+                        <td>function(alert, errorThrown){
+							alert.closeAlert();
+							errorAlert(errorThrown);
+						};</td>
+                        <td>function</td>
+                        <td>What to do if the $.get request fails for ajax. Default closes the alert and displays the ajax error.</td>
+                    </tr>
+                    <tr>
+                        <td>iframe</td>
+                        <td>false</td>
+                        <td>string (url), false</td>
+                        <td>Displays a full width iframe with no border. Show a loader until the iframe has loaded. </td>
+                    </tr>
+                    <tr>
+                        <td>iframeHeight</td>
+                        <td>false</td>
+                        <td>string (px, %), false</td>
+                        <td>Controls the height of the iframe. False will calculate 90% of the viewport height.</td>
+                    </tr>
+                    <tr>
+                        <td>class</td>
+                        <td>false</td>
+                        <td>string, false</td>
+                        <td>Comma delimited string of classes (or just one class). Will be added to div.jAlert</td>
+                    </tr>
+                    <tr>
+                        <td>id</td>
+                        <td>false</td>
+                        <td>string, false</td>
+                        <td>Sets an ID for div.jAlert</td>
+                    </tr>
+                    <tr>
+                        <td>showAnimation</td>
+                        <td>'fadeInUp'</td>
+                        <td>string, false</td>
+                        <td>Controls how to animate the entrance of the alert. Uses <a href='https://daneden.github.io/animate.css/' target='_blank'>Animate.css</a> (included in the CSS file).</td>
+                    </tr>
+                    <tr>
+                        <td>hideAnimation</td>
+                        <td>'fadeOutDown'</td>
+                        <td>string, false</td>
+                        <td>Controls how to animate the closing of the alert. Uses <a href='https://daneden.github.io/animate.css/' target='_blank'>Animate.css</a> (included in the CSS file).</td>
+                    </tr>
+                    <tr>
+                        <td>animationTimeout</td>
+                        <td>500</td>
+                        <td>int</td>
+                        <td>Approx. how long the hide/show animation takes so that the background can wait and then hide. Since the animation is in CSS, there is no callback to rely on. If you change the animation speed in the CSS, you should change this to match.</td>
+                    </tr>
+                    <tr>
+                        <td>theme</td>
+                        <td>'default'</td>
+                        <td>string ('default', 'red', 'dark_red', 'green',' dark_green', 'blue', 'dark_blue', 'brown', 'gray', 'dark_gray', 'black')</td>
+                        <td>Controls the color of the title background, the border of the entire alert, and the font color of the title.</td>
+                    </tr>
+                    <tr>
+                        <td>backgroundColor</td>
+                        <td>'black'</td>
+                        <td>string ('black', 'white')</td>
+                        <td>Controls the color of the background behind the alert (the color that covers up the rest of the page).</td>
+                    </tr>
+                    <tr>
+                        <td>blurBackground</td>
+                        <td>false</td>
+                        <td>boolean</td>
+                        <td>Blurs all elements behind the alert.</td>
+                    </tr>
+                    <tr>
+                        <td>size (width is an alias)</td>
+                        <td>'sm'</td>
+                        <td>string ('xsm', 'xsmall', 'sm', 'small', 'md', 'medium', 'lg', 'large', 'xlg', 'xlarge', 'full', 'auto', {'height': '300px', 'width': '300px'}, 'npx', 'n%')</td>
+                        <td>If you need to know exact pixel sizes of each, they're in the CSS file. All sizes are max-width of just smaller than the viewport (aka..responsive). Auto adjusts to the size of the content. You can also pass an object with height and width OR just a width (px or %)</td>
+                    </tr>
+                    <tr>
+                        <td>replaceOtherAlerts</td>
+                        <td>false</td>
+                        <td>boolean</td>
+                        <td>When opening an alert/this alert, should other alerts be removed first? (true = yes)</td>
+                    </tr>
+                    <tr>
+                        <td>closeOnClick</td>
+                        <td>false</td>
+                        <td>boolean</td>
+                        <td>Whether or not to hide the alert when you click anywhere on the page (true = yes). This is disabled if you include buttons in your alert.</td>
+                    </tr>
+                    <tr>
+                        <td>closeOnEsc</td>
+                        <td>true</td>
+                        <td>boolean</td>
+                        <td>Whether or not to hide the alert when you click the "esc" key (true = yes).</td>
+                    </tr>
+                    <tr>
+                        <td>closeBtn</td>
+                        <td>true</td>
+                        <td>boolean</td>
+                        <td>Whether or not to show the close button in the top-right side of the alert (true = yes).</td>
+                    </tr>
+                    <tr>
+                        <td>closeBtnRound</td>
+                        <td>true</td>
+                        <td>boolean</td>
+                        <td>Default. Makes the button round. Set to false for the old style.</td>
+                    </tr>
+                    <tr>
+                        <td>closeBtnAlt</td>
+                        <td>false</td>
+                        <td>boolean</td>
+                        <td>Enables an alternative version of the top-right close button</td>
+                    </tr>
+                    <tr>
+                        <td>btns</td>
+                        <td>false</td>
+                        <td>object, false</td>
+                        <td>You can include just one button object, or multiple by wrapping them in brackets. Example: [ {'text': 'close'}, {'text': 'close'} ]</td>
+                    </tr>
+                    <tr>
+                        <td>A btn object can contain the following properties:
+                        </td>
+                        <td colspan='3'>
+	                        <table class="table table-bordered settings">
+				                <thead>
+				                <tr>
+				                	<th><strong>Property</strong></th>
+				                    <th><strong>Default</strong></th>
+				                    <th><strong>Options</strong></th>
+				                    <th><strong>Description</strong></th>
+				                </tr>
+				                </thead>
+				                <tbody>
+					                <tr>
+						                <td>text</td>
+						                <td>''</td>
+						                <td>string</td>
+						                <td>Required. This is the label for the button</td>
+					                </tr>
+					                <tr>
+						                <td>href</td>
+						                <td>''</td>
+						                <td>string (url)</td>
+						                <td>Where the button should navigate to. Not required if you plan to use the onClick callback and do something else.</td>
+					                </tr>
+					                <tr>
+						                <td>target</td>
+						                <td>'_self'</td>
+						                <td>string ('_self', '_blank', '_parent', etc)</td>
+						                <td>The target window/tab for the link to open in.</td>
+					                </tr>
+					                <tr>
+						                <td>theme</td>
+						                <td>'default'</td>
+						                <td>string ('default', 'red', 'green', 'blue', 'black')</td>
+						                <td>The color of the button, button border, font are controlled by this.</td>
+					                </tr>
+					                <tr>
+						                <td>class</td>
+						                <td>''</td>
+						                <td>string</td>
+						                <td>Comma delimited string of classes (or just one class). Will be added to the button.</td>
+					                </tr>
+					                 <tr>
+						                <td>closeAlert</td>
+						                <td>true</td>
+						                <td>boolean</td>
+						                <td>Whether or not to close the alert when you click the button.</td>
+					                </tr>
+					                 <tr>
+						                <td>onClick</td>
+						                <td></td>
+						                <td>function</td>
+						                <td>Handle the onClick event. The function is passed 2 parameters, the first is the event and the second is the button.</td>
+					                </tr>
+				                </tbody>
+	                        </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>btnBackground</td>
+                        <td>true</td>
+                        <td>boolean</td>
+                        <td>Whether or not to show the gray background behind the button(s).</td>
+                    </tr>
+                    <tr>
+                        <td>autofocus</td>
+                        <td>false</td>
+                        <td>string (dom selector), false</td>
+                        <td>String should be an element within the alert that you would like autofocused onOpen (good for inputs and buttons).</td>
+                    </tr>
+                    <tr>
+                        <td>onOpen</td>
+                        <td>function(alert){ return false; }</td>
+                        <td>function</td>
+                        <td>Function is called after the alert has finished opening. In the case of Ajax content, it's called after the content is loaded. The only parameter passed is a reference to the alert.</td>
+                    </tr>
+                    <tr>
+                        <td>onClose</td>
+                        <td>function(alert){ return false; }</td>
+                        <td>function</td>
+                        <td>Function is called after the alert has closed. The only parameter passed is a reference to the alert.</td>
+                    </tr>
+                    <tr>
+                        <td>type</td>
+                        <td>'modal'</td>
+                        <td>string ('modal', 'confirm')</td>
+                        <td>A type: 'confirm' has magic that creates a standard confirmation popup.</td>
+                    </tr>
+                    <tr>
+                        <td>confirmQuestion</td>
+                        <td>'Are you sure?'</td>
+                        <td>string</td>
+                        <td>The question to ask when type: 'confirm'.</td>
+                    </tr>
+                    <tr>
+                        <td>confirmBtnText</td>
+                        <td>'Yes'</td>
+                        <td>string</td>
+                        <td>The confirmation button's text for type: 'confirm'.</td>
+                    </tr>
+                    <tr>
+                        <td>denyBtnText</td>
+                        <td>'No'</td>
+                        <td>string</td>
+                        <td>The deny button's text for type: 'confirm'.</td>
+                    </tr>
+                    <tr>
+                        <td>confirmAutofocus</td>
+                        <td>'.confirmBtn'</td>
+                        <td>string ('.confirmBtn', '.denyBtn', dom selector)</td>
+                        <td>Autofocuses on the confirm button by default. You may pass any selector for a DOM element in the alert, or one of the two classes shown here. For type: 'confirm'.</td>
+                    </tr>
+                    <tr>
+                        <td>onConfirm</td>
+                        <td>function(e, btn){ e.preventDefault(); console.log('confirmed'); return false; }</td>
+                        <td>function</td>
+                        <td>This callback is triggered when you click the confirmBtn. It's passed two parameters, the first is the event and the second is the button clicked. For type: 'confirm'.</td>
+                    </tr>
+                    <tr>
+                        <td>onDeny</td>
+                        <td>function(alert){ return false; }</td>
+                        <td>function</td>
+                        <td>This callback is triggered when you click the denyBtn. It's passed two parameters, the first is the event and the second is the button clicked. For type: 'confirm'.</td>
+                    </tr>
+                </tbody>
+                </table>
+                
+                <p>Public methods</p>
+                <table class="table table-bordered settings">
+                <thead>
+                <tr>
+                	<th><strong>Function</strong></th>
+                    <th><strong>Sample</strong></th>
+                    <th><strong>Params</strong></th>
+                    <th><strong>Description</strong></th>
+                </tr>
+                </thead>
+                <tbody>
+                	<tr>
+                        <td>closeAlert</td>
+                        <td>$('.jAlert').closeAlert(true, function(){
+	                    	console.log('the alert is now closed');
+	                    });
+                        OR
+                        $('.jAlert').jAlert().closeAlert(true, function(){
+                            console.log('the alert is now closed');
+                        });</td>
+                        <td>destroyOrJustHide, onClose</td>
+                        <td>The first parameter determines whether or not to hide or remove from the DOM (boolean), and the second is a callback for when it's done closing.</td>
+                    </tr>
+                    <tr>
+                        <td>centerAlert</td>
+                        <td>$('.jAlert').jAlert().centerAlert();</td>
+                        <td></td>
+                        <td>Centers the alert on the page.</td>
+                    </tr>
+                    <tr>
+                        <td>showAlert</td>
+                        <td>$('.jAlert').jAlert().showAlert();</td>
+                        <td>replaceOthers, removeOthers, onOpen, onClose</td>
+                        <td>Shows a hidden alert that was previously opened. replaceOthers will close all other alerts to show this one. removeOthers will remove the closed alerts before opening this one. onOpen and onClose are the same callbacks you can apply when instantiating a jAlert.</td>
+                    </tr>
+                </tbody>
+                </table>
+                
+           </section>
+          </div><!--end documentation-content-->
+           <!-- 
+          =====================================
+          Roadmap and changelog Tab Content
+          =====================================
+          -->
+          <div class="tab-pane" id="roadmap">
+            <section class="sec-header">
+              <h3 class="font-bree-serif">Roadmap</h3>
+              <table class="table table-bordered">
+                  <thead>
+                      <tr>
+                          <th><strong>Version</strong></th>
+                          <th><strong>Description</strong></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                      <td>5</td>
+                      <td>Lightbox Slideshow</td>
+                  </tr>
+                  </tbody>
+              </table>
+            </section>
+            
+            <section class="sec-header">
+              <h3 class="font-bree-serif">Changelog</h3>              
+              <div class="accordion" id="changelog-accordion">
+                  <!--
+                        --- VERSION 4.5.1 ---
+                    -->
+                  <div class="accordion-group">
+                      <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#fourfiveone">
+                              <strong>Version 4.5.1</strong>
+                          </a>
+                      </div>
+                      <div id="fourfiveone" class="accordion-body collapse in">
+                          <div class="accordion-inner">
+                              <ul>
+                                  <li><span class="label label-info">Added</span> fullscreen option.</li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+                  <!--
+                        --- VERSION 4.5 ---
+                    -->
+                  <div class="accordion-group">
+                      <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#fourfive">
+                              <strong>Version 4.5</strong>
+                          </a>
+                      </div>
+                      <div id="fourfive" class="accordion-body collapse in">
+                          <div class="accordion-inner">
+                              <ul>
+                                  <li><span class="label label-danger">Removed</span> minified files from src folder.</li>
+                                  <li><span class="label label-info">Added</span> distribution folder (dist).</li>
+                                  <li><span class="label label-success">Fixed</span> duplicate button callbacks.</li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+                  <!--
+                        --- VERSION 4.036 ---
+                    -->
+                  <div class="accordion-group">
+                      <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#fourzerothreesix">
+                              <strong>Version 4.036</strong>
+                          </a>
+                      </div>
+                      <div id="fourzerothreesix" class="accordion-body collapse in">
+                          <div class="accordion-inner">
+                              <ul>
+                                  <li><span class="label label-danger">Removed</span> Borders for no-title alerts and iframes.</li>
+                                  <li><span class="label label-info">Added</span> Box-shadow back in.</li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+                  <!--
+                        --- VERSION 4.035 ---
+                    -->
+                  <div class="accordion-group">
+                      <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#fourzerothreefive">
+                              <strong>Version 4.035</strong>
+                          </a>
+                      </div>
+                      <div id="fourzerothreefive" class="accordion-body collapse in">
+                          <div class="accordion-inner">
+                              <ul>
+                                  <li><span class="label label-success">Improved</span> Comments to include exact version number.</li>
+                                  <li><span class="label label-info">Added</span> noPadContent option.</li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!--
+                        --- VERSION 4.03 ---
+                    -->
+                  <div class="accordion-group">
+                      <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#fourzerothree">
+                              <strong>Version 4.03</strong>
+                          </a>
+                      </div>
+                      <div id="fourzerothree" class="accordion-body collapse in">
+                          <div class="accordion-inner">
+                              <ul>
+                                  <li><span class="label label-success">Improved</span> iFrame height handling.</li>
+                                  <li><span class="label label-success">Fixed</span> Positioning so there is no longer an unnecessary scroll bar.</li>
+                                  <li><span class="label label-info">Added</span> blurBackground option.</li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!--
+                        --- VERSION 4.02 ---
+                    -->
+                  <div class="accordion-group">
+                      <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#fourzerotwo">
+                              <strong>Version 4.02</strong>
+                          </a>
+                      </div>
+                      <div id="fourzerotwo" class="accordion-body collapse in">
+                          <div class="accordion-inner">
+                              <ul>
+                                  <li><span class="label label-success">Improved</span> The body will have overflow: hidden before the popup animated to prevent weird animation.</li>
+                                  <li><span class="label label-success">Fixed</span> Body background will now stretch to match jAlert height (if set in size object).</li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!--
+                        --- VERSION 4.01 ---
+                    -->
+                  <div class="accordion-group">
+                      <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#fourzeroone">
+                              <strong>Version 4.01</strong>
+                          </a>
+                      </div>
+                      <div id="fourzeroone" class="accordion-body collapse in">
+                          <div class="accordion-inner">
+                              <ul>
+                                  <li><span class="label label-success">Fixed</span> $.jAlert('attach') was attaching the callback multiple times if run multiple times for dynamically added content.</li>
+                                  <li><span class="label label-info">Added</span> the alias "color" for "theme".</li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!--
+                        --- VERSION 4.0 ---
+                    -->
+                  <div class="accordion-group">
+                      <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#fourzero">
+                              <strong>Version 4</strong>
+                          </a>
+                      </div>
+                      <div id="fourzero" class="accordion-body collapse in">
+                          <div class="accordion-inner">
+                              <ul>
+                                  <li><span class="label label-success">Improved</span> massive changes in 3.98 and entire backbone.</li>
+                                  <li><span class="label label-info">Added</span> ability to pass "px" or "%" as size.</li>
+                                  <li><span class="label label-info">Added</span> ability to pass an object with dimensions as size (ex: {height:'400px', width: '400px'}.</li>
+                                  <li><span class="label label-info">Added</span> alias for size - "width".</li>
+                                  <li><span class="label label-info">Added</span> alias for sizes - "sm" can now be called using "small".</li>
+                                  <li><span class="label label-info">Added</span> ability to get current top-most jAlert using $.jAlert('current').</li>
+                                  <li><span class="label label-info">Added</span> ability to access public methods and properties of jAlert calling .jAlert() on the opened alert (ex: $('.jAlert:visible:last').jAlert();).</li>
+                                  <li><span class="label label-info">Added</span> data-jAlert data attribute option. Just use $.jAlert('attach') in your on dom ready function and create elements with data-jAlert. Clicking the element will open a jAlert with whatever options you provided via data attributes. (ex: &gt;a href='#' data-jAlert data-title="Hi" data-content="Nice work!">Click Me&gt;/a></li>
+                                  <li><span class="label label-info">Added</span> ability to get contents from an element using it's ID via the content option. Simply pass the ID selector as "content". (ex: content: "#mydiv").</li>
+                                  <li><span class="label label-warning">Changed</span> default jAlert font to Arial - remove from the CSS to allow your template's font to override.</li>
+                                  <li><span class="label label-warning">Changed</span> make the options case-insensitive.</li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!--
+                        --- VERSION 3.99 ---
+                    -->
+                  <div class="accordion-group">
+                      <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#threeninenine">
+                              <strong>Version 3.99</strong>
+                          </a>
+                      </div>
+                      <div id="threeninenine" class="accordion-body collapse in">
+                          <div class="accordion-inner">
+                              <ul>
+                                  <li><span class="label label-success">Confirmed</span> massive changes in 3.98 haven't added bugs. New release version.</li>
+                                  <li><span class="label label-info">Added</span> "auto" size.</li>
+                                  <li><span class="label label-info">Added</span> "gray", "brown", "dark_gray", "dark_red", "dark_blue" themes.</li>
+                                  <li><span class="label label-warning">Changed</span> default close button to a new round one.</li>
+                                  <li><span class="label label-warning">Changed</span> Now removes focus from focused element on open.</li>
+                                  <li><span class="label label-warning">Changed</span> flattened out the design.</li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!--
+                        --- VERSION 3.98 ---
+                    -->
+                  <div class="accordion-group">
+                      <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#threenineeight">
+                              <strong>Version 3.98</strong>
+                          </a>
+                      </div>
+                      <div id="threenineeight" class="accordion-body collapse in">
+                          <div class="accordion-inner">
+                              <ul>
+                                  <li><span class="label label-success">Fixed</span> options being overridden by the next alert that is opened.</li>
+                                  <li><span class="label label-success">Fixed</span> IE7 compatibility.</li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+
+
+                  <!--
+                        --- VERSION 3.97 ---
+                    -->
+                  <div class="accordion-group">
+                      <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#threenineseven">
+                              <strong>Version 3.97</strong>
+                          </a>
+                      </div>
+                      <div id="threenineseven" class="accordion-body collapse in">
+                          <div class="accordion-inner">
+                              <ul>
+                                  <li><span class="label label-success">Fixed</span> .off bug. jAlert was removing all handlers instead of just it's own</li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!--
+                        --- VERSION 3.96 ---
+                    -->
+                  <div class="accordion-group">
+                      <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#threeninesix">
+                              <strong>Version 3.96</strong>
+                          </a>
+                      </div>
+                      <div id="threeninesix" class="accordion-body collapse in">
+                          <div class="accordion-inner">
+                              <ul>
+                                  <li><span class="label label-success">Fixed</span> tall alert background is now position: fixed.</li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!--
+                        --- VERSION 3.95 ---
+                    -->
+                  <div class="accordion-group">
+                      <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#threeninefive">
+                              <strong>Version 3.95</strong>
+                          </a>
+                      </div>
+                      <div id="threeninefive" class="accordion-body collapse in">
+                          <div class="accordion-inner">
+                              <ul>
+                                  <li><span class="label label-success">Fixed</span> body and fixed overflow: hidden bug.</li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!--
+                        --- VERSION 3.91 ---
+                    -->
+                  <div class="accordion-group">
+                      <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#threenineone">
+                              <strong>Version 3.91</strong>
+                          </a>
+                      </div>
+                      <div id="threenineone" class="accordion-body collapse in">
+                          <div class="accordion-inner">
+                              <ul>
+                                  <li><span class="label label-warning">Moved</span> optional functions into their own file.</li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!--
+                        --- VERSION 3.9 ---
+                    -->
+                  <div class="accordion-group">
+                      <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#threenine">
+                              <strong>Version 3.9</strong>
+                          </a>
+                      </div>
+                      <div id="threenine" class="accordion-body collapse in">
+                          <div class="accordion-inner">
+                              <ul>
+                                  <li><span class="label label-info">Added</span> "yellow" theme.</li>
+                                  <li><span class="label label-success">Improved</span> overlapping.</li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!--
+	                    --- VERSION 3.66 ---
+	                -->          
+                    <div class="accordion-group">
+                      <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#threesixsix">
+                          <strong>Version 3.66</strong>
+                        </a>
+                      </div>
+                      <div id="threesixsix" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+	                        <ul>
+								<li><span class="label label-danger">Removed</span> z-index from javascript. It's now entirely dependent on the CSS.</li>
+							</ul>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- 
+	                    --- VERSION 3.65 ---
+	                -->          
+                    <div class="accordion-group">
+                      <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#threesixfixe">
+                          <strong>Version 3.65</strong>
+                        </a>
+                      </div>
+                      <div id="threesixfixe" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+	                        <ul>
+								<li><span class="label label-info">Added</span> imageWidth param.</li>
+							</ul>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- 
+	                    --- VERSION 3.6 ---
+	                -->          
+                    <div class="accordion-group">
+                      <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#threesix">
+                          <strong>Version 3.6</strong>
+                        </a>
+                      </div>
+                      <div id="threesix" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+	                        <ul>
+								<li><span class="label label-danger">Removed</span> z-index plugin (because it had GLP license).</li>
+								<li><span class="label label-danger">Removed</span> debug mode (not necessary now that it's been fully tested).</li>
+							</ul>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- 
+	                    --- VERSION 3 ---
+	                -->
+                    <div class="accordion-group">
+                      <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#three">
+                          <strong>Version 3</strong>
+                        </a>
+                      </div>
+                      <div id="three" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+	                        <ul>
+								<li><span class="label label-success">Completely</span> rebuilt</li>
+								<li><span class="label label-warning">Changed</span> default size to "sm".</li>
+								<li><span class="label label-warning">Changed</span> "message" param to "content". Seems to make more sense since it's HTML, not just a simple message.</li>
+								<li><span class="label label-warning">Changed</span> "clickAnywhere" param to "closeOnClick". In an attempt to keep things more uniform.</li>
+								<li><span class="label label-warning">Changed</span> "hideOnEsc" param to "closeOnEsc". (same as above)</li>
+								<li><span class="label label-warning">Changed</span> "btn" to "btns" so you can easily tell it allows multiple.</li>
+								<li><span class="label label-warning">Changed</span> "cssClass" param to "class" or "classes" to keep it simple.</li>
+								<li><span class="label label-warning">Changed</span> themes from "success", "error", "info" etc to "red", "green", "black", "default", and "blue". Hopefully this is easier.</li>
+								<li><span class="label label-warning">Changed</span> "iframeUrl", "ajaxUrl", and "imgUrl" to "iframe", "ajax", "image" to keep it simple.</li>
+								<li><span class="label label-warning">Changed</span> "label" to "text" in the button parameters.</li>
+								<li><span class="label label-danger">Removed</span> full name option for declaring size.</li>
+								<li><span class="label label-info">Added</span> imageWidth param</li>
+								<li><span class="label label-info">Added</span> animate.css so you can pick from a couple dozen animations</li>
+								<li><span class="label label-info">Added</span> "video" param that displays a responsive video</li>
+								<li><span class="label label-info">Added</span> more sizes (xsm, xlg).</li>
+								<li><span class="label label-info">Added</span> a CSS loader to image, ajax, and iframe alerts before the content loads.</li>
+								<li><span class="label label-info">Added</span> $.jAlert syntax so you only have to use $.fn.jAlert when interacting with existing alerts like $('.jAlert').closeAlert();</li>
+								<li><span class="label label-info">Added</span> $.fn.jAlert.defaults object so you can easily override default settings.</li>
+								<li><span class="label label-info">Added</span> numerous default settings.</li>
+								<li><span class="label label-info">Added</span> "type" param with "confirm" option which automatically creates a confirmation popup.</li>
+								<li><span class="label label-info">Added</span> optional "confirm()" function that overrides javascript's built in one. WARNING: Works differently and requires a callback be passed as a parameter.</li>
+								<li><span class="label label-info">Added</span> "theme" to buttons - options are the same colors as 'theme' for jAlert.</li>
+								<li><span class="label label-info">Added</span> "btnBackground" (boolean) param and background behind buttons. </li>
+								<li><span class="label label-info">Added</span> $.alertOnClick(options) and $('.btn').alertOnClick(options)</li>
+							</ul>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- 
+	                    --- VERSION 2 ---
+	                -->
+                    <div class="accordion-group">
+                      <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseab">
+                          <strong>Version 2</strong>
+                        </a>
+                      </div>
+                      <div id="collapseab" class="accordion-body collapse">
+                        <div class="accordion-inner">
+                            <ul>
+								<li><span class="label label-success">Completely</span> revamped documentation.</li>
+								<li><span class="label label-success">Completely</span> rebuilt as a jQuery plugin.</li>
+							</ul>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- 
+	                    --- VERSION 1 ---
+	                -->
+                    <div class="accordion-group">
+                      <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseac">
+                          <strong>Version 1</strong>
+                        </a>
+                      </div>
+                      <div id="collapseac" class="accordion-body collapse">
+                        <div class="accordion-inner">
+							<ul>
+		                        <li>Initial Release</li>
+	                        </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div><!--end accordion-->
+            </section>
+          </div><!--end roadmap-content-->
+   
+           <!-- 
+          =====================================
+          License Tab Content
+          =====================================
+          -->
+          <div class="tab-pane" id="license">
+            <section class="sec-header">
+              <h3 class="font-bree-serif">License</h3>
+              <p>
+		          Copyright (c) 2015 Versatility Werks<br><br>
+	      		
+				Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: <br><br>
+				
+				The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. <br><br>
+				
+				THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+             </p>
+            </section>
+          </div><!--end license-content-->
+          
+          
+          </div><!--end tab-content-->
+      </div><!--end tabbable-->
+      
+      <div class="well align-center">
+        	<h4>For any queries or issues. <a href="https://github.com/VersatilityWerks/jAlert/issues" target="_blank">Submit issues</a> on Github or contact me at <a href='http://flwebsites.biz/contact' target='_blank'>FLWebsites.biz</a></h4>
+      </div><!--end well-->
+    </div><!--end span12-->
+  </div><!--end row-->
+  </div><!--end container-->
+  </div><!--end main-content-->
+  <footer>
+      <div class="container">
+      <div class="row">
+          <div class="span6">
+            <p>&copy; Versatility Werks. All Rights Reserved</p>
+          </div>
+          <div class="span2 offset4">
+          <p><a href="#" id="top">Go To Top</a></p>
+          </div><!--end span2-->
+      </div><!--end row-->  
+      </div><!--end container-->  
+  </footer>
+<script>
+    $.jAlert('attach');
+</script>
+</body>
+</html>
