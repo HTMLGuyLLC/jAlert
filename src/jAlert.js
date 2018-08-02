@@ -761,7 +761,7 @@
 		/* END OF PLUGIN */
 	};
 
-	/* set closeTimer for preventing on dublicate */
+	/* set closeTimer for preventing on duplicate */
     $.fn.closeTimer = (function(){
         var timer = 0;
         return function(callback, ms){
