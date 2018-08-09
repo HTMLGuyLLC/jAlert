@@ -707,7 +707,23 @@
 			{
 				alert.instance.focus();
 			}
-
+            /*
+            	Set Auto
+            	usage $.jAlert({
+            		autoClose : 3500,
+            	});
+             */
+            if(alert.autoClose)
+            {
+                $.fn.closeTimer(function()
+				{
+                    var currentAlert = $.jAlert('current');
+                    if(currentAlert !== false)
+                    {
+                        currentAlert.closeAlert();
+                    }
+				}, alert.autoClose);
+            }
 			alert.instance.bind("DOMSubtreeModified", function(){
 				alert.centerAlert();
 			});
@@ -745,6 +761,15 @@
 		/* END OF PLUGIN */
 	};
 
+	/* set closeTimer for preventing on duplicate */
+    $.fn.closeTimer = (function(){
+        var timer = 0;
+        return function(callback, ms){
+            clearTimeout (timer);
+            timer = setTimeout(callback, ms);
+        };
+    })(jQuery);
+
 	/* Default alert */
 	$.fn.jAlert.defaults = {
 		'title': false, //title for the popup (false = don't show)
@@ -779,6 +804,7 @@
         'closeBtnRound': true, //alternative round close button
         'closeBtnRoundWhite': false, //alternative round close button (in white)
 		'btns': false, //adds buttons to the popup at the bottom. Pass an object for a single button, or an object of objects for many
+        'autoClose' : false, // By default we specify as false. You can add secound
 		/*
 		 Variety of buttons you could create (also, an example of how to pass the object
 
