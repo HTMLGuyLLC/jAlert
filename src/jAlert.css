@@ -171,11 +171,13 @@ body.ja_blur > *:not(.ja_wrap)
     right: -11px;
     top: -11px;
     background: rgba(0, 0, 0, 0.7) none repeat scroll 0% 0%;
+    color: #d4d4d4;
 }
 
 .ja_noTitle .ja_close_round:hover
 {
     background: black;
+    color: #fff;
 }
 
 .ja_noTitle .ja_close_round_white

@@ -94,15 +94,20 @@
             },
             centerAlert: function()
             {
-                var viewportHeight = $(window).height(),
-                    alertHeight = alert.instance.height(),
+                var viewportHeight = $(window).innerHeight(),
+                    alertHeight = alert.instance.outerHeight(),
                     diff = viewportHeight - alertHeight;
 
                 var margin = diff / 2;
 
                 margin = margin > 200 ? margin - 100 : margin;
                 margin = margin <= 0 ? 0 : margin;
-                margin = margin - 1; //make up for border if any - just brings it up a bit anyway.
+
+                //add 15 for the round button that sits above the alert
+				if( alert.instance.find('.ja_close_round').length )
+				{
+					margin += 15;
+				}
 
                 alert.instance.css('margin-top', margin+'px');
                 alert.instance.css('margin-bottom', '0px');
