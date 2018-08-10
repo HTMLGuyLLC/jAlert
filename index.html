@@ -382,10 +382,14 @@
 					  'closeOnClick': true
 				  });
 			      </script>
-			      <a href='#' class='btn btn-primary jnone'>none</a>
+			      <a href='#' class='btn btn-primary jauto'>auto</a>
 				  <script>
-				  $('.jnone').alertOnClick({'title': ':(', 'theme':'blue', 'content': 'Gotta refresh to close this one.', 'closeBtn':false, 'closeOnClick': false, 'closeOnEsc': false});
+				  $('.jauto').alertOnClick({'title': 'Autoclose', 'theme':'blue', 'content': 'This alert will close after 3 seconds', 'autoClose' : 3000, 'closeBtn':false, 'closeOnClick': false, 'closeOnEsc': false});
 			      </script>
+            <a href='#' class='btn btn-primary jnone'>none</a>
+          <script>
+          $('.jnone').alertOnClick({'title': ':(', 'theme':'blue', 'content': 'Gotta refresh to close this one.', 'closeBtn':false, 'closeOnClick': false, 'closeOnEsc': false});
+            </script>
               </div>
               <!--end span4-->
               <div class="span4">
