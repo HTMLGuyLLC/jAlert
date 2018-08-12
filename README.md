@@ -5,13 +5,13 @@
  
 jAlert v4
 ======
-by Versatility Werks 
+by HTMLGuy, LLC
 
-![logo](http://versatilitywerks.github.io/jAlert/index-assets/img/logo.png)
+![logo](http://htmlguyllc.github.io/jAlert/index-assets/img/logo.png)
 
 Demo & Detailed Docs
 =======
-http://versatilitywerks.github.io/jAlert/
+http://htmlguyllc.github.io/jAlert/
 ===
 
 What is it?
