@@ -1,12 +1,8 @@
-/* 
- *
- *
- jAlert version 4.5.1
- Made with love by HTMLGuy, LLC
- MIT Licensed
- *
- *
- */
+/*
+	jAlert version 4.6.3
+	Made with love by HTMLGuy, LLC
+	MIT Licensed
+*/
 ;(function($) {
 
 	if(!Date.now)
