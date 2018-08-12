@@ -13,5 +13,9 @@
   "private": false,
   "dependencies": {
     "jquery": "^1.7.1"
+  },
+  "license":{ 
+    "type": "MIT", 
+    "url": "https://www.opensource.org/licenses/mit-license.php"
   }
 }
