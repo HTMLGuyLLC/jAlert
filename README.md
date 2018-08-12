@@ -1,5 +1,5 @@
  [![Join the chat at https://gitter.im/jAlert/Lobby](https://badges.gitter.im/jAlert/Lobby.svg)](https://gitter.im/jAlert/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
- [![Packagist](https://img.shields.io/badge/License-MIT-blue.svg)]
+ ![Packagist](https://img.shields.io/badge/License-MIT-blue.svg)
  [![Codeship](https://img.shields.io/badge/Build-Passing-green.svg)]()
  [![npm](https://img.shields.io/badge/NPM-v4.6.3-blue.svg)](https://npmjs.com/package/jAlert)
  
