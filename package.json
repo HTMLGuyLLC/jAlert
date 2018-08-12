@@ -1,15 +1,15 @@
 {
   "name": "jAlert",
-  "version": "4.6.1",
+  "version": "4.6.3",
   "description": "Simple jQuery (Modal | Popup | Lightbox | Alert) Plugin",
   "repository": {
     "type": "git",
-    "url": "https://github.com/VersatilityWerks/jAlert"
+    "url": "https://github.com/HTMLGuyLLC/jAlert"
   },
   "bugs": {
-    "url": "https://github.com/VersatilityWerks/jAlert/issues"
+    "url": "https://github.com/HTMLGuyLLC/jAlert/issues"
   },
-  "homepage": "http://flwebsites.biz/jAlert/",
+  "homepage": "https://htmlguyllc.github.io/jAlert/",
   "private": false,
   "dependencies": {
     "jquery": "^1.7.1"
