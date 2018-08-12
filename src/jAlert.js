@@ -2,7 +2,7 @@
  *
  *
  jAlert version 4.5.1
- Made with love by Versatility Werks (http://flwebsites.biz)
+ Made with love by HTMLGuy, LLC
  MIT Licensed
  *
  *
