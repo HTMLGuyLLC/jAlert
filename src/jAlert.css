@@ -75,7 +75,7 @@ body.ja_blur > *:not(.ja_wrap)
 	background: white;
 	border-radius: 5px;
 	max-width: 98%;
-    margin: 0px auto;
+    margin: 15px auto;
 	display: inline-block;
     -webkit-box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.75);
