@@ -672,9 +672,8 @@ If you're using the data-jAlert attributes (every options can be set this way, h
 &lt;/a></pre>
                 How to get the current top-most visible jAlert:
                  <pre class="prettyprint linenums">var currentAlert = $.jAlert('current');
-//now that you've got it, you can get it's properties, center it, or close it.
+//now that you've got it, you can get it's properties, or close it.
 console.log(currentAlert);
-currentAlert.centerAlert();
 currentAlert.closeAlert();</pre>
                 How to override defaults:
                 <pre class='prettyprint linenums'>
@@ -1003,12 +1002,6 @@ $.fn.jAlert.defaults.hideAnimation = 'fadeOutDown';</pre>
                         });</td>
                         <td>destroyOrJustHide, onClose</td>
                         <td>The first parameter determines whether or not to hide or remove from the DOM (boolean), and the second is a callback for when it's done closing.</td>
-                    </tr>
-                    <tr>
-                        <td>centerAlert</td>
-                        <td>$('.jAlert').jAlert().centerAlert();</td>
-                        <td></td>
-                        <td>Centers the alert on the page.</td>
                     </tr>
                     <tr>
                         <td>showAlert</td>
