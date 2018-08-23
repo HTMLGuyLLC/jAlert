@@ -1,5 +1,6 @@
 /*
-	jAlert version 4.6.3
+	jAlert
+	https://github.com/HTMLGuyLLC/jAlert
 	Made with love by HTMLGuy, LLC
 	MIT Licensed
 */
@@ -68,7 +69,6 @@
 
         /**
          * This is the alert object with the public properties/methods you can call
-         * @type {{set: alert.set, __set: alert.__set, get: alert.get, __get: alert.__get, centerAlert: alert.centerAlert, animateAlert: alert.animateAlert, closeAlert: alert.closeAlert, showAlert: alert.showAlert}}
          */
         var alert = {
             set: function(key, val)
@@ -88,44 +88,6 @@
             {
                 return alert.get(key);
             },
-            centerAlert: function()
-            {
-                var viewportHeight = $(window).innerHeight(),
-                    alertHeight = alert.instance.outerHeight(),
-                    diff = viewportHeight - alertHeight;
-
-                var margin = diff / 2;
-
-                margin = margin > 200 ? margin - 100 : margin;
-                margin = margin <= 0 ? 0 : margin;
-
-                //add 15 for the round button that sits above the alert
-				if( alert.instance.find('.ja_close_round').length )
-				{
-					margin += 15;
-				}
-
-                alert.instance.css('margin-top', margin+'px');
-                alert.instance.css('margin-bottom', '0px');
-
-                $('html,body').css('overflow', 'hidden');
-
-                if( diff > 5 )
-                {
-                    alert.instance.parents('.ja_wrap').css('position', 'fixed');
-                }
-                else
-                {
-                    alert.instance.parents('.ja_wrap').css('position', 'absolute');
-
-                    /* Scroll to alert */
-                    $('html, body').animate({
-                        scrollTop: top - 50
-                    }, 200);
-                }
-
-                return alert;
-            },
             animateAlert: function(which){
                 if( which == 'hide' )
                 {
@@ -142,8 +104,6 @@
                     {
                         $('body').addClass('ja_blur');
                     }
-
-                    alert.centerAlert();
                     alert.instance.addClass(alert.showAnimation).removeClass(alert.hideAnimation).show();
                 }
 
@@ -159,8 +119,6 @@
     
                 if(alert.instance)
                 {
-                    alert.instance.unbind('DOMSubtreeModified');
-    
                     alert.animateAlert('hide');
     
                     window.setTimeout(function()
@@ -185,13 +143,9 @@
                             alert.onClose(alert.instance);
                         }
     
-                        if( $('.jAlert:visible').length > 0 )
+                        if( $('.jAlert:visible').length === 0 )
                         {
-                            $('.jAlert:visible:last').jAlert().centerAlert();
-                        }
-                        else
-                        {
-                            $('html,body').css('overflow', 'auto');
+                            $('html,body').css('overflow', '');
                         }
     
                     }, alert.animationTimeout);
@@ -725,9 +679,6 @@
                     }
 				}, alert.autoClose);
             }
-			alert.instance.bind("DOMSubtreeModified", function(){
-				alert.centerAlert();
-			});
 
 			return alert.instance;
 
@@ -947,17 +898,6 @@
         $(this).jAlert().closeAlert(remove, onClose);
     };
 
-	/* Slowed window resize function */
-	var $jAlertResizeTimeout;
-	$(window).resize(function () {
-		window.clearTimeout($jAlertResizeTimeout);
-		$jAlertResizeTimeout = window.setTimeout(function(){
-			$('.jAlert:visible').each(function(){
-				$(this).jAlert().centerAlert();
-			});
-		}, 200);
-	});
-
 	/* Onload callback for iframe, img, etc */
 	$.fn.jAlert.mediaLoaded = function(elem){
 		var wrap = elem.parents('.ja_media_wrap'),
@@ -982,8 +922,6 @@
             elem.css('display', 'block');
             elem.height(jalert.iframeHeight);
         }
-
-        jalert.centerAlert();
 
 	};
 

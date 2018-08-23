@@ -267,12 +267,12 @@
 
                 <script>
                     $('.jimg').alertOnClick({
-                        'image': 'http://s2.quickmeme.com/img/c6/c676de4842e508242361c7a0aa2fe13a2e1191b58546d1554d5c128c404216d9.jpg',
+                        'image': 'https://images.unsplash.com/photo-1534842628439-bcc9e12f826e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6011f1896abdbf93d066723c42e826a9&auto=format&fit=crop&w=1234&q=80',
                         'imageWidth': '100%',
                         'size': 'lg'
                     });
                     $('.jimgnopad').alertOnClick({
-                        'image': 'http://s2.quickmeme.com/img/c6/c676de4842e508242361c7a0aa2fe13a2e1191b58546d1554d5c128c404216d9.jpg',
+                        'image': 'https://images.unsplash.com/photo-1534842628439-bcc9e12f826e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6011f1896abdbf93d066723c42e826a9&auto=format&fit=crop&w=1234&q=80',
                         'imageWidth': '100%',
                         'size': 'lg',
                         'noPadContent':true
@@ -528,17 +528,6 @@
             </div>
             <!--end row-->
             <hr class="soften"/>
-            
-            <!--
-            <h1 class="font-bree-serif align-center">Showcase</h1>
-            <h4 class="align-center font-open-sans-normal-italic">Websites using this plugin. Check Out</h4>
-            <ul class="thumbnails">
-              <li class="span3"> <a href="https://nomoreagent.com/" class="thumbnail"><img src="index-assets/showcase/nma.jpg" alt="nma"></a> </li>
-              <li class="span3"> <a href="https://farfromboring.com/" class="thumbnail"><img src="index-assets/showcase/ffb.jpg" alt="ffb"></a> </li>
-              <li class="span3"> <a href="https://1pass4.me/" class="thumbnail"><img src="index-assets/showcase/1p4m.jpg" alt="ffb"></a> </li>
-              <li class="span3"> <a href="https://chargebacks911.com/" class="thumbnail"><img src="index-assets/showcase/cb911.jpg" alt="cb911"></a> </li>
-            </ul>
-            -->
             <!--end thumbnails-->
           </div>
           <!--end overview-content-->
@@ -1059,6 +1048,24 @@ $.fn.jAlert.defaults.hideAnimation = 'fadeOutDown';</pre>
             <section class="sec-header">
               <h3 class="font-bree-serif">Changelog</h3>              
               <div class="accordion" id="changelog-accordion">
+                  <!--
+                        --- VERSION 4.6.4 ---
+                    -->
+                  <div class="accordion-group">
+                      <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#foursixfour">
+                              <strong>Version 4.6.4</strong>
+                          </a>
+                      </div>
+                      <div id="foursixfour" class="accordion-body collapse in">
+                          <div class="accordion-inner">
+                              <ul>
+                                  <li><span class="label label-success">Rewrote</span> alert positioning to be flexbox</li>
+                                  <li><span class="label label-danger">Removed</span> centerAlert method</li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
                   <!--
                         --- VERSION 4.6.3 ---
                     -->
