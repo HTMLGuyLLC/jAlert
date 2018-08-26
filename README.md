@@ -7,11 +7,11 @@ jAlert v4
 ======
 by HTMLGuy, LLC
 
-![logo](http://htmlguyllc.github.io/jAlert/index-assets/img/logo.png)
+![logo](https://htmlguyllc.github.io/jAlert/index-assets/img/logo.png)
 
 Demo & Detailed Docs
 =======
-http://htmlguyllc.github.io/jAlert/
+https://htmlguyllc.github.io/jAlert/
 ===
 
 What is it?
