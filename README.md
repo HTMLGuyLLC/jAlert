@@ -3,11 +3,11 @@
  ![Codeship](https://img.shields.io/badge/Build-Passing-green.svg)
  [![npm](https://img.shields.io/badge/NPM-v4.6.3-blue.svg)](https://npmjs.com/package/jAlert)
  
-jAlert v4
+jAlert
 ======
-by HTMLGuy, LLC
+by HTMLGuy, LLC (https://htmlguy.com)
 
-![logo](https://htmlguyllc.github.io/jAlert/index-assets/img/logo.png)
+![example jalert](https://htmlguyllc.github.io/jAlert/index-assets/img/logo.png)
 
 Demo & Detailed Docs
 =======
