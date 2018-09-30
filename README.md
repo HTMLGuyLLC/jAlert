@@ -22,7 +22,7 @@ Whether you call it a lightbox, modal, popup, or window, jAlert is an excellent 
 
 Getting the files
 =======
-Using NPM:
+Available on NPM (https://www.npmjs.com/package/jAlert):
 ```html
 npm install jAlert
 ```
