@@ -6,18 +6,18 @@
 */
 ;(function($) {
 
-	if(!Date.now)
-		Date.now = function(){
-			return +new Date();
-		};
+    if(!Date.now)
+        Date.now = function(){
+            return +new Date();
+        };
 
-	$.fn.jAlert = function(options) {
+    $.fn.jAlert = function(options) {
 
         //remove focus from current element so you can't just hit enter a bunch to popup the same alert over and over again
         $('body').focus();
         $('body').blur();
 
-		var themes = ['default', 'green', 'dark_green', 'red', 'dark_red', 'black', 'brown', 'gray', 'dark_gray', 'blue', 'dark_blue', 'yellow'],
+        var themes = ['default', 'green', 'dark_green', 'red', 'dark_red', 'black', 'brown', 'gray', 'dark_gray', 'blue', 'dark_blue', 'yellow'],
             sizes = ['xsm', 'sm', 'md', 'lg', 'xlg', 'full', 'auto'],
             sizeAliases = {'xsmall': 'xsm', 'small':'sm','medium':'md','large':'lg','xlarge':'xlg'},
             backgroundColors = ['white', 'black'],
@@ -25,13 +25,13 @@
             classes = ['animated'], //array of classes that get joined together with a space between on the jalert div
             backgroundClasses = []; //array of classes that get joined together with a space between on the jalert background div
 
-		/* Block Multiple Instances by running jAlert for each one */
-		if (this.length > 1){
-			this.each(function() {
-				$.fn.jAlert(options);
-			});
-			return this;
-		}
+        /* Block Multiple Instances by running jAlert for each one */
+        if (this.length > 1){
+            this.each(function() {
+                $.fn.jAlert(options);
+            });
+            return this;
+        }
 
         /* If this is an existing jAlert, return it so you can access public methods and properties */
         if( typeof $(this)[0] != 'undefined' )
@@ -46,26 +46,26 @@
          * Use the defaults object to find any accidentally lowercased keys from the options object and convert them.
          */
         $.each($.fn.jAlert.defaults, function(key, val){
-           var lowerKey = key.toLowerCase();
-           if( typeof options[lowerKey] !== 'undefined' )
-           {
-               options[key] = options[lowerKey];
-           }
+            var lowerKey = key.toLowerCase();
+            if( typeof options[lowerKey] !== 'undefined' )
+            {
+                options[key] = options[lowerKey];
+            }
         });
 
-		/* Combine user options with default */
-		options = $.extend({}, $.fn.jAlert.defaults, options);
+        /* Combine user options with default */
+        options = $.extend({}, $.fn.jAlert.defaults, options);
 
-		/* If they didn't set an id, just create a random one */
-		if( !options.id )
-		{
-			var unique = Date.now().toString() + Math.floor(Math.random() * 100000);
-			var alert_id = 'ja_' + unique;
-		}
-		else
-		{
-			var alert_id = options.id;
-		}
+        /* If they didn't set an id, just create a random one */
+        if( !options.id )
+        {
+            var unique = Date.now().toString() + Math.floor(Math.random() * 100000);
+            var alert_id = 'ja_' + unique;
+        }
+        else
+        {
+            var alert_id = options.id;
+        }
 
         /**
          * This is the alert object with the public properties/methods you can call
@@ -91,7 +91,7 @@
             animateAlert: function(which){
                 if( which == 'hide' )
                 {
-                    if( alert.instance.jAlert().blurBackground )
+                    if( alert.instance.data('jAlert').blurBackground )
                     {
                         $('body').removeClass('ja_blur');
                     }
@@ -100,7 +100,7 @@
                 }
                 else
                 {
-                    if( alert.instance.jAlert().blurBackground )
+                    if( alert.instance.data('jAlert').blurBackground )
                     {
                         $('body').addClass('ja_blur');
                     }
@@ -116,15 +116,15 @@
                 {
                     remove = true;
                 }
-    
+
                 if(alert.instance)
                 {
                     alert.animateAlert('hide');
-    
+
                     window.setTimeout(function()
                     {
                         var alertWrap = alert.instance.parents('.ja_wrap');
-    
+
                         if( remove )
                         {
                             alertWrap.remove();
@@ -133,7 +133,7 @@
                         {
                             alertWrap.hide();
                         }
-    
+
                         if(typeof onClose == 'function')
                         {
                             onClose(alert.instance);
@@ -142,12 +142,12 @@
                         {
                             alert.onClose(alert.instance);
                         }
-    
+
                         if( $('.jAlert:visible').length === 0 )
                         {
                             $('html,body').css('overflow', '');
                         }
-    
+
                     }, alert.animationTimeout);
                 }
 
@@ -168,7 +168,7 @@
 
                 if( replaceOthers )
                 {
-                    $('.jAlert:visible').jAlert().closeAlert(removeOthers);
+                    $('.jAlert:visible').data('jAlert').jAlert().closeAlert(removeOthers);
                 }
 
                 /* Put this one above the last one by moving to end of dom */
@@ -200,7 +200,7 @@
          * Add all options to the alert object as properties
          */
         $.each(options, function(key, val){
-           alert.set(key, val);
+            alert.set(key, val);
         });
 
         /**
@@ -220,6 +220,14 @@
         }
 
         /**
+         * If content is a dom element, grab it's HTML
+         */
+        if( typeof alert.content === 'object' && alert.jquery )
+        {
+            alert.content = alert.content.html();
+        }
+
+        /**
          * Automatically convert a youtube video's URL to the embed version
          */
         if( alert.video && alert.video.indexOf('youtube.com/watch?v=') > -1 && alert.video.indexOf('embed') === -1 )
@@ -230,20 +238,20 @@
         /**
          * If this is a confirm popup, set the buttons, content, etc
          */
-		if( alert.type == 'confirm' )
-		{
-			if( !alert.content )
-			{
+        if( alert.type == 'confirm' )
+        {
+            if( !alert.content )
+            {
                 alert.content = alert.confirmQuestion;
-			}
+            }
 
-			alert.btns = [
-				{ 'text': alert.confirmBtnText, 'theme': 'green', 'class': 'confirmBtn', 'closeAlert': true, 'onClick': alert.onConfirm },
-				{ 'text': alert.denyBtnText, 'theme': 'red', 'class': 'denyBtn', 'closeAlert': true, 'onClick': alert.onDeny }
-			];
+            alert.btns = [
+                { 'text': alert.confirmBtnText, 'theme': 'green', 'class': 'confirmBtn', 'closeAlert': true, 'onClick': alert.onConfirm },
+                { 'text': alert.denyBtnText, 'theme': 'red', 'class': 'denyBtn', 'closeAlert': true, 'onClick': alert.onDeny }
+            ];
 
-			alert.autofocus = alert.confirmAutofocus;
-		}
+            alert.autofocus = alert.confirmAutofocus;
+        }
 
         /* If used the alias color, swap to theme */
         if( alert.color )
@@ -254,44 +262,44 @@
         /**
          * Make sure theme is a real class
          */
-		if( $.inArray(alert.theme, themes) == -1 )
-		{
-			console.log('jAlert Config Error: Invalid theme selection.');
-			return false;
-		}
+        if( $.inArray(alert.theme, themes) == -1 )
+        {
+            console.log('jAlert Config Error: Invalid theme selection.');
+            return false;
+        }
 
         /**
          * Push the theme to the classes array
          */
-		classes.push('ja_'+alert.theme);
+        classes.push('ja_'+alert.theme);
 
-		/* If they set custom classes */
-		if( alert['class'] )
-		{
-			classes.push(alert['class']);
-		}
-		if( alert.classes )
-		{
-			classes.push(alert.classes);
-		}
+        /* If they set custom classes */
+        if( alert['class'] )
+        {
+            classes.push(alert['class']);
+        }
+        if( alert.classes )
+        {
+            classes.push(alert.classes);
+        }
 
-		//if fullscreen, add class
-		if( alert.fullscreen )
+        //if fullscreen, add class
+        if( alert.fullscreen )
         {
             classes.push('ja_fullscreen');
         }
 
         //if no padding on the content
-		if( alert.noPadContent )
+        if( alert.noPadContent )
         {
             classes.push('ja_no_pad');
         }
 
-		/* If no title, add class */
-		if( !alert.title )
-		{
-			classes.push( 'ja_noTitle' );
-		}
+        /* If no title, add class */
+        if( !alert.title )
+        {
+            classes.push( 'ja_noTitle' );
+        }
 
         /* If used the alias width, swap to size */
         if( alert.width )
@@ -299,26 +307,26 @@
             alert.size = alert.width;
         }
 
-		/* if it's set and it's not in the array of sizes OR it's an object and it's missing width/height */
-		if( alert.size && ((typeof alert.size == 'object' && (typeof alert.size.width == 'undefined' || typeof alert.size.height == 'undefined'))) ) {
+        /* if it's set and it's not in the array of sizes OR it's an object and it's missing width/height */
+        if( alert.size && ((typeof alert.size == 'object' && (typeof alert.size.width == 'undefined' || typeof alert.size.height == 'undefined'))) ) {
             console.log('jAlert Config Error: Invalid size selection (try a preset or make sure you\'re including height and width in your size object).');
             return false;
         }
-		/* If it's not set, set to md */
-		else if( !alert.size )
-		{
-			classes.push('ja_sm');
-		}
-		/* If it's set and it's an object */
-		else if( typeof alert.size == 'object' )
-		{
-			styles.push('width: '+alert.size.width+';');
-			styles.push('height: '+alert.size.height+';');
+        /* If it's not set, set to md */
+        else if( !alert.size )
+        {
+            classes.push('ja_sm');
+        }
+        /* If it's set and it's an object */
+        else if( typeof alert.size == 'object' )
+        {
+            styles.push('width: '+alert.size.width+';');
+            styles.push('height: '+alert.size.height+';');
             classes.push('ja_setheight');
-		}
-		/* If it's set and it's not an object */
-		else
-		{
+        }
+        /* If it's set and it's not an object */
+        else
+        {
             //swap alias for actual size class
             if( typeof sizeAliases[alert.size] !== 'undefined' )
             {
@@ -335,21 +343,21 @@
             {
                 styles.push('width: '+alert.size+';');
             }
-		}
+        }
 
-		/* Add background color class */
-		if( $.inArray(alert.backgroundColor, backgroundColors) == -1 )
-		{
-			console.log('jAlert Config Error: Invalid background color selection.');
-			return false;
-		}
+        /* Add background color class */
+        if( $.inArray(alert.backgroundColor, backgroundColors) == -1 )
+        {
+            console.log('jAlert Config Error: Invalid background color selection.');
+            return false;
+        }
 
-		backgroundClasses.push('ja_wrap_'+alert.backgroundColor);
+        backgroundClasses.push('ja_wrap_'+alert.backgroundColor);
 
-		alert.onOpen = [ alert.onOpen ];
+        alert.onOpen = [ alert.onOpen ];
 
-		var onload = "onload='$.fn.jAlert.mediaLoaded($(this))'",
-				loader = "<div class='ja_loader'>Loading...</div>";
+        var onload = "onload='$.fn.jAlert.mediaLoaded($(this))'",
+            loader = "<div class='ja_loader'>Loading...</div>";
 
         /**
          * Picture is now an alias for image
@@ -360,175 +368,189 @@
         }
 
         /* Creates content */
-		if( alert.image )
-		{
-			alert.content = "<div class='ja_media_wrap'>"+
-					loader+
-					"<img src='"+alert.image+"' class='ja_img' "+onload+"'";
-			if( alert.imageWidth )
-			{
-				alert.content += " style='width: "+alert.imageWidth+"'";
-			}
-			alert.content += ">"+
-					"</div>";
-		}
-		else if( alert.video )
-		{
-			alert.content = "<div class='ja_media_wrap'>"+
-					loader+
-					"<div class='ja_video'>"+
-					"</div>"+
-					"</div>";
+        if( alert.image )
+        {
+            //images should never have padding
+            alert.noPadContent = true;
 
-			/* Add to the onOpen callbacks array to append the iframe and attach the onload callback in a crossbrowser compatible way (IE is a bizitch). */
-			alert.onOpen.unshift( function(elem){
-				var iframe = document.createElement("iframe");
-				iframe.src = elem.jAlert().video;
+            alert.content = "<div class='ja_media_wrap'>"+
+                loader+
+                "<img src='"+alert.image+"' class='ja_img' "+onload+"'";
+            if( alert.imageWidth )
+            {
+                alert.content += " style='width: "+alert.imageWidth+"'";
+            }
+            alert.content += ">"+
+                "</div>";
 
-				if(iframe.addEventListener)
-				{
-					iframe.addEventListener('load', function(){
-						$.fn.jAlert.mediaLoaded($(this));
-					}, true)
-				}
-				else if (iframe.attachEvent){
-					iframe.attachEvent("onload", function(){
-						$.fn.jAlert.mediaLoaded($(this));
-					});
-				} else {
-					iframe.onload = function(){
-						$.fn.jAlert.mediaLoaded($(this));
-					};
-				}
+            /* Add to the onOpen callbacks array to shrink the alert to fit the size of the image if the image is smaller than it */
+            alert.onOpen.unshift( function(elem){
+                var img_elem = elem.find('.ja_img');
+                img_elem.on('load', function () {
+                    elem.css('width', img_elem.width() + 'px');
+                    elem.css('height', img_elem.height() + 'px');
+                });
+            });
+        }
+        else if( alert.video )
+        {
+            alert.content = "<div class='ja_media_wrap'>"+
+                loader+
+                "<div class='ja_video'>"+
+                "</div>"+
+                "</div>";
+
+            /* Add to the onOpen callbacks array to append the iframe and attach the onload callback in a crossbrowser compatible way (IE is a bizitch). */
+            alert.onOpen.unshift( function(elem){
+                var iframe = document.createElement("iframe");
+                iframe.src = elem.data('jAlert').video;
+
+                if(iframe.addEventListener)
+                {
+                    iframe.addEventListener('load', function(){
+                        $.fn.jAlert.mediaLoaded($(this));
+                    }, true)
+                }
+                else if (iframe.attachEvent){
+                    iframe.attachEvent("onload", function(){
+                        $.fn.jAlert.mediaLoaded($(this));
+                    });
+                } else {
+                    iframe.onload = function(){
+                        $.fn.jAlert.mediaLoaded($(this));
+                    };
+                }
 
                 elem.find('.ja_video').append(iframe);
-			});
+            });
 
-		}
-		else if( alert.iframe )
-		{
-			if( !alert.iframeHeight )
-			{
-				alert.iframeHeight = $(window).height() +'px';
-			}
+        }
+        else if( alert.iframe )
+        {
+            if( !alert.iframeHeight )
+            {
+                alert.iframeHeight = $(window).height() +'px';
+            }
 
-			alert.content = "<div class='ja_media_wrap'>"+
-					loader+
-					"</div>";
+            alert.content = "<div class='ja_media_wrap'>"+
+                loader+
+                "</div>";
 
-			/* Add to the onOpen callbacks array to append the iframe and attach the onload callback in a crossbrowser compatible way (IE is a bizitch). */
-			alert.onOpen.unshift( function(elem){
-				var iframe = document.createElement("iframe");
-				iframe.src = elem.jAlert().iframe;
-				iframe.className = 'ja_iframe';
+            /* Add to the onOpen callbacks array to append the iframe and attach the onload callback in a crossbrowser compatible way (IE is a bizitch). */
+            alert.onOpen.unshift( function(elem){
+                var iframe = document.createElement("iframe");
+                iframe.src = elem.jAlert().iframe;
+                iframe.className = 'ja_iframe';
 
-				if(iframe.addEventListener)
-				{
-					iframe.addEventListener('load', function(){
-						$.fn.jAlert.mediaLoaded($(this));
-					}, true)
-				}
-				else if (iframe.attachEvent){
-					iframe.attachEvent("onload", function(){
-						$.fn.jAlert.mediaLoaded($(this));
-					});
-				} else {
-					iframe.onload = function(){
-						$.fn.jAlert.mediaLoaded($(this));
-					};
-				}
+                if(iframe.addEventListener)
+                {
+                    iframe.addEventListener('load', function(){
+                        $.fn.jAlert.mediaLoaded($(this));
+                    }, true)
+                }
+                else if (iframe.attachEvent){
+                    iframe.attachEvent("onload", function(){
+                        $.fn.jAlert.mediaLoaded($(this));
+                    });
+                } else {
+                    iframe.onload = function(){
+                        $.fn.jAlert.mediaLoaded($(this));
+                    };
+                }
 
                 elem.find('.ja_media_wrap').append(iframe);
-			});
-		}
-		else if( alert.ajax )
-		{
-			alert.content = "<div class='ja_media_wrap'>"+
-					loader+
-					"</div>";
+            });
+        }
+        else if( alert.ajax )
+        {
+            alert.content = "<div class='ja_media_wrap'>"+
+                loader+
+                "</div>";
 
-			/* Store as another var */
-			onAjaxCallbacks = alert.onOpen;
+            /* Store as another var */
+            onAjaxCallbacks = alert.onOpen;
 
-			/* Overwrite the onOpen to be the ajax call */
-			alert.onOpen = [function(elem){
-				$.ajax(elem.jAlert().ajax, {
-					async: true,
-					complete: function(jqXHR, textStatus)
-					{
+            /* Overwrite the onOpen to be the ajax call */
+            alert.onOpen = [function(elem){
+                $.ajax(elem.jAlert().ajax, {
+                    async: true,
+                    complete: function(jqXHR, textStatus)
+                    {
                         elem.find('.ja_media_wrap').replaceWith(jqXHR.responseText);
 
-						/* Run onOpen callbacks here */
-						$.each(onAjaxCallbacks, function(index, onAjax){
-							onAjax(elem);
-						});
-					},
-					error: function(jqXHR, textStatus, errorThrown)
-					{
-						alert.onAjaxFail(elem, 'Error getting content: Code: '+jqXHR.status+ ' : Msg: '+jqXHR.statusText);
-					}
-				});
-			}];
-		}
+                        /* Run onOpen callbacks here */
+                        $.each(onAjaxCallbacks, function(index, onAjax){
+                            onAjax(elem);
+                        });
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        alert.onAjaxFail(elem, 'Error getting content: Code: '+jqXHR.status+ ' : Msg: '+jqXHR.statusText);
+                    }
+                });
+            }];
+        }
 
-		var getBtnHTML = function(btn){
+        var getBtnHTML = function(btn){
 
-			if(typeof btn.href == 'undefined'){ btn.href = ''; }
-			if(typeof btn['class'] == 'undefined'){ btn['class'] = ''; }
-			if(typeof btn.theme == 'undefined'){ btn['class'] += ' ja_btn_default'; }else{ btn['class'] += ' ja_btn_'+btn.theme; }
-			if(typeof btn.text == 'undefined'){ btn.text = ''; }
-			if(typeof btn.id == 'undefined'){ var unique = Date.now().toString() + Math.floor(Math.random() * 100000); btn.id = 'ja_btn_' + unique; }
-			if(typeof btn.target == 'undefined'){ btn.target = '_self'; }
-			if(typeof btn.closeAlert == 'undefined'){ btn.closeAlert = true; }
+            if(typeof btn.href == 'undefined'){ btn.href = ''; }
+            if(typeof btn['class'] == 'undefined'){ btn['class'] = ''; }
+            if(typeof btn.theme == 'undefined'){ btn['class'] += ' ja_btn_default'; }else{ btn['class'] += ' ja_btn_'+btn.theme; }
+            if(typeof btn.text == 'undefined'){ btn.text = ''; }
+            if(typeof btn.id == 'undefined'){ var unique = Date.now().toString() + Math.floor(Math.random() * 100000); btn.id = 'ja_btn_' + unique; }
+            if(typeof btn.target == 'undefined'){ btn.target = '_self'; }
+            if(typeof btn.closeAlert == 'undefined'){ btn.closeAlert = true; }
 
-			$('body').off('click', '#'+btn.id); //remove handler before adding it to remove dupe handlers
+            $('body').off('click', '#'+btn.id); //remove handler before adding it to remove dupe handlers
 
-			/* Attach on click handler */
-			$('body').on('click', '#'+btn.id, function(e){
+            /* Attach on click handler */
+            $('body').on('click', '#'+btn.id, function(e){
 
-				var button = $(this);
+                var button = $(this);
 
-				if( btn.closeAlert )
-				{
-					button.parents('.jAlert').jAlert().closeAlert();
-				}
+                alert = button.parents('.jAlert').jAlert();
 
-				var callbackResponse = true;
+                if( btn.closeAlert )
+                {
+                    alert.closeAlert();
+                }
 
-				if( typeof btn.onClick == 'function' )
-				{
-					callbackResponse = btn.onClick(e, button);
-				}
+                var callbackResponse = true;
 
-				if( !callbackResponse || btn.closeAlert )
-				{
-					e.preventDefault();
-					return false;
-				}
+                if( typeof btn.onClick == 'function' )
+                {
+                    callbackResponse = btn.onClick(e, button, alert);
+                }
 
-				return callbackResponse;
+                if( !callbackResponse || btn.closeAlert )
+                {
+                    e.preventDefault();
+                    return false;
+                }
 
-			});
+                return callbackResponse;
 
-			return "<a href='"+btn.href+"' id='"+btn.id+"' target='"+btn.target+"' class='ja_btn "+btn['class']+"'>"+btn.text+"</a> ";
-		};
+            });
 
-		/* Adds a new alert to the dom */
-		var addAlert = function(content){
+            return "<a href='"+btn.href+"' id='"+btn.id+"' target='"+btn.target+"' class='ja_btn "+btn['class']+"'>"+btn.text+"</a> ";
+        };
 
-			var html = '';
+        /* Adds a new alert to the dom */
+        var addAlert = function(content){
 
-			html += '<div class="ja_wrap '+backgroundClasses.join(' ')+'">'+
-					'<div class="jAlert '+classes.join(' ')+ '" style="' +styles.join(' ')+ '" id="' +alert.id+ '">'+
-					'<div>';
+            var html = '';
 
-			if( alert.closeBtn )
-			{
-				html += 		"<div class='closejAlert ja_close";
-				if( alert.closeBtnAlt )
-				{
-					html += ' ja_close_alt';
-				}
+            html += '<div class="ja_wrap '+backgroundClasses.join(' ')+'">'+
+                '<div class="jAlert '+classes.join(' ')+ '" style="' +styles.join(' ')+ '" id="' +alert.id+ '">'+
+                '<div>';
+
+            if( alert.closeBtn )
+            {
+                html += 		"<div class='closejAlert ja_close";
+                if( alert.closeBtnAlt )
+                {
+                    html += ' ja_close_alt';
+                }
                 else if( alert.closeBtnRoundWhite )
                 {
                     html += ' ja_close_round_white';
@@ -537,71 +559,73 @@
                 {
                     html += ' ja_close_round';
                 }
-				html += "'>&times;</div>"; //closejAlert has a close handler attached, ja_close is for styling
-			}
+                html += "'>&times;</div>"; //closejAlert has a close handler attached, ja_close is for styling
+            }
 
-			if( alert.title )
-			{
-				html += 		"<div class='ja_title'><div>"+alert.title+"</div></div>";
-			}
+            if( alert.title )
+            {
+                html += 		"<div class='ja_title'><div>"+alert.title+"</div></div>";
+            }
 
-			html += 			'<div class="ja_body">'+content;
+            html += 			'<div class="ja_body">'+content;
 
 
-			if( alert.btns )
-			{
-				html += 			'<div class="ja_btn_wrap ';
+            if( alert.btns )
+            {
+                html += 			'<div class="ja_btn_wrap ';
 
-				if( alert.btnBackground )
-				{
-					html += 		'optBack';
-				}
+                if( alert.btnBackground )
+                {
+                    html += 		'optBack';
+                }
 
-				html += 			'">';
-			}
+                html += 			'">';
+            }
 
-			if( typeof alert.btns[0] == 'object' )
-			{
-				$.each(alert.btns, function(index, btn){
-					if( typeof btn == 'object' )
-					{
-						html += 		getBtnHTML(btn);
-					}
-				});
-			}
-			else if( typeof alert.btns == 'object' )
-			{
-				html += 				getBtnHTML(alert.btns);
-			}
-			else if( alert.btns )
-			{
-				console.log('jAlert Config Error: Incorrect value for btns (must be object or array of objects): '+alert.btns);
-			}
+            if( typeof alert.btns[0] == 'object' )
+            {
+                $.each(alert.btns, function(index, btn){
+                    if( typeof btn == 'object' )
+                    {
+                        html += 		getBtnHTML(btn);
+                    }
+                });
+            }
+            else if( typeof alert.btns == 'object' )
+            {
+                html += 				getBtnHTML(alert.btns);
+            }
+            else if( alert.btns )
+            {
+                console.log('jAlert Config Error: Incorrect value for btns (must be object or array of objects): '+alert.btns);
+            }
 
-			if( alert.btns )
-			{
-				html += 			'</div>';
-			}
+            if( alert.btns )
+            {
+                html += 			'</div>';
+            }
 
-			html += 			'</div>'+
-					'</div>'+
-					'</div>'+
-					'</div>';
+            html += 			'</div>'+
+                '</div>'+
+                '</div>'+
+                '</div>';
 
-			var alertHTML = $(html);
+            var alertHTML = $(html);
 
-			if( alert.replaceOtherAlerts )
-			{
+            if( alert.replaceOtherAlerts )
+            {
                 var alerts = $('.jAlert:visible');
                 alerts.each(function(){
                     $(this).jAlert().closeAlert();
                 });
-			}
+            }
 
-			$('body').append(alertHTML);
+            $('body').append(alertHTML);
+
+            $('.jAlert:last').data('jAlert', alert);
 
             //cache instance
-			alert.instance = $('#'+alert.id);
+            alert.instance = $('#'+alert.id);
 
             //attach alert object to dom element
             alert.instance[0]['jAlert'] = alert;
@@ -610,58 +634,58 @@
             $('html,body').css('overflow', 'hidden');
 
             //show the new alert
-			alert.animateAlert('show');
+            alert.animateAlert('show');
 
             //add close button handler
-			if( alert.closeBtn ){
+            if( alert.closeBtn ){
 
-				alert.instance.on('click', '.closejAlert', function(e){
-					e.preventDefault();
-					$(this).parents('.jAlert:first').jAlert().closeAlert();
-					return false;
-				});
+                alert.instance.on('click', '.closejAlert', function(e){
+                    e.preventDefault();
+                    $(this).parents('.jAlert:first').closeAlert();
+                    return false;
+                });
 
-			}
+            }
 
-			/* Bind mouseup handler to document if this alert has closeOnClick enabled */
-			if( alert.closeOnClick ){
+            /* Bind mouseup handler to document if this alert has closeOnClick enabled */
+            if( alert.closeOnClick ){
 
-				/* Unbind if already exists */
-				$(document).off('mouseup touchstart', $.fn.jAlert.onMouseUp);
+                /* Unbind if already exists */
+                $(document).off('mouseup touchstart', $.fn.jAlert.onMouseUp);
 
-				/* Bind mouseup */
-				$(document).on('mouseup touchstart', $.fn.jAlert.onMouseUp);
+                /* Bind mouseup */
+                $(document).on('mouseup touchstart', $.fn.jAlert.onMouseUp);
 
-			}
+            }
 
-			/* Bind on keydown handler to document and if esc was pressed, find all visible jAlerts with that close option enabled and close them */
-			if( alert.closeOnEsc ){
+            /* Bind on keydown handler to document and if esc was pressed, find all visible jAlerts with that close option enabled and close them */
+            if( alert.closeOnEsc ){
 
-				/* Unbind if already exists */
-				$(document).off('keydown', $.fn.jAlert.onEscKeyDown);
+                /* Unbind if already exists */
+                $(document).off('keydown', $.fn.jAlert.onEscKeyDown);
 
-				/* Bind keydown */
-				$(document).on('keydown', $.fn.jAlert.onEscKeyDown);
+                /* Bind keydown */
+                $(document).on('keydown', $.fn.jAlert.onEscKeyDown);
 
-			}
+            }
 
-			/* If there are onOpen callbacks, run them. */
-			if( alert.onOpen )
-			{
-				$.each(alert.onOpen, function(index, onOpen){
-					onOpen(alert.instance);
-				});
-			}
+            /* If there are onOpen callbacks, run them. */
+            if( alert.onOpen )
+            {
+                $.each(alert.onOpen, function(index, onOpen){
+                    onOpen(alert.instance);
+                });
+            }
 
-			/* If the alert has an element that should be focused by default */
-			if( alert.autofocus )
-			{
-				alert.instance.find(alert.autofocus).focus();
-			}
-			else
-			{
-				alert.instance.focus();
-			}
+            /* If the alert has an element that should be focused by default */
+            if( alert.autofocus )
+            {
+                alert.instance.find(alert.autofocus).focus();
+            }
+            else
+            {
+                alert.instance.focus();
+            }
             /*
             	Set Auto
             	usage $.jAlert({
@@ -671,49 +695,49 @@
             if(alert.autoClose)
             {
                 $.fn.closeTimer(function()
-				{
+                {
                     var currentAlert = $.jAlert('current');
                     if(currentAlert !== false)
                     {
                         currentAlert.closeAlert();
                     }
-				}, alert.autoClose);
+                }, alert.autoClose);
             }
 
-			return alert.instance;
+            return alert.instance;
 
-		};
+        };
 
-		/* Shows an alert based on content type */
-		this.initialize = function(){
+        /* Shows an alert based on content type */
+        this.initialize = function(){
 
-			if( !alert.content && !alert.image && !alert.video && !alert.iframe && !alert.ajax )
-			{
-				console.log('jAlert potential error: No content defined');
-				return addAlert('');
-			}
-			else
-			{
-				if( !alert.content )
-				{
-					alert.content = '';
-				}
+            if( !alert.content && !alert.image && !alert.video && !alert.iframe && !alert.ajax )
+            {
+                console.log('jAlert potential error: No content defined');
+                return addAlert('');
+            }
+            else
+            {
+                if( !alert.content )
+                {
+                    alert.content = '';
+                }
 
-				return addAlert(alert.content);
-			}
+                return addAlert(alert.content);
+            }
 
-		};
+        };
 
         //initialize
-		this.initialize();
+        this.initialize();
 
         //return the object so you can chain public methods/properties
-		return alert;
+        return alert;
 
-		/* END OF PLUGIN */
-	};
+        /* END OF PLUGIN */
+    };
 
-	/* set closeTimer for preventing on duplicate */
+    /* set closeTimer for preventing on duplicate */
     $.fn.closeTimer = (function(){
         var timer = 0;
         return function(callback, ms){
@@ -722,117 +746,117 @@
         };
     })(jQuery);
 
-	/* Default alert */
-	$.fn.jAlert.defaults = {
-		'title': false, //title for the popup (false = don't show)
-		'content': false, //html for the popup (replaced if you use image, ajax, or iframe)
+    /* Default alert */
+    $.fn.jAlert.defaults = {
+        'title': false, //title for the popup (false = don't show)
+        'content': false, //html for the popup (replaced if you use image, ajax, or iframe)
         'noPadContent': false, //remove padding from the body
         'fullscreen': false, //make the jAlert completely fullscreen
-		'image': false, //adds a centered img tag
-		'imageWidth': 'auto', //defaults to max-width: 100%; width: auto;
-		'video': false, //adds a responsive iframe video - value is the "src" of the iframe
-		'ajax': false, //uses ajax call to get contents
-		'onAjaxFail': function(alert, errorThrown){ //callback for when ajax fails
-			alert.jAlert().closeAlert();
-			errorAlert(errorThrown);
-		},
-		'iframe': false, //uses iframe as content
-		'iframeHeight': false, //string. height of the iframe within the popup (false = 90% of viewport height)
-		'class': '', //adds a class to the jAlert (add as many as you want space delimited)
-		'classes': '', //add classes to the jAlert (space delimited)
-		'id': false, //adds an ID to the jAlert
-		'showAnimation': 'fadeInUp',
-		'hideAnimation': 'fadeOutDown',
-		'animationTimeout': 600, //approx duration of animation to wait until onClose
-		'theme': 'default', // red, green, blue, black, default
-		'backgroundColor': 'black', //white, black
+        'image': false, //adds a centered img tag
+        'imageWidth': 'auto', //defaults to max-width: 100%; width: auto;
+        'video': false, //adds a responsive iframe video - value is the "src" of the iframe
+        'ajax': false, //uses ajax call to get contents
+        'onAjaxFail': function(alert, errorThrown){ //callback for when ajax fails
+            alert.jAlert().closeAlert();
+            errorAlert(errorThrown);
+        },
+        'iframe': false, //uses iframe as content
+        'iframeHeight': false, //string. height of the iframe within the popup (false = 90% of viewport height)
+        'class': '', //adds a class to the jAlert (add as many as you want space delimited)
+        'classes': '', //add classes to the jAlert (space delimited)
+        'id': false, //adds an ID to the jAlert
+        'showAnimation': 'fadeInUp',
+        'hideAnimation': 'fadeOutDown',
+        'animationTimeout': 600, //approx duration of animation to wait until onClose
+        'theme': 'default', // red, green, blue, black, default
+        'backgroundColor': 'black', //white, black
         'blurBackground': false, //blurs background elements
-		'size': false, //false = css default, xsm, sm, md, lg, xlg, full, { height: 200, width: 200 }
-		'replaceOtherAlerts': false, //if there's already an open jAlert, remove it first
-		'closeOnClick': false, //close the alert when you click anywhere
-		'closeOnEsc': true, //close the alert when you click the escape key
-		'closeBtn': true, //adds a button to the top right of the alert that allows you to close it
-		'closeBtnAlt': false, //alternative close button
+        'size': false, //false = css default, xsm, sm, md, lg, xlg, full, { height: 200, width: 200 }
+        'replaceOtherAlerts': false, //if there's already an open jAlert, remove it first
+        'closeOnClick': false, //close the alert when you click anywhere
+        'closeOnEsc': true, //close the alert when you click the escape key
+        'closeBtn': true, //adds a button to the top right of the alert that allows you to close it
+        'closeBtnAlt': false, //alternative close button
         'closeBtnRound': true, //alternative round close button
         'closeBtnRoundWhite': false, //alternative round close button (in white)
-		'btns': false, //adds buttons to the popup at the bottom. Pass an object for a single button, or an object of objects for many
+        'btns': false, //adds buttons to the popup at the bottom. Pass an object for a single button, or an object of objects for many
         'autoClose' : false, // By default we specify as false. You can add secound
-		/*
-		 Variety of buttons you could create (also, an example of how to pass the object
+        /*
+         Variety of buttons you could create (also, an example of how to pass the object
 
-		 'btns': [
-		 {'text':'Open in new window', 'closeAlert':false, 'href': 'http://google.com', 'target':'_new'},
-		 {'text':'Cool, close this alert', 'theme': 'blue', 'closeAlert':true},
-		 {'text':'Buy Now', 'closeAlert':true, 'theme': 'green', 'onClick': function(){ console.log('You bought it!'); } },
-		 {'text':'I do not want it', 'closeAlert': true, 'theme': 'red', 'onClick': function(){ console.log('Did not want it'); } },
-		 {'text':'DOA', 'closeAlert': true, 'theme': 'black', 'onClick': function(){ console.log('Dead on arrival'); } }
-		 ]
-		 */
-		'btnBackground': true, //adds optional background to btns
-		'autofocus': false, //pass a selector to autofocus on it
+         'btns': [
+         {'text':'Open in new window', 'closeAlert':false, 'href': 'http://google.com', 'target':'_new'},
+         {'text':'Cool, close this alert', 'theme': 'blue', 'closeAlert':true},
+         {'text':'Buy Now', 'closeAlert':true, 'theme': 'green', 'onClick': function(){ console.log('You bought it!'); } },
+         {'text':'I do not want it', 'closeAlert': true, 'theme': 'red', 'onClick': function(){ console.log('Did not want it'); } },
+         {'text':'DOA', 'closeAlert': true, 'theme': 'black', 'onClick': function(){ console.log('Dead on arrival'); } }
+         ]
+         */
+        'btnBackground': true, //adds optional background to btns
+        'autofocus': false, //pass a selector to autofocus on it
 
-		'onOpen': function(alert){ //on open call back. Fires just after the alert has finished rendering
-			return false;
-		},
-		'onClose': function(alert){ //fires when you close the alert
-			return false;
-		},
+        'onOpen': function(alert){ //on open call back. Fires just after the alert has finished rendering
+            return false;
+        },
+        'onClose': function(alert){ //fires when you close the alert
+            return false;
+        },
 
-		'type': 'modal', //modal, confirm, tooltip
+        'type': 'modal', //modal, confirm, tooltip
 
-		/* The following only applies when type == 'confirm' */
-		'confirmQuestion': 'Are you sure?',
-		'confirmBtnText': 'Yes',
-		'denyBtnText': 'No',
-		'confirmAutofocus': '.confirmBtn', //confirmBtn or denyBtn
-		'onConfirm': function(e, btn){
-			e.preventDefault();
-			console.log('confirmed');
-			return false;
-		},
-		'onDeny': function(e, btn){
-			e.preventDefault();
-			//console.log('denied');
-			return false;
-		}
-	};
+        /* The following only applies when type == 'confirm' */
+        'confirmQuestion': 'Are you sure?',
+        'confirmBtnText': 'Yes',
+        'denyBtnText': 'No',
+        'confirmAutofocus': '.confirmBtn', //confirmBtn or denyBtn
+        'onConfirm': function(e, btn){
+            e.preventDefault();
+            console.log('confirmed');
+            return false;
+        },
+        'onDeny': function(e, btn){
+            e.preventDefault();
+            //console.log('denied');
+            return false;
+        }
+    };
 
-	/** Mouseup on document */
-	$.fn.jAlert.onMouseUp = function(e){
+    /** Mouseup on document */
+    $.fn.jAlert.onMouseUp = function(e){
         //cross browser
         var target = e.target ? e.target : e.srcElement;
 
-		/* Find top visible jAlert and see if it has closeOnClick enabled */
-		var lastVisibleAlert = $('.jAlert:visible:last');
+        /* Find top visible jAlert and see if it has closeOnClick enabled */
+        var lastVisibleAlert = $('.jAlert:visible:last');
 
-		if( lastVisibleAlert.length > 0 && lastVisibleAlert.jAlert().closeOnClick )
-		{
-			//close only if clicked outside
+        if( lastVisibleAlert.length > 0 && lastVisibleAlert.data('jAlert').closeOnClick )
+        {
+            //close only if clicked outside
             if( !$(target).is('.jAlert *') )
             {
-                lastVisibleAlert.jAlert().closeAlert();
+                lastVisibleAlert.data('jAlert').closeAlert();
             }
-		}
+        }
 
-	};
+    };
 
-	/* Keydown on document (escape key) */
-	$.fn.jAlert.onEscKeyDown = function(e){
+    /* Keydown on document (escape key) */
+    $.fn.jAlert.onEscKeyDown = function(e){
 
-		/* Escape = 27 */
-		if(e.keyCode === 27){
+        /* Escape = 27 */
+        if(e.keyCode === 27){
 
-			/* Find top visible jAlert and see if it has closeOnClick enabled */
-			var lastVisibleAlert = $('.jAlert:visible:last');
+            /* Find top visible jAlert and see if it has closeOnClick enabled */
+            var lastVisibleAlert = $('.jAlert:visible:last');
 
-			if( lastVisibleAlert.length > 0 && lastVisibleAlert.jAlert().closeOnEsc )
-			{
-				lastVisibleAlert.jAlert().closeAlert();
-			}
+            if( lastVisibleAlert.length > 0 && lastVisibleAlert.data('jAlert').closeOnEsc )
+            {
+                lastVisibleAlert.data('jAlert').closeAlert();
+            }
 
-		}
+        }
 
-	};
+    };
 
     $.fn.attachjAlert = function(e){
         e.preventDefault();
@@ -840,8 +864,8 @@
         return false;
     };
 
-	/* If you're not using the DOM (aka, you're not hiding or showing a specific alert, you can just use $.jAlert */
-	$.jAlert = function(options){
+    /* If you're not using the DOM (aka, you're not hiding or showing a specific alert, you can just use $.jAlert */
+    $.jAlert = function(options){
 
         /**
          * If you pass "current" to $.jAlert('current'); it should return the top-most visible jAlert
@@ -851,7 +875,7 @@
             var latest = $('.jAlert:visible:last');
             if( latest.length > 0 )
             {
-                return latest.jAlert();
+                return latest.data('jAlert');
             }
 
             return false;
@@ -871,59 +895,62 @@
             return false;
         }
 
-		return $.fn.jAlert(options);
-	};
-
-	/* Alert on click function - attach to existing dom */
-	$.fn.alertOnClick = function(options)
-	{
-		$(this).on('click', function(e){
-			e.preventDefault();
-			$.jAlert(options);
-			return false;
-		});
-	};
-
-	/* Alert on click function - global, works for changing dom */
-	$.alertOnClick = function(selector, options)
-	{
-		$('body').on('click', selector, function(e){
-			e.preventDefault();
-			$.jAlert(options);
-			return false;
-		});
-	};
-
-    $.fn.closeAlert = function(remove, onClose){
-        $(this).jAlert().closeAlert(remove, onClose);
+        return $.fn.jAlert(options);
     };
 
-	/* Onload callback for iframe, img, etc */
-	$.fn.jAlert.mediaLoaded = function(elem){
-		var wrap = elem.parents('.ja_media_wrap'),
-			vid_wrap = wrap.find('.ja_video'),
+    /* Alert on click function - attach to existing dom */
+    $.fn.alertOnClick = function(options)
+    {
+        $(this).on('click', function(e){
+            e.preventDefault();
+            $.jAlert(options);
+            return false;
+        });
+    };
+
+    /* Alert on click function - global, works for changing dom */
+    $.alertOnClick = function(selector, options)
+    {
+        $('body').on('click', selector, function(e){
+            e.preventDefault();
+            $.jAlert(options);
+            return false;
+        });
+    };
+
+    $.fn.closeAlert = function(remove, onClose){
+        if( $(this).data('jAlert') )
+        {
+            $(this).data('jAlert').closeAlert(remove, onClose);
+        }
+    };
+
+    /* Onload callback for iframe, img, etc */
+    $.fn.jAlert.mediaLoaded = function(elem){
+        var wrap = elem.parents('.ja_media_wrap'),
+            vid_wrap = wrap.find('.ja_video'),
             alert = elem.parents('.jAlert:first'),
-            jalert = alert.jAlert();
+            jalert = alert.data('jAlert');
 
-		wrap.find('.ja_loader').remove();
+        wrap.find('.ja_loader').remove();
 
-		if( vid_wrap.length > 0 )
-		{
-			vid_wrap.fadeIn('fast');
-		}
-		else
-		{
-			elem.fadeIn('fast');
-		}
+        if( vid_wrap.length > 0 )
+        {
+            vid_wrap.fadeIn('fast');
+        }
+        else
+        {
+            elem.fadeIn('fast');
+        }
 
-		//if iframe, add height after load and set display: block
-		if( typeof jalert.iframeHeight !== 'undefined' && jalert.iframeHeight )
+        //if iframe, add height after load and set display: block
+        if( typeof jalert.iframeHeight !== 'undefined' && jalert.iframeHeight )
         {
             elem.css('display', 'block');
             elem.height(jalert.iframeHeight);
         }
 
-	};
+    };
 
-	/* END OF ON JQUERY LOAD */
+    /* END OF ON JQUERY LOAD */
 })(jQuery);
