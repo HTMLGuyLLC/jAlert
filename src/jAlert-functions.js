@@ -12,9 +12,9 @@ function alert(title, msg){
 }
 
 /* Optional: Overwrites javascript's built-in confirm function (DANGER: operates differently - returns true every time and doesn't stop execution!) - You must provide a callback */
-function confirm(confirmCallback, denyCallback)
+function confirm(confirmCallback, denyCallback, confirmQuestion)
 {
-	$.jAlert({'type': 'confirm', 'onConfirm': confirmCallback, 'onDeny': denyCallback });
+	$.jAlert({'type': 'confirm', 'confirmQuestion':confirmQuestion, 'onConfirm': confirmCallback, 'onDeny': denyCallback });
 }
 
 /* Optional Alert shortcuts based on color */
