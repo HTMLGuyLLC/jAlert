@@ -427,9 +427,9 @@
         }
         else if( alert.iframe )
         {
-            if( !alert.iframeHeight )
-            {
-                alert.iframeHeight = $(window).height() +'px';
+            //if no height was provided, use flexbox to stretch the height to fit the window
+            if( !alert.iframeHeight ){
+                classes.push('ja_stretch_height');
             }
 
             alert.content = "<div class='ja_media_wrap'>"+
@@ -761,7 +761,7 @@
             errorAlert(errorThrown);
         },
         'iframe': false, //uses iframe as content
-        'iframeHeight': false, //string. height of the iframe within the popup (false = 90% of viewport height)
+        'iframeHeight': false, //string. height of the iframe within the popup (false = flex to fit)
         'class': '', //adds a class to the jAlert (add as many as you want space delimited)
         'classes': '', //add classes to the jAlert (space delimited)
         'id': false, //adds an ID to the jAlert
@@ -944,9 +944,9 @@
         }
 
         //if iframe, add height after load and set display: block
-        if( typeof jalert.iframeHeight !== 'undefined' && jalert.iframeHeight )
+        if( jalert.iframeHeight )
         {
-            elem.css('display', 'block');
+            elem.css('flex', 'unset');
             elem.height(jalert.iframeHeight);
         }
 

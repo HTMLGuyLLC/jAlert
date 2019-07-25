@@ -1,7 +1,11 @@
 {
   "name": "jAlert",
-  "version": "4.9.0",
+  "version": "4.9.1",
   "description": "Simple jQuery (Modal | Popup | Lightbox | Alert) Plugin",
+  "author": { 
+    "name" : "HTMLGuy, LLC", 
+    "url" : "https://htmlguy.com"
+  },
   "main": "./dist/jAlert.min.js",
   "repository": {
     "type": "git",
@@ -15,8 +19,5 @@
   "dependencies": {
     "jquery": "^3.4.0"
   },
-  "license":{ 
-    "type": "MIT", 
-    "url": "https://www.opensource.org/licenses/mit-license.php"
-  }
+  "license":"MIT"
 }
