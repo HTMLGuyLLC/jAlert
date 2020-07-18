@@ -26,7 +26,7 @@ html, body {
     width: 100%;
     height: 100%;
 
-    -moz-user-select: -moz-none;
+    -moz-user-select: none;
     -khtml-user-select: none;
     -webkit-user-select: none;
     -o-user-select: none;
@@ -43,14 +43,14 @@ html, body {
     background: rgba(255, 255, 255, .75);
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=1, StartColorStr='#BFFFFFFF', EndColorStr='#BFFFFFFF')";
     filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=1, StartColorStr='#BFFFFFFF', EndColorStr='#BFFFFFFF');
-    zoom: 1 !important;
+    transform: scale(1);
 }
 
 .ja_wrap.ja_wrap_black {
     background: rgba(0, 0, 0, .75);
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=1, StartColorStr='#BF000000', EndColorStr='#BF000000')";
     filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=1, StartColorStr='#BF000000', EndColorStr='#BF000000');
-    zoom: 1 !important;
+    transform: scale(1);
 }
 
 body.ja_blur > *:not(.ja_wrap) {
@@ -149,7 +149,7 @@ body.ja_blur > *:not(.ja_wrap) {
 
 .ja_default .ja_close_round, .ja_default .ja_close_round_white {
     color: #FFF;
-    background: rgba(0, 0, 0, 0.3) none repeat scroll 0% 0%;
+    background: rgba(0, 0, 0, 0.3) none repeat scroll 0 0;
 }
 
 .ja_close_alt {
@@ -189,7 +189,7 @@ body.ja_blur > *:not(.ja_wrap) {
 .ja_noTitle .ja_close_round {
     right: -11px;
     top: -11px;
-    background: rgba(0, 0, 0, 0.7) none repeat scroll 0% 0%;
+    background: rgba(0, 0, 0, 0.7) none repeat scroll 0 0;
     color: #d4d4d4;
 }
 
@@ -321,7 +321,6 @@ body.ja_blur > *:not(.ja_wrap) {
 }
 
 .ja_setheight .ja_body {
-    height: 100%;
     height: calc(100% - 40px);
 }
 
@@ -408,9 +407,8 @@ body.ja_blur > *:not(.ja_wrap) {
 
 .ja_btn_wrap.optBack {
     background: #f3f3f3;
-    margin-top: 25px;
     margin: 25px -20px -20px -20px;
-    padding: 5px 0px;
+    padding: 5px 0;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
