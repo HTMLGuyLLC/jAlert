@@ -803,9 +803,11 @@
         'autofocus': false, //pass a selector to autofocus on it
 
         'onOpen': function(alert){ //on open call back. Fires just after the alert has finished rendering
+            toggleFocusTrap();
             return false;
         },
         'onClose': function(alert){ //fires when you close the alert
+            toggleFocusTrap();
             return false;
         },
 
@@ -827,6 +829,55 @@
             return false;
         }
     };
+
+    var toggleFocusTrap = function() {
+      let numVisiblejAlerts = $('.jAlert:visible').length;
+      let lastVisibleAlert = $('.jAlert:visible:last');
+
+      if(numVisiblejAlerts > 0){
+        document.querySelectorAll('*').forEach( el => {
+          if(focusable(el)){ /* DOM element is focusable */
+            if(!$.contains(lastVisibleAlert[0], el)){ /* If focusable element is NOT in the last visible jAlert */
+              $(el).addClass("trap-disabled").attr("tabindex", -1).attr("aria-hidden", true);
+            } else { /* If focusable element IS in the last visible jAlert (useful for multiple stacked jAlerts) */
+              $(el).removeClass("trap-disabled").attr("tabindex", 0).attr("aria-hidden", false);;
+            }
+          }
+        });
+      } else {
+        $(".trap-disabled").removeClass("trap-disabled").attr("tabindex", 0).attr("aria-hidden", false);
+      }
+    };
+
+    /* This function returns true/false whether or not a given element is focusale. Can be replaced by JQeury UI's $(":focusable"), if JQueryUI were to become a dependency. */
+    function focusable( element ) {
+      var map, mapName, img,
+          nodeName = element.nodeName.toLowerCase(),
+          isTabIndexNotNaN = !isNaN( $.attr( element, "tabindex" ) );
+      if ( "area" === nodeName ) {
+          map = element.parentNode;
+          mapName = map.name;
+          if ( !element.href || !mapName || map.nodeName.toLowerCase() !== "map" ) {
+              return false;
+          }
+          img = $( "img[usemap=#" + mapName + "]" )[0];
+          return !!img && visible( img );
+      }
+      return ( /input|select|textarea|button|object/.test( nodeName ) ?
+          !element.disabled :
+          "a" === nodeName ?
+              element.href || isTabIndexNotNaN :
+              isTabIndexNotNaN) &&
+          // the element and all of its ancestors must be visible
+          visible( element );
+  
+      function visible( element ) {
+        return $.expr.filters.visible( element ) &&
+          !$( element ).parents().addBack().filter(function() {
+            return $.css( this, "visibility" ) === "hidden";
+          }).length;
+      }
+  }
 
     /** Mouseup on document */
     $.fn.jAlert.onMouseUp = function(e){
