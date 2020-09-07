@@ -546,7 +546,7 @@
 
             if( alert.closeBtn )
             {
-                html += 		"<div class='closejAlert ja_close";
+                html += 		"<div tabindex=0 role='button' aria-pressed='false' class='closejAlert ja_close";
                 if( alert.closeBtnAlt )
                 {
                     html += ' ja_close_alt';
@@ -638,13 +638,20 @@
 
             //add close button handler
             if( alert.closeBtn ){
-
+                /* Close jAlert when closeBtn is clicked */
                 alert.instance.on('click', '.closejAlert', function(e){
                     e.preventDefault();
                     $(this).parents('.jAlert:first').closeAlert();
                     return false;
                 });
-
+                /* Close jAlert when closeBtn is tabbed to and Enter is pressed */
+                alert.instance.on('keydown', '.closejAlert', function(e){
+                    if(e.originalEvent.key === 'Enter'){
+                      e.preventDefault();
+                      $(this).parents('.jAlert:first').closeAlert();
+                      return false;
+                    }
+                });
             }
 
             /* Bind mouseup handler to document if this alert has closeOnClick enabled */
