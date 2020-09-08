@@ -832,10 +832,10 @@
     };
 
     var toggleFocusTrap = function() {
-      let curAlert = $.jAlert('current');
+      var curAlert = $.jAlert('current');
 
       if(curAlert){
-        document.querySelectorAll('*').forEach( el => {
+        document.querySelectorAll('*').forEach( function(el) {
           if(focusable(el)){ /* DOM element is focusable */
             if(!$.contains(curAlert.instance[0], el)){ /* If focusable element is NOT in the current jAlert */
               $(el).addClass("trap-disabled").attr("tabindex", -1).attr("aria-hidden", true);
