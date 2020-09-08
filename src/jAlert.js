@@ -137,10 +137,12 @@
                         if(typeof onClose == 'function')
                         {
                             onClose(alert.instance);
+                            toggleFocusTrap();
                         }
                         else if(typeof alert.onClose == 'function')
                         {
                             alert.onClose(alert.instance);
+                            toggleFocusTrap();
                         }
 
                         if( $('.jAlert:visible').length === 0 )
@@ -679,6 +681,7 @@
             /* If there are onOpen callbacks, run them. */
             if( alert.onOpen )
             {
+                alert.onOpen.push(toggleFocusTrap);
                 $.each(alert.onOpen, function(index, onOpen){
                     onOpen(alert.instance);
                 });
@@ -803,11 +806,9 @@
         'autofocus': false, //pass a selector to autofocus on it
 
         'onOpen': function(alert){ //on open call back. Fires just after the alert has finished rendering
-            toggleFocusTrap();
             return false;
         },
         'onClose': function(alert){ //fires when you close the alert
-            toggleFocusTrap();
             return false;
         },
 
@@ -831,15 +832,14 @@
     };
 
     var toggleFocusTrap = function() {
-      let numVisiblejAlerts = $('.jAlert:visible').length;
-      let lastVisibleAlert = $('.jAlert:visible:last');
+      let curAlert = $.jAlert('current');
 
-      if(numVisiblejAlerts > 0){
+      if(curAlert){
         document.querySelectorAll('*').forEach( el => {
           if(focusable(el)){ /* DOM element is focusable */
-            if(!$.contains(lastVisibleAlert[0], el)){ /* If focusable element is NOT in the last visible jAlert */
+            if(!$.contains(curAlert.instance[0], el)){ /* If focusable element is NOT in the current jAlert */
               $(el).addClass("trap-disabled").attr("tabindex", -1).attr("aria-hidden", true);
-            } else { /* If focusable element IS in the last visible jAlert (useful for multiple stacked jAlerts) */
+            } else { /* If focusable element IS in the current jAlert (useful for multiple stacked jAlerts) */
               $(el).removeClass("trap-disabled").attr("tabindex", 0).attr("aria-hidden", false);;
             }
           }
@@ -849,7 +849,7 @@
       }
     };
 
-    /* This function returns true/false whether or not a given element is focusale. Can be replaced by JQeury UI's $(":focusable"), if JQueryUI were to become a dependency. */
+    /* This function returns true/false whether or not a given element is focusable. Can be replaced by JQeury UI's $(":focusable"), if JQueryUI were to become a dependency. */
     function focusable( element ) {
       var map, mapName, img,
           nodeName = element.nodeName.toLowerCase(),
