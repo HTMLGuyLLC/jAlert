@@ -134,15 +134,15 @@
                             alertWrap.hide();
                         }
 
+                        toggleFocusTrap();
+
                         if(typeof onClose == 'function')
                         {
                             onClose(alert.instance);
-                            toggleFocusTrap();
                         }
                         else if(typeof alert.onClose == 'function')
                         {
                             alert.onClose(alert.instance);
-                            toggleFocusTrap();
                         }
 
                         if( $('.jAlert:visible').length === 0 )
@@ -678,14 +678,11 @@
 
             }
 
-            /* If there are onOpen callbacks, run them. */
-            if( alert.onOpen )
-            {
-                alert.onOpen.push(toggleFocusTrap);
-                $.each(alert.onOpen, function(index, onOpen){
-                    onOpen(alert.instance);
-                });
-            }
+            /* Run onOpen callbacks */
+            alert.onOpen.push(toggleFocusTrap);
+            $.each(alert.onOpen, function(index, onOpen){
+                onOpen(alert.instance);
+            });
 
             /* If the alert has an element that should be focused by default */
             if( alert.autofocus )
