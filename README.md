@@ -1,150 +1,283 @@
- [![Join the chat at https://gitter.im/jAlert/Lobby](https://badges.gitter.im/jAlert/Lobby.svg)](https://gitter.im/jAlert/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
- ![Packagist](https://img.shields.io/badge/License-MIT-blue.svg)
- ![Codeship](https://img.shields.io/badge/Build-Passing-green.svg)
- [![npm](https://img.shields.io/badge/NPM-v4.6.3-blue.svg)](https://npmjs.com/package/jAlert)
- 
-jAlert
-======
+[![Join the chat at https://gitter.im/jAlert/Lobby](https://badges.gitter.im/jAlert/Lobby.svg)](https://gitter.im/jAlert/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+![Packagist](https://img.shields.io/badge/License-MIT-blue.svg)
+![Codeship](https://img.shields.io/badge/Build-Passing-green.svg)
+[![npm](https://img.shields.io/badge/NPM-v5.0.0-blue.svg)](https://npmjs.com/package/jAlert)
+
+# jAlert v5.0.0
+**Modern jQuery Modal/Popup/Lightbox Plugin**
+
 by HTMLGuy, LLC (https://htmlguy.com)
 
-![example jalert](https://htmlguyllc.github.io/jAlert/index-assets/img/logo.png)
+![jAlert Logo](https://htmlguyllc.github.io/jAlert/index-assets/img/logo.png)
 
-Demo & Detailed Docs
-=======
-https://htmlguyllc.github.io/jAlert/
-===
+## 🚀 What's New in v5.0.0
 
-What is it?
-=======
-Simple jQuery (Modal | Popup | Lightbox | Alert) Plugin
+**Complete Modernization!** jAlert has been completely rewritten with modern JavaScript practices while maintaining 100% backward compatibility:
 
-Whether you call it a lightbox, modal, popup, or window, jAlert is an excellent replacement / alternative for Simple Modal, FancyBox, or Reveal.
+- **ES6+ Modern JavaScript** with Babel transpilation
+- **Webpack 5** for efficient bundling
+- **PostCSS** for modern CSS processing
+- **Comprehensive Test Suite** with Jest, Puppeteer, and visual regression testing
+- **Lightbox Slideshow Feature** with advanced navigation options
+- **Enhanced Performance** and smaller bundle size
+- **Full Backward Compatibility** with existing code
 
-Getting the files
-=======
-Available on NPM (https://www.npmjs.com/package/jAlert):
-```html
+## 📖 Demo & Documentation
+
+**Live Demo:** https://htmlguyllc.github.io/jAlert/
+
+## 🎯 What is jAlert?
+
+jAlert is a powerful, lightweight jQuery plugin for creating beautiful modals, popups, lightboxes, and alerts. It's an excellent replacement for Simple Modal, FancyBox, or Reveal.
+
+### Key Features
+
+- **Responsive Design** - Works perfectly on all devices
+- **Multiple Content Types** - Images, videos, iframes, AJAX content, and custom HTML
+- **Lightbox Slideshow** - Advanced slideshow with navigation controls
+- **Theme System** - 12 built-in themes with custom styling support
+- **Animation Support** - Integrated with Animate.css
+- **Keyboard Navigation** - Full keyboard support
+- **Accessibility** - ARIA compliant and screen reader friendly
+- **Modern Build System** - ES6+, Webpack, PostCSS
+
+## 📦 Installation
+
+### NPM (Recommended)
+```bash
 npm install jAlert
 ```
 
-Dependencies
-=======
-jQuery 1.7+
-
-Setup
-======
-Include the CSS files from the folder in the head section:
+### CDN
 ```html
-<link rel="stylesheet" href="jAlert-master/dist/jAlert.css">
+<!-- CSS -->
+<link rel="stylesheet" href="https://unpkg.com/jAlert/dist/jAlert.min.css">
+
+<!-- JavaScript (after jQuery) -->
+<script src="https://unpkg.com/jAlert/dist/jAlert.min.js"></script>
 ```
 
-Include the JS file from the folder before the `</body>`:
+### Manual Download
+Download the latest release from the [releases page](https://github.com/HTMLGuyLLC/jAlert/releases).
+
+## 🔧 Dependencies
+
+- **jQuery 3.7.0+** (supports 1.7+ for backward compatibility)
+
+## 🚀 Quick Start
+
+### Basic Usage
 ```html
-<script src="jAlert-master/dist/jAlert.min.js"></script>
-<script src="jAlert-master/dist/jAlert-functions.min.js"></script> <!-- COMPLETELY OPTIONAL -->
+<!-- Include jQuery and jAlert -->
+<script src="jquery.min.js"></script>
+<script src="jAlert.min.js"></script>
+<link rel="stylesheet" href="jAlert.min.css">
+
+<!-- Basic alert -->
+<script>
+$.jAlert({
+    'title': 'Hello World',
+    'content': 'This is a simple alert!'
+});
+</script>
 ```
 
-To use the 'data-jAlert' attributes, you must attach the handlers (must be re-attached for newly added dynamic content):
-```html
-<a href='#' data-jAlert data-title='New jAlert!' data-content='Great job!'>Click Me</a>
-```
+### Lightbox Slideshow
 ```javascript
-$(function(){
-  $.jAlert('attach');
+$.jAlert({
+    'slideshow': [
+        'image1.jpg',
+        'image2.jpg',
+        'image3.jpg'
+    ],
+    'slideshowOptions': {
+        'showArrows': true,
+        'showCounter': 'numbers',
+        'autoAdvance': true,
+        'autoAdvanceInterval': 3000,
+        'loop': true,
+        'keyboardNav': true
+    },
+    'size': 'lg'
 });
 ```
 
-### This is the default usage. Doesn't require jAlert-functions.js
-```javascript   
-  $.jAlert({ //this is the normal usage
-    'title': 'Test',
-    'content': 'Howdy',
-    'theme': 'green',
-    'size': 'xsm'
-  });
+## 🛠️ Development
+
+### Prerequisites
+- Node.js 16+ 
+- npm or yarn
+
+### Setup
+```bash
+# Clone the repository
+git clone https://github.com/HTMLGuyLLC/jAlert.git
+cd jAlert
+
+# Install dependencies
+npm install
 ```
 
-### Quick Use (requires jAlert-functions.js!!!)
+### Build Commands
+```bash
+# Build for production (minified)
+npm run build
+
+# Build for development (with source maps)
+npm run build:dev
+
+# Watch for changes during development
+npm run watch
+
+# Clean build artifacts
+npm run clean
+```
+
+### Testing
+The project includes a comprehensive test suite:
+
+```bash
+# Run all tests
+npm test
+
+# Run unit tests only
+npm run test:unit
+
+# Run end-to-end tests
+npm run test:e2e
+
+# Run visual regression tests
+npm run test:visual
+
+# Run all tests with coverage
+npm run test:all
+```
+
+**Test Coverage:**
+- **Unit Tests:** Core functionality, slideshow features
+- **E2E Tests:** Browser automation with Puppeteer
+- **Visual Tests:** Screenshot regression testing
+
+## 🎨 Configuration Options
+
+### Basic Options
 ```javascript
-  alert('hi'); //override is enabled by default 
+$.jAlert({
+    'title': 'Alert Title',
+    'content': 'Alert content or HTML',
+    'theme': 'blue',           // Theme color
+    'size': 'lg',              // Size: xsm, sm, md, lg, xlg, full, auto
+    'closeOnClick': true,      // Close when clicking outside
+    'closeOnEscape': true,     // Close with ESC key
+    'autofocus': true,         // Auto-focus on first button
+    'blurBackground': false    // Blur background elements
+});
 ```
-Note: When you run alert() in your console, it works as expected but will return "undefined"...ignore that. It's just because the function doesn't return anything. Had to add this disclaimer because people got confused..lol..
+
+### Slideshow Options
 ```javascript
-  successAlert('Success', 'You did it!'); //green alert
+'slideshowOptions': {
+    'showArrows': true,              // Show navigation arrows
+    'showCounter': 'numbers',        // 'numbers', 'dots', or false
+    'autoAdvance': false,            // Auto-advance slides
+    'autoAdvanceInterval': 3000,     // Interval in milliseconds
+    'pauseOnHover': true,            // Pause auto-advance on hover
+    'loop': false,                   // Loop back to first slide
+    'keyboardNav': true,             // Enable keyboard navigation
+    'resizeMode': 'fitLargest'       // 'fitLargest' or 'original'
+}
 ```
-```javascript 
-  errorAlert('Error', 'It didn\'t work!'); //red alert
-```
-```javascript 
-  infoAlert('Info', 'Information!'); //blue alert
-```
-```javascript 
-  warningAlert('Warning', 'Warning!'); //yellow alert
-```
-```javascript 
-  blackAlert('Warning', 'Warning!'); //black alert (obviously)
-```
-```javascript 
-  imageAlert('http://mydomain.com/myimg.jpg'); //optional second param is the image width (defaults to auto)
-```
-```javascript 
-  videoAlert('http://youtube.com/viddk35k');
-```
-```javascript 
-  ajaxAlert('http://mydomain.com/myfile.php'); //optional second param is onOpen callback which gets passed the instance of jAlert
-```
-```javascript 
-  iframeAlert('http://mydomain.com'); //optional second param is height (defaults to fill the viewport height)
-```
-```javascript   
-  confirm(function(){
-    console.log('confirmed!');
-  }, function(){
-    console.log('denied');
-  });
-```
-```javascript   
-  $.fn.jAlert.defaults.backgroundColor = 'white'; //override a default setting
-  
-  $.fn.jAlert({ //same as $.jAlert when you're not passing an element - this alert will now have the white background color
-    'title': 'Test',
-    'content': 'Howdy',
-    'theme': 'green',
-    'size': 'xsm'
-    //'backgroundColor': 'white' //you could also pass it here
-  });
-  
-  $.fn.jAlert.defaults.backgroundColor = 'black'; //set it back to black
-```
-```javascript 
-  $('.btn').alertOnClick({ //this function attaches an onclick handler to .btn and passes the options to jAlert
-    'title': 'It worked!',
-    'content': 'You clicked the button'
-  });
-```
-```javascript   
-  $.alertOnClick('.btn', { //this function attaches an onclick handler to the body for .btn and kicks off jAlert
-    'title': 'Like magic',
-    'content': 'You clicked the button that was dynamically added'
-  });
-```
-```javascript   
-  $.jAlert({ //creates a lightbox for the image - responsive and all
-    'image': 'http://mysite.com/my-image.jpg'
-  });
- ```
-```javascript  
-  $.jAlert({ //creates a lightbox for the video - responsive and all
-    'video': 'http://youtube.com/dflskd'
-  });
-```
-```javascript   
-  $.jAlert({ //creates an alert that fills most of the height with a scrollable iframe
-    'iframe': 'http://mysite.com'
-  });
-```
-```javascript   
-  $.jAlert({ //gets content from another file with $.get()
-    'ajax': 'my-ajax-content.php'
-  });
-```
+
+## 🎭 Themes
+
+jAlert includes 12 built-in themes:
+- `default`, `red`, `dark_red`, `green`, `dark_green`
+- `blue`, `dark_blue`, `yellow`, `brown`
+- `gray`, `dark_gray`, `black`
+
+## 📱 Browser Support
+
+- **Modern Browsers:** Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
+- **Legacy Support:** IE11+ (with polyfills)
+- **Mobile:** iOS Safari 12+, Chrome Mobile 90+
+
+## 🤝 Contributing
+
+We welcome contributions! Here's how to get started:
+
+### Development Workflow
+
+1. **Fork and Clone**
+   ```bash
+   git clone https://github.com/your-username/jAlert.git
+   cd jAlert
+   ```
+
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Create a Feature Branch**
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+
+4. **Make Your Changes**
+   - Edit source files in `src/`
+   - Update documentation as needed
+   - Add tests for new features
+   - Keep everything backwards compatible, when possible
+
+5. **Run Tests**
+   ```bash
+   npm test
+   npm run test:all
+   ```
+
+6. **Build and Test**
+   ```bash
+   npm run build
+   # Open index.html to test manually
+   ```
+
+7. **Commit and Push**
+   ```bash
+   git add .
+   git commit -m "feat: add your feature description"
+   git push origin feature/your-feature-name
+   ```
+
+8. **Create Pull Request**
+   - Go to GitHub and create a PR against the `master` branch
+   - Include a description of your changes
+   - Ensure all tests pass
+
+### Contribution Guidelines
+
+- **Code Style:** Follow existing conventions and use ESLint
+- **Testing:** Add tests for new features and ensure all tests pass
+- **Documentation:** Update README and inline documentation
+- **Backward Compatibility:** Maintain compatibility with existing APIs
+- **Performance:** Consider impact on bundle size and performance
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- **Animate.css** for animation support
+- **Font Awesome** for icons
+- **Unsplash** for demo images
+- **All contributors** who have helped improve jAlert
+
+## 📞 Support
+
+- **Issues:** [GitHub Issues](https://github.com/HTMLGuyLLC/jAlert/issues)
+- **Chat:** [Gitter](https://gitter.im/jAlert/Lobby)
+- **Email:** support@htmlguy.com
+
+---
+
+**Made with ❤️ by HTMLGuy, LLC**

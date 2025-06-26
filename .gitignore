@@ -1,4 +1,11 @@
-index-assets/*
-index.html
-ajax-dummy.html
-.idea
+# Ignore Mac system files
+.DS_Store
+
+# Ignore build output
+/dist/
+
+# Ignore IDE files
+.idea/
+
+# Ignore node modules
+node_modules/

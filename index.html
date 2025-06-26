@@ -82,11 +82,11 @@
 			</div>
 			<div class="span6">
 				<br>
-			    <h1 class="font-bree-serif">jAlert Version 4</h1>
+			    <h1 class="font-bree-serif">jAlert Version 5</h1>
 			    <p class="font-open-sans-normal">Simple jQuery Modal | Popup | Lightbox | Alert Plugin</p>
 			    <p style='margin: 10px auto; margin-top: 20px; background: white;padding:20px; border-radius: 20px;'>Whether you call it a lightbox, modal, popup, or window, jAlert is an excellent replacement / alternative for Simple Modal, FancyBox, or whatever plugin you're used to.</p>
 			    
-			    <p class="jumbo"> <a href="https://github.com/HTMLGuyLLC/jAlert" class="btn btn-inverse btn-large font-open-sans-normal"><strong>View Plugin on GitHub</strong></a> <a href="https://github.com/HTMLGuyLLC/jAlert/archive/master.zip" class="btn btn-success btn-large font-open-sans-normal"><strong>Download Plugin </strong><small>(v4)</small></a> </p>
+			    <p class="jumbo"> <a href="https://github.com/HTMLGuyLLC/jAlert" class="btn btn-inverse btn-large font-open-sans-normal"><strong>View Plugin on GitHub</strong></a> <a href="https://github.com/HTMLGuyLLC/jAlert/archive/master.zip" class="btn btn-success btn-large font-open-sans-normal"><strong>Download Plugin </strong><small>(v5)</small></a> </p>
 			    
 			    <p class="share"> <a href="https://twitter.com/intent/tweet?screen_name=htmlguyllc" class="twitter-mention-button" data-related="verswerks">Tweet to @htmlguyllc</a>
 			      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
@@ -264,8 +264,20 @@
                   <a href='#' class='jframenopad btn btn-primary'>iFrame no Pad</a>
                   <a href='#' class='btn btn-primary' data-jAlert data-iframe="https://nomoreagent.com" data-noPadContent="true" data-fullscreen="true">iFrame fullscreen, no Pad</a>
                   <a href='#' class='jajax btn btn-primary'>AJAX</a>
+                  <br><br>
+                  <h4><i class="fa fa-images"></i> Slideshow</h4>
+                  <a href='#' class='jslideshow btn btn-primary'>Basic Slideshow</a>
+                  <a href='#' class='jslideshow-auto btn btn-primary'>Auto-Advance</a>
+                  <a href='#' class='jslideshow-fit btn btn-primary'>Fit Largest</a>
+                  <a href='#' class='jslideshow-dom btn btn-primary'>DOM Slideshow</a>
+                  <a href='#' class='jslideshow-loop btn btn-primary'>Looping Slideshow</a>
+                  <a href='#' class='jslideshow-dots btn btn-primary'>Dots Navigation</a>
+                  <a href='#' class='jslideshow-no-controls btn btn-primary'>No Controls</a>
+                  <a href='#' class='jslideshow-keyboard btn btn-primary'>Keyboard Only</a>
+                  <a href='#' class='jslideshow-dots-arrows btn btn-primary'>Dots + Arrows</a>
 
                 <script>
+                    // Image alerts
                     $('.jimg').alertOnClick({
                         'image': 'https://images.unsplash.com/photo-1534842628439-bcc9e12f826e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6011f1896abdbf93d066723c42e826a9&auto=format&fit=crop&w=1234&q=80',
                         'imageWidth': '100%',
@@ -275,31 +287,178 @@
                         'image': 'https://images.unsplash.com/photo-1534842628439-bcc9e12f826e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6011f1896abdbf93d066723c42e826a9&auto=format&fit=crop&w=1234&q=80',
                         'imageWidth': '100%',
                         'size': 'lg',
-                        'noPadContent':true
+                        'noPadContent': true
                     });
-	                $('.jvid').alertOnClick({
-		                'video': 'https://www.youtube.com/embed/u3oqwk6UmQI',
-		                'size': 'lg'
-	                });
+                    
+                    // Video alerts
+                    $('.jvid').alertOnClick({
+                        'video': 'https://www.youtube.com/embed/7PIji8OubXU?si=Zatm4sV5IdDHv7Ub',
+                        'size': 'lg'
+                    });
                     $('.jvidnopad').alertOnClick({
-                        'video': 'https://www.youtube.com/embed/u3oqwk6UmQI',
+                        'video': 'https://www.youtube.com/embed/7PIji8OubXU?si=Zatm4sV5IdDHv7Ub',
                         'size': 'lg',
-                        'noPadContent':true
+                        'noPadContent': true
                     });
-	                $('.jframe').alertOnClick({
-		               'iframe': 'https://nomoreagent.com',
-		               'size': 'xlg' 
-	                });
+                    
+                    // iFrame alerts
+                    $('.jframe').alertOnClick({
+                        'iframe': 'https://nomoreagent.com',
+                        'size': 'xlg'
+                    });
                     $('.jframenopad').alertOnClick({
                         'iframe': 'https://nomoreagent.com',
                         'size': 'xlg',
-                        'noPadContent':true
+                        'noPadContent': true
                     });
-	                $('.jajax').alertOnClick({
-		               'ajax': 'ajax-dummy.html',
-		               'size': 'sm' 
-	                });
-	            </script>
+                    
+                    // AJAX alert
+                    $('.jajax').alertOnClick({
+                        'ajax': 'index-assets/ajax-dummy.html',
+                        'size': 'sm'
+                    });
+                    
+                    // Basic Slideshow: Arrows + counter (numbers)
+                    $('.jslideshow').alertOnClick({
+                        'slideshow': [
+                            'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                            'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80',
+                            'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80'
+                        ],
+                        'slideshowOptions': {
+                            'showArrows': true,
+                            'showCounter': 'numbers',
+                            'keyboardNav': false
+                        },
+                        'size': 'lg'
+                    });
+                    // Auto-Advance: Arrows + counter (numbers) + auto-advance
+                    $('.jslideshow-auto').alertOnClick({
+                        'slideshow': [
+                            'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                            'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80',
+                            'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80'
+                        ],
+                        'slideshowOptions': {
+                            'showArrows': true,
+                            'showCounter': 'numbers',
+                            'autoAdvance': true,
+                            'autoAdvanceInterval': 2000,
+                            'pauseOnHover': true,
+                            'keyboardNav': false
+                        },
+                        'size': 'lg'
+                    });
+                    // Fit Largest: Arrows + counter (numbers) + fitLargest
+                    $('.jslideshow-fit').alertOnClick({
+                        'slideshow': [
+                            'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                            'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80',
+                            'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80'
+                        ],
+                        'slideshowOptions': {
+                            'showArrows': true,
+                            'showCounter': 'numbers',
+                            'resizeMode': 'fitLargest',
+                            'keyboardNav': false
+                        },
+                        'size': 'lg'
+                    });
+                    // DOM Slideshow: Arrows + counter (numbers) + DOM content
+                    $('.jslideshow-dom').alertOnClick({
+                        'slideshow': '#dom-slideshow',
+                        'slideshowOptions': {
+                            'showArrows': true,
+                            'showCounter': 'numbers',
+                            'autoAdvance': true,
+                            'autoAdvanceInterval': 3000,
+                            'keyboardNav': false
+                        },
+                        'size': 'lg'
+                    });
+                    // Looping Slideshow: Arrows + counter (numbers) + loop + auto-advance
+                    $('.jslideshow-loop').alertOnClick({
+                        'slideshow': [
+                            'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                            'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80',
+                            'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80'
+                        ],
+                        'slideshowOptions': {
+                            'showArrows': true,
+                            'showCounter': 'numbers',
+                            'autoAdvance': true,
+                            'autoAdvanceInterval': 2000,
+                            'loop': true,
+                            'keyboardNav': false
+                        },
+                        'size': 'lg'
+                    });
+                    // Dots Navigation: Dots only
+                    $('.jslideshow-dots').alertOnClick({
+                        'slideshow': [
+                            'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                            'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80',
+                            'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80'
+                        ],
+                        'slideshowOptions': {
+                            'showArrows': false,
+                            'showCounter': 'dots',
+                            'autoAdvance': true,
+                            'autoAdvanceInterval': 3000,
+                            'keyboardNav': false
+                        },
+                        'size': 'lg'
+                    });
+                    // No Controls: No arrows, no dots, no counter
+                    $('.jslideshow-no-controls').alertOnClick({
+                        'slideshow': [
+                            'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                            'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80',
+                            'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80'
+                        ],
+                        'slideshowOptions': {
+                            'showArrows': false,
+                            'showCounter': false,
+                            'autoAdvance': true,
+                            'autoAdvanceInterval': 2000,
+                            'loop': true,
+                            'keyboardNav': false
+                        },
+                        'size': 'lg'
+                    });
+                    // Keyboard Only: Keyboard navigation only, no arrows/dots/counter
+                    $('.jslideshow-keyboard').alertOnClick({
+                        'slideshow': [
+                            'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                            'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80',
+                            'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80'
+                        ],
+                        'slideshowOptions': {
+                            'showArrows': false,
+                            'showCounter': false,
+                            'autoAdvance': false,
+                            'loop': false,
+                            'keyboardNav': true
+                        },
+                        'size': 'lg'
+                    });
+                    // Dots + Arrows: Dots + arrows, no counter
+                    $('.jslideshow-dots-arrows').alertOnClick({
+                        'slideshow': [
+                            'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                            'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80',
+                            'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80'
+                        ],
+                        'slideshowOptions': {
+                            'showArrows': true,
+                            'showCounter': 'dots',
+                            'autoAdvance': false,
+                            'loop': true,
+                            'keyboardNav': true
+                        },
+                        'size': 'lg'
+                    });
+                </script>
                   <h3 style="margin-top:20px"><i class="fa fa-adjust"></i>Blurred Background</h3>
                   Popup an alert and blur all the background elements:<br><br>
                   <a href='#' class='jblur btn btn-primary'>Image</a>
@@ -1012,6 +1171,143 @@ $.fn.jAlert.defaults.hideAnimation = 'fadeOutDown';</pre>
                 </tbody>
                 </table>
                 
+                <h3 class="font-bree-serif">Slideshow Options</h3>
+                <p>jAlert now supports lightbox slideshows with navigation controls, auto-advance, and keyboard navigation.</p>
+                
+                <h4>Basic Usage</h4>
+                <pre><code>// Array of image URLs
+$.jAlert({
+    'slideshow': [
+        'image1.jpg',
+        'image2.jpg', 
+        'image3.jpg'
+    ]
+});
+
+// DOM-based slideshow
+$.jAlert({
+    'slideshow': '#my-slideshow-container'
+});
+
+// Slideshow with dots navigation
+$.jAlert({
+    'slideshow': ['image1.jpg', 'image2.jpg', 'image3.jpg'],
+    'slideshowOptions': {
+        'showCounter': 'dots'
+    }
+});
+
+// Slideshow without controls
+$.jAlert({
+    'slideshow': ['image1.jpg', 'image2.jpg', 'image3.jpg'],
+    'slideshowOptions': {
+        'showArrows': false,
+        'showCounter': false
+    }
+});</code></pre>
+
+                <h4>Slideshow Options</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th><strong>Option</strong></th>
+                            <th><strong>Type</strong></th>
+                            <th><strong>Default</strong></th>
+                            <th><strong>Description</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>autoAdvance</td>
+                            <td>boolean</td>
+                            <td>false</td>
+                            <td>Whether to automatically advance to the next slide</td>
+                        </tr>
+                        <tr>
+                            <td>autoAdvanceInterval</td>
+                            <td>number</td>
+                            <td>3000</td>
+                            <td>Time in milliseconds between auto-advances</td>
+                        </tr>
+                        <tr>
+                            <td>keyboardNav</td>
+                            <td>boolean</td>
+                            <td>true</td>
+                            <td>Enable keyboard navigation (left/right arrow keys)</td>
+                        </tr>
+                        <tr>
+                            <td>pauseOnHover</td>
+                            <td>boolean</td>
+                            <td>false</td>
+                            <td>Pause auto-advance when hovering over slideshow</td>
+                        </tr>
+                        <tr>
+                            <td>resizeMode</td>
+                            <td>string</td>
+                            <td>'fitCurrent'</td>
+                            <td>'fitCurrent' (resize modal to fit current image) or 'fitLargest' (resize to fit largest image)</td>
+                        </tr>
+                        <tr>
+                            <td>loop</td>
+                            <td>boolean</td>
+                            <td>true</td>
+                            <td>Whether to loop back to the first slide when reaching the end (or last slide when going backwards)</td>
+                        </tr>
+                        <tr>
+                            <td>showArrows</td>
+                            <td>boolean</td>
+                            <td>true</td>
+                            <td>Whether to show navigation arrows on the sides</td>
+                        </tr>
+                        <tr>
+                            <td>showCounter</td>
+                            <td>string</td>
+                            <td>'numbers'</td>
+                            <td>'numbers' (1/3 format), 'dots' (clickable dots), or false (no counter)</td>
+                        </tr>
+                        <tr>
+                            <td>arrowButtons</td>
+                            <td>DOM elements</td>
+                            <td>null</td>
+                            <td>Custom DOM elements to use as arrow buttons instead of defaults</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>DOM Structure for Slideshows</h4>
+                <p>When using DOM-based slideshows, use this structure:</p>
+                <pre><code>&lt;div id="my-slideshow"&gt;
+    &lt;div class="ja_slide"&gt;
+        &lt;img src="image1.jpg" alt="Description"&gt;
+        &lt;div class="caption"&gt;Image Caption&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="ja_slide"&gt;
+        &lt;img src="image2.jpg" alt="Description"&gt;
+        &lt;div class="caption"&gt;Another Caption&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+                <h4>Utility Function</h4>
+                <pre><code>// Quick slideshow creation
+slideshowAlert([
+    'image1.jpg',
+    'image2.jpg',
+    'image3.jpg'
+], {
+    autoAdvance: true,
+    autoAdvanceInterval: 2000
+});
+
+// Looping slideshow
+slideshowAlert([
+    'image1.jpg',
+    'image2.jpg',
+    'image3.jpg'
+], {
+    autoAdvance: true,
+    autoAdvanceInterval: 2000,
+    loop: true
+});</code></pre>
            </section>
           </div><!--end documentation-content-->
            <!-- 
@@ -1021,26 +1317,49 @@ $.fn.jAlert.defaults.hideAnimation = 'fadeOutDown';</pre>
           -->
           <div class="tab-pane" id="roadmap">
             <section class="sec-header">
-              <h3 class="font-bree-serif">Roadmap</h3>
-              <table class="table table-bordered">
-                  <thead>
-                      <tr>
-                          <th><strong>Version</strong></th>
-                          <th><strong>Description</strong></th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                  <tr>
-                      <td>5</td>
-                      <td>Lightbox Slideshow</td>
-                  </tr>
-                  </tbody>
-              </table>
-            </section>
-            
-            <section class="sec-header">
               <h3 class="font-bree-serif">Changelog</h3>              
               <div class="accordion" id="changelog-accordion">
+                  <!--
+                        --- VERSION 5.0.0 ---
+                    -->
+                  <div class="accordion-group">
+                      <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#fivezerozero">
+                              <strong>Version 5.0.0</strong>
+                          </a>
+                      </div>
+                      <div id="fivezerozero" class="accordion-body collapse in">
+                          <div class="accordion-inner">
+                              <ul>
+                                  <li><span class="label label-info">Added</span> Lightbox slideshow functionality with navigation controls (arrows, dots, counter, keyboard, auto-advance, loop, pause on hover, fit modes, captions, etc.)</li>
+                                  <li><span class="label label-info">Added</span> Support for both array-based and DOM-based slideshows</li>
+                                  <li><span class="label label-info">Added</span> Auto-advance slideshow with configurable intervals</li>
+                                  <li><span class="label label-info">Added</span> Keyboard navigation (arrow keys, optional per instance)</li>
+                                  <li><span class="label label-info">Added</span> Pause on hover functionality</li>
+                                  <li><span class="label label-info">Added</span> Image sizing options (fit current vs fit largest, responsive to viewport)</li>
+                                  <li><span class="label label-info">Added</span> Caption support for slides</li>
+                                  <li><span class="label label-info">Added</span> Modern ES6+ JavaScript with Babel transpilation</li>
+                                  <li><span class="label label-info">Added</span> Webpack build system with optimization</li>
+                                  <li><span class="label label-info">Added</span> Autoprefixer for CSS compatibility</li>
+                                  <li><span class="label label-info">Added</span> Source maps for debugging</li>
+                                  <li><span class="label label-info">Added</span> Comprehensive automated test suite (unit, e2e, visual regression) with Jest and Puppeteer</li>
+                                  <li><span class="label label-success">Improved</span> Code organization, maintainability, and error handling</li>
+                                  <li><span class="label label-success">Improved</span> Performance optimizations</li>
+                                  <li><span class="label label-success">Improved</span> Documentation and contribution guidelines</li>
+                                  <li><span class="label label-success">Improved</span> Loader and image sizing logic for slideshows</li>
+                                  <li><span class="label label-success">Improved</span> Slideshow controls: show/hide arrows, dots, counter, keyboard, etc.</li>
+                                  <li><span class="label label-success">Improved</span> Accessibility and responsive design</li>
+                                  <li><span class="label label-success">Updated</span> jQuery dependency to 3.7.0+ (maintains 1.7+ compatibility)</li>
+                                  <li><span class="label label-warning">Changed</span> Build process - now uses npm scripts and dist/ folder</li>
+                                  <li><span class="label label-success">Fixed</span> Slideshow options are now deeply merged with defaults (fixes loop and other option issues)</li>
+                                  <li><span class="label label-success">Fixed</span> Loader and fitLargest issues in slideshows</li>
+                                  <li><span class="label label-success">Fixed</span> Legacy files and hooks removed (auto-compile-pre-commit-hook.txt, etc.)</li>
+                                  <li><span class="label label-success">Fixed</span> Demo and asset references (ajax-dummy.html moved to index-assets/)</li>
+                                  <li><span class="label label-success">Maintained</span> 100% backward compatibility with all existing APIs</li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
                   <!--
                         --- VERSION 4.6.6 ---
                     -->
@@ -1087,7 +1406,7 @@ $.fn.jAlert.defaults.hideAnimation = 'fadeOutDown';</pre>
                       <div id="foursixfour" class="accordion-body collapse in">
                           <div class="accordion-inner">
                               <ul>
-                                  <li><span class="label label-success">Rewrote</span> alert positioning to be flexbox</li>
+                                  <li><span class="label label-success">Rewritten</span> alert positioning to be flexbox</li>
                                   <li><span class="label label-danger">Removed</span> centerAlert method</li>
                               </ul>
                           </div>
@@ -1620,6 +1939,23 @@ $.fn.jAlert.defaults.hideAnimation = 'fadeOutDown';</pre>
   </div><!--end row-->
   </div><!--end container-->
   </div><!--end main-content-->
+  
+  <!-- DOM Slideshow Structure (hidden) -->
+  <div id="dom-slideshow" style="display: none;">
+    <div class="ja_slide">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Mountain Landscape">
+      <div class="caption">Beautiful Mountain Landscape</div>
+    </div>
+    <div class="ja_slide">
+      <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80" alt="Forest Path">
+      <div class="caption">Peaceful Forest Path</div>
+    </div>
+    <div class="ja_slide">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Sunset View">
+      <div class="caption">Stunning Sunset View</div>
+    </div>
+  </div>
+  
   <footer>
       <div class="container">
       <div class="row">

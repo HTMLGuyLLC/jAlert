@@ -4,953 +4,1134 @@
 	Made with love by HTMLGuy, LLC
 	MIT Licensed
 */
-;(function($) {
+(function($) {
+    'use strict';
 
-    if(!Date.now)
-        Date.now = function(){
+    // Polyfill for Date.now if not available
+    if (!Date.now) {
+        Date.now = function() {
             return +new Date();
         };
+    }
 
+    // Constants
+    const THEMES = ['default', 'green', 'dark_green', 'red', 'dark_red', 'black', 'brown', 'gray', 'dark_gray', 'blue', 'dark_blue', 'yellow'];
+    const SIZES = ['xsm', 'sm', 'md', 'lg', 'xlg', 'full', 'auto'];
+    const SIZE_ALIASES = {'xsmall': 'xsm', 'small':'sm','medium':'md','large':'lg','xlarge':'xlg'};
+    const BACKGROUND_COLORS = ['white', 'black'];
+
+    // Utility functions
+    const utils = {
+        generateId() {
+            return 'ja_' + Date.now().toString() + Math.floor(Math.random() * 100000);
+        },
+
+        isElement(obj) {
+            return obj && obj.jquery;
+        },
+
+        normalizeOptions(options) {
+            const normalized = {};
+            // Convert any accidentally lowercased keys from options to match defaults
+            Object.keys($.fn.jAlert.defaults).forEach(key => {
+                const lowerKey = key.toLowerCase();
+                if (typeof options[lowerKey] !== 'undefined') {
+                    normalized[key] = options[lowerKey];
+                }
+            });
+            return { ...normalized, ...options };
+        },
+
+        processContent(content, alert) {
+            // If content is a selector (id only) and the element exists, grab its content
+            if (content && content.indexOf('#') === 0) {
+                const element = $(content);
+                if (element.length > 0) {
+                    return element.html();
+                }
+            }
+
+            // If content is a DOM element, grab its HTML
+            if (utils.isElement(content)) {
+                return content.html();
+            }
+
+            return content;
+        },
+
+        processVideoUrl(video) {
+            // Automatically convert a youtube video's URL to the embed version
+            if (video && video.indexOf('youtube.com/watch?v=') > -1 && video.indexOf('embed') === -1) {
+                return video.replace('watch?v=', 'embed/');
+            }
+            return video;
+        },
+
+        setupConfirmButtons(alert) {
+            if (!alert.content) {
+                alert.content = alert.confirmQuestion;
+            }
+
+            alert.btns = [
+                { 
+                    'text': alert.confirmBtnText, 
+                    'theme': 'green', 
+                    'class': 'confirmBtn', 
+                    'closeAlert': true, 
+                    'onClick': alert.onConfirm 
+                },
+                { 
+                    'text': alert.denyBtnText, 
+                    'theme': 'red', 
+                    'class': 'denyBtn', 
+                    'closeAlert': true, 
+                    'onClick': alert.onDeny 
+                }
+            ];
+
+            alert.autofocus = alert.confirmAutofocus;
+        },
+
+        validateTheme(theme) {
+            if (THEMES.indexOf(theme) === -1) {
+                console.log('jAlert Config Error: Invalid theme selection.');
+                return false;
+            }
+            return true;
+        },
+
+        validateSize(size) {
+            if (size && ((typeof size === 'object' && (typeof size.width === 'undefined' || typeof size.height === 'undefined'))) ) {
+                console.log('jAlert Config Error: Invalid size selection (try a preset or make sure you\'re including height and width in your size object).');
+                return false;
+            }
+            return true;
+        },
+
+        validateBackgroundColor(backgroundColor) {
+            if (BACKGROUND_COLORS.indexOf(backgroundColor) === -1) {
+                console.log('jAlert Config Error: Invalid background color selection.');
+                return false;
+            }
+            return true;
+        },
+
+        getSizeClasses(size) {
+            const classes = [];
+            
+            if (!size) {
+                classes.push('ja_sm');
+            } else if (typeof size === 'object') {
+                // Custom size object - will be handled by styles
+            } else {
+                // Swap alias for actual size class
+                if (typeof SIZE_ALIASES[size] !== 'undefined') {
+                    size = SIZE_ALIASES[size];
+                }
+
+                // If it's one of the sizes, set the class
+                if (SIZES.indexOf(size) > -1) {
+                    classes.push('ja_' + size);
+                }
+                // Otherwise, we assume they provided a px or % width
+            }
+            
+            return classes;
+        },
+
+        getSizeStyles(size) {
+            const styles = [];
+            
+            if (size && typeof size === 'object') {
+                styles.push(`width: ${size.width};`);
+                styles.push(`height: ${size.height};`);
+            } else if (size && typeof size === 'string' && SIZES.indexOf(size) === -1 && SIZE_ALIASES[size] === undefined) {
+                styles.push(`width: ${size};`);
+            }
+            
+            return styles;
+        },
+
+        createMediaContent(alert) {
+            const onload = "onload='$.fn.jAlert.mediaLoaded($(this))'";
+            const loader = "<div class='ja_loader'>Loading...</div>";
+
+            if (alert.slideshow) {
+                // Slideshow functionality
+                alert.noPadContent = true;
+                
+                let content = "<div class='ja_media_wrap ja_slideshow_wrap'>" + loader + 
+                    "<div class='ja_slideshow_container'>" +
+                    "<div class='ja_slideshow_slide'></div>";
+                
+                // Add side arrows if enabled
+                if (alert.slideshowOptions && alert.slideshowOptions.showArrows !== false) {
+                    content += "<button class='ja_slideshow_arrow ja_slideshow_prev'>&lt;</button>" +
+                              "<button class='ja_slideshow_arrow ja_slideshow_next'>&gt;</button>";
+                }
+                
+                content += "</div>";
+                
+                // Add counter/dots if enabled
+                if (alert.slideshowOptions && alert.slideshowOptions.showCounter) {
+                    if (alert.slideshowOptions.showCounter === 'dots') {
+                        content += "<div class='ja_slideshow_dots'></div>";
+                    } else if (alert.slideshowOptions.showCounter === 'numbers') {
+                        content += "<div class='ja_slideshow_counter'>1 / 1</div>";
+                    }
+                }
+                
+                content += "</div>";
+
+                // Add slideshow functionality to onOpen
+                alert.onOpen.unshift(function(elem) {
+                    const slideshow = elem.data('jAlert').slideshow;
+                    const slideshowOptions = elem.data('jAlert').slideshowOptions || {};
+                    const container = elem.find('.ja_slideshow_container');
+                    const slideContainer = elem.find('.ja_slideshow_slide');
+                    const counter = elem.find('.ja_slideshow_counter');
+                    const dots = elem.find('.ja_slideshow_dots');
+                    const prevBtn = elem.find('.ja_slideshow_prev');
+                    const nextBtn = elem.find('.ja_slideshow_next');
+                    
+                    let slides = [];
+                    let currentIndex = 0;
+                    let autoAdvanceTimer = null;
+                    let loadedImages = 0;
+                    let totalImages = 0;
+                    
+                    // Initialize slides
+                    if (Array.isArray(slideshow)) {
+                        // Array of image URLs
+                        slides = slideshow.map((src, index) => ({
+                            type: 'image',
+                            src: src,
+                            index: index
+                        }));
+                    } else if (typeof slideshow === 'string') {
+                        // DOM selector
+                        const slideElements = $(slideshow).find('.ja_slide, .slide, [data-slide]');
+                        slides = slideElements.map(function(index) {
+                            const $slide = $(this);
+                            const img = $slide.find('img').first();
+                            const src = img.attr('src') || img.attr('data-src');
+                            const caption = $slide.find('.caption, .slide-caption').text() || img.attr('alt') || '';
+                            return {
+                                type: 'image',
+                                src: src,
+                                caption: caption,
+                                index: index
+                            };
+                        }).get();
+                    }
+                    
+                    if (slides.length === 0) {
+                        slideContainer.html('<p>No slides found</p>');
+                        return;
+                    }
+                    
+                    totalImages = slides.length;
+                    
+                    // Create dots if enabled
+                    if (slideshowOptions.showCounter === 'dots') {
+                        let dotsHTML = '';
+                        for (let i = 0; i < slides.length; i++) {
+                            dotsHTML += '<span class="ja_slideshow_dot" data-slide="' + i + '"></span>';
+                        }
+                        dots.html(dotsHTML);
+                    }
+                    
+                    // Update counter
+                    function updateCounter() {
+                        if (slideshowOptions.showCounter === 'numbers') {
+                            counter.text(`${currentIndex + 1} / ${slides.length}`);
+                        } else if (slideshowOptions.showCounter === 'dots') {
+                            dots.find('.ja_slideshow_dot').removeClass('active');
+                            dots.find('.ja_slideshow_dot[data-slide="' + currentIndex + '"]').addClass('active');
+                        }
+                    }
+                    
+                    // Load slide
+                    function loadSlide(index) {
+                        if (index < 0 || index >= slides.length) return;
+                        
+                        currentIndex = index;
+                        const slide = slides[index];
+                        
+                        if (slide.type === 'image') {
+                            const img = $('<img>', {
+                                src: slide.src,
+                                class: 'ja_img ja_slideshow_img',
+                                alt: slide.caption || ''
+                            });
+                            
+                            slideContainer.html(img);
+                            
+                            // Handle image sizing
+                            if (slideshowOptions.resizeMode === 'fitLargest') {
+                                // Preload all images to calculate max dimensions
+                                let maxWidth = 0, maxHeight = 0;
+                                let imagesLoaded = 0;
+                                
+                                slides.forEach((s, i) => {
+                                    const tempImg = new Image();
+                                    tempImg.onload = function() {
+                                        maxWidth = Math.max(maxWidth, this.width);
+                                        maxHeight = Math.max(maxHeight, this.height);
+                                        imagesLoaded++;
+                                        
+                                        if (imagesLoaded === slides.length) {
+                                            // Get viewport dimensions
+                                            const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+                                            const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+                                            
+                                            // Calculate maximum available space (leave some margin)
+                                            const maxAvailableWidth = viewportWidth * 0.9;
+                                            const maxAvailableHeight = viewportHeight * 0.9;
+                                            
+                                            // Scale down if larger than viewport
+                                            let finalWidth = maxWidth;
+                                            let finalHeight = maxHeight;
+                                            
+                                            if (finalWidth > maxAvailableWidth) {
+                                                const scale = maxAvailableWidth / finalWidth;
+                                                finalWidth = maxAvailableWidth;
+                                                finalHeight = finalHeight * scale;
+                                            }
+                                            
+                                            if (finalHeight > maxAvailableHeight) {
+                                                const scale = maxAvailableHeight / finalHeight;
+                                                finalHeight = maxAvailableHeight;
+                                                finalWidth = finalWidth * scale;
+                                            }
+                                            
+                                            elem.css('width', finalWidth + 'px');
+                                            elem.css('height', finalHeight + 'px');
+                                        }
+                                    };
+                                    tempImg.src = s.src;
+                                });
+                            } else {
+                                // Default: resize modal to fit current image
+                                img.on('load', function() {
+                                    // Get viewport dimensions
+                                    const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+                                    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+                                    
+                                    // Calculate maximum available space (leave some margin)
+                                    const maxAvailableWidth = viewportWidth * 0.9;
+                                    const maxAvailableHeight = viewportHeight * 0.9;
+                                    
+                                    // Scale down if larger than viewport
+                                    let finalWidth = this.width;
+                                    let finalHeight = this.height;
+                                    
+                                    if (finalWidth > maxAvailableWidth) {
+                                        const scale = maxAvailableWidth / finalWidth;
+                                        finalWidth = maxAvailableWidth;
+                                        finalHeight = finalHeight * scale;
+                                    }
+                                    
+                                    if (finalHeight > maxAvailableHeight) {
+                                        const scale = maxAvailableHeight / finalHeight;
+                                        finalHeight = maxAvailableHeight;
+                                        finalWidth = finalWidth * scale;
+                                    }
+                                    
+                                    elem.css('width', finalWidth + 'px');
+                                    elem.css('height', finalHeight + 'px');
+                                });
+                            }
+                            
+                            // Add caption if available
+                            if (slide.caption) {
+                                slideContainer.append('<div class="ja_slideshow_caption">' + slide.caption + '</div>');
+                            }
+                            
+                            // Remove loader when image loads
+                            img.on('load', function() {
+                                elem.find('.ja_loader').remove();
+                            });
+                        }
+                        
+                        updateCounter();
+                        
+                        // Update navigation buttons - only disable if not looping
+                        if (slideshowOptions.loop) {
+                            prevBtn.removeClass('disabled');
+                            nextBtn.removeClass('disabled');
+                        } else {
+                            prevBtn.toggleClass('disabled', currentIndex === 0);
+                            nextBtn.toggleClass('disabled', currentIndex === slides.length - 1);
+                        }
+                    }
+                    
+                    // Navigation functions
+                    function nextSlide() {
+                        if (currentIndex < slides.length - 1) {
+                            loadSlide(currentIndex + 1);
+                        } else if (slideshowOptions.loop) {
+                            // Loop back to first slide
+                            loadSlide(0);
+                        }
+                    }
+                    
+                    function prevSlide() {
+                        if (currentIndex > 0) {
+                            loadSlide(currentIndex - 1);
+                        } else if (slideshowOptions.loop) {
+                            // Loop to last slide
+                            loadSlide(slides.length - 1);
+                        }
+                    }
+                    
+                    // Auto advance
+                    function startAutoAdvance() {
+                        if (slideshowOptions.autoAdvance && slideshowOptions.autoAdvanceInterval) {
+                            autoAdvanceTimer = setInterval(nextSlide, slideshowOptions.autoAdvanceInterval);
+                        }
+                    }
+                    
+                    function stopAutoAdvance() {
+                        if (autoAdvanceTimer) {
+                            clearInterval(autoAdvanceTimer);
+                            autoAdvanceTimer = null;
+                        }
+                    }
+                    
+                    // Event handlers
+                    nextBtn.on('click', function() {
+                        stopAutoAdvance();
+                        nextSlide();
+                        startAutoAdvance();
+                    });
+                    
+                    prevBtn.on('click', function() {
+                        stopAutoAdvance();
+                        prevSlide();
+                        startAutoAdvance();
+                    });
+                    
+                    // Dot click handlers
+                    if (slideshowOptions.showCounter === 'dots') {
+                        dots.on('click', '.ja_slideshow_dot', function() {
+                            const slideIndex = parseInt($(this).data('slide'));
+                            if (slideIndex !== currentIndex) {
+                                stopAutoAdvance();
+                                loadSlide(slideIndex);
+                                startAutoAdvance();
+                            }
+                        });
+                    }
+                    
+                    // Keyboard navigation
+                    if (slideshowOptions.keyboardNav !== false) {
+                        $(document).on('keydown.ja_slideshow', function(e) {
+                            if (e.keyCode === 37) { // Left arrow
+                                stopAutoAdvance();
+                                prevSlide();
+                                startAutoAdvance();
+                            } else if (e.keyCode === 39) { // Right arrow
+                                stopAutoAdvance();
+                                nextSlide();
+                                startAutoAdvance();
+                            }
+                        });
+                    }
+                    
+                    // Pause auto advance on hover
+                    if (slideshowOptions.pauseOnHover) {
+                        container.hover(
+                            function() { stopAutoAdvance(); },
+                            function() { startAutoAdvance(); }
+                        );
+                    }
+                    
+                    // Load first slide
+                    loadSlide(0);
+                    
+                    // Start auto advance
+                    startAutoAdvance();
+                    
+                    // Clean up on close
+                    elem.data('jAlert').onClose = function() {
+                        stopAutoAdvance();
+                        $(document).off('keydown.ja_slideshow');
+                    };
+                });
+
+                return content;
+            } else if (alert.image) {
+                // Images should never have padding
+                alert.noPadContent = true;
+
+                let content = "<div class='ja_media_wrap'>" + loader + "<img src='" + alert.image + "' class='ja_img' " + onload;
+                if (alert.imageWidth) {
+                    content += " style='width: " + alert.imageWidth + "'";
+                }
+                content += "></div>";
+
+                // Add to the onOpen callbacks array to shrink the alert to fit the size of the image
+                alert.onOpen.unshift(function(elem) {
+                    const imgElem = elem.find('.ja_img');
+                    imgElem.on('load', function() {
+                        elem.css('width', imgElem.width() + 'px');
+                        elem.css('height', imgElem.height() + 'px');
+                    });
+                });
+
+                return content;
+            } else if (alert.video) {
+                const content = "<div class='ja_media_wrap'>" + loader + "<div class='ja_video'></div></div>";
+
+                // Add to the onOpen callbacks array to append the iframe
+                alert.onOpen.unshift(function(elem) {
+                    const iframe = document.createElement("iframe");
+                    iframe.src = elem.data('jAlert').video;
+
+                    if (iframe.addEventListener) {
+                        iframe.addEventListener('load', function() {
+                            $.fn.jAlert.mediaLoaded($(this));
+                        }, true);
+                    } else if (iframe.attachEvent) {
+                        iframe.attachEvent("onload", function() {
+                            $.fn.jAlert.mediaLoaded($(this));
+                        });
+                    } else {
+                        iframe.onload = function() {
+                            $.fn.jAlert.mediaLoaded($(this));
+                        };
+                    }
+
+                    elem.find('.ja_video').append(iframe);
+                });
+
+                return content;
+            } else if (alert.iframe) {
+                const content = "<div class='ja_media_wrap'>" + loader + "</div>";
+
+                // Add to the onOpen callbacks array to append the iframe
+                alert.onOpen.unshift(function(elem) {
+                    const iframe = document.createElement("iframe");
+                    iframe.src = elem.jAlert().iframe;
+                    iframe.className = 'ja_iframe';
+
+                    if (iframe.addEventListener) {
+                        iframe.addEventListener('load', function() {
+                            $.fn.jAlert.mediaLoaded($(this));
+                        }, true);
+                    } else if (iframe.attachEvent) {
+                        iframe.attachEvent("onload", function() {
+                            $.fn.jAlert.mediaLoaded($(this));
+                        });
+                    } else {
+                        iframe.onload = function() {
+                            $.fn.jAlert.mediaLoaded($(this));
+                        };
+                    }
+
+                    elem.find('.ja_media_wrap').append(iframe);
+                });
+
+                return content;
+            } else if (alert.ajax) {
+                const content = "<div class='ja_media_wrap'>" + loader + "</div>";
+
+                // Store as another var
+                const onAjaxCallbacks = alert.onOpen;
+
+                // Overwrite the onOpen to be the ajax call
+                alert.onOpen = [function(elem) {
+                    $.ajax(elem.jAlert().ajax, {
+                        async: true,
+                        complete: function(jqXHR, textStatus) {
+                            elem.find('.ja_media_wrap').replaceWith(jqXHR.responseText);
+
+                            // Run onOpen callbacks here
+                            onAjaxCallbacks.forEach(function(onAjax) {
+                                onAjax(elem);
+                            });
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            alert.onAjaxFail(elem, 'Error getting content: Code: ' + jqXHR.status + ' : Msg: ' + jqXHR.statusText);
+                        }
+                    });
+                }];
+
+                return content;
+            }
+
+            return null;
+        },
+
+        getBtnHTML(btn, alert) {
+            // Set defaults
+            btn.href = btn.href || '';
+            btn['class'] = btn['class'] || '';
+            btn.theme = btn.theme || 'default';
+            btn['class'] += ' ja_btn_' + btn.theme;
+            btn.text = btn.text || '';
+            btn.id = btn.id || 'ja_btn_' + utils.generateId();
+            btn.target = btn.target || '_self';
+            btn.closeAlert = btn.closeAlert !== false;
+
+            // Remove handler before adding it to remove dupe handlers
+            $('body').off('click', '#' + btn.id);
+
+            // Attach on click handler
+            $('body').on('click', '#' + btn.id, function(e) {
+                const button = $(this);
+                const alertInstance = button.parents('.jAlert').jAlert();
+
+                if (btn.closeAlert) {
+                    alertInstance.closeAlert();
+                }
+
+                let callbackResponse = true;
+
+                if (typeof btn.onClick === 'function') {
+                    callbackResponse = btn.onClick(e, button, alertInstance);
+                }
+
+                if (!callbackResponse || btn.closeAlert) {
+                    e.preventDefault();
+                    return false;
+                }
+
+                return callbackResponse;
+            });
+
+            return "<a href='" + btn.href + "' id='" + btn.id + "' target='" + btn.target + "' class='ja_btn " + btn['class'] + "'>" + btn.text + "</a> ";
+        },
+
+        createAlertHTML(alert, content) {
+            const classes = ['animated', 'ja_' + alert.theme];
+            const styles = [];
+            const backgroundClasses = ['ja_wrap_' + alert.backgroundColor];
+
+            // Add custom classes
+            if (alert['class']) {
+                classes.push(alert['class']);
+            }
+            if (alert.classes) {
+                classes.push(alert.classes);
+            }
+
+            // Handle special cases
+            if (alert.fullscreen) {
+                classes.push('ja_fullscreen');
+            }
+            if (alert.noPadContent) {
+                classes.push('ja_no_pad');
+            }
+            if (!alert.title) {
+                classes.push('ja_noTitle');
+            }
+
+            // Handle size
+            const sizeClasses = utils.getSizeClasses(alert.size);
+            const sizeStyles = utils.getSizeStyles(alert.size);
+            classes.push(...sizeClasses);
+            styles.push(...sizeStyles);
+
+            // Handle iframe height
+            if (alert.iframe && !alert.iframeHeight) {
+                classes.push('ja_stretch_height');
+            }
+
+            let html = '<div class="ja_wrap ' + backgroundClasses.join(' ') + '">' +
+                '<div class="jAlert ' + classes.join(' ') + '" style="' + styles.join(' ') + '" id="' + alert.id + '">' +
+                '<div>';
+
+            // Close button
+            if (alert.closeBtn) {
+                html += "<div class='closejAlert ja_close";
+                if (alert.closeBtnAlt) {
+                    html += ' ja_close_alt';
+                } else if (alert.closeBtnRoundWhite) {
+                    html += ' ja_close_round_white';
+                } else if (alert.closeBtnRound) {
+                    html += ' ja_close_round';
+                }
+                html += "'>&times;</div>";
+            }
+
+            // Title
+            if (alert.title) {
+                html += "<div class='ja_title'><div>" + alert.title + "</div></div>";
+            }
+
+            // Body
+            html += '<div class="ja_body">' + content;
+
+            // Buttons
+            if (alert.btns) {
+                html += '<div class="ja_btn_wrap ';
+                if (alert.btnBackground) {
+                    html += 'optBack';
+                }
+                html += '">';
+
+                if (Array.isArray(alert.btns)) {
+                    alert.btns.forEach(function(btn) {
+                        if (typeof btn === 'object') {
+                            html += utils.getBtnHTML(btn, alert);
+                        }
+                    });
+                } else if (typeof alert.btns === 'object') {
+                    html += utils.getBtnHTML(alert.btns, alert);
+                } else {
+                    console.log('jAlert Config Error: Incorrect value for btns (must be object or array of objects): ' + alert.btns);
+                }
+
+                html += '</div>';
+            }
+
+            html += '</div></div></div></div>';
+
+            return html;
+        }
+    };
+
+    // Alert class for better organization
+    class Alert {
+        constructor(options) {
+            this.options = options;
+            this.id = options.id || utils.generateId();
+            this.instance = null;
+            
+            // Add all options as properties
+            Object.keys(options).forEach(key => {
+                this[key] = options[key];
+            });
+        }
+
+        set(key, val) {
+            this[key] = val;
+            return this;
+        }
+
+        __set(key, val) {
+            return this.set(key, val);
+        }
+
+        get(key) {
+            return this[key];
+        }
+
+        __get(key) {
+            return this.get(key);
+        }
+
+        animateAlert(which) {
+            if (which === 'hide') {
+                if (this.instance.data('jAlert').blurBackground) {
+                    $('body').removeClass('ja_blur');
+                }
+                this.instance.removeClass(this.showAnimation).addClass(this.hideAnimation);
+            } else {
+                if (this.instance.data('jAlert').blurBackground) {
+                    $('body').addClass('ja_blur');
+                }
+                this.instance.addClass(this.showAnimation).removeClass(this.hideAnimation).show();
+            }
+            return this;
+        }
+
+        closeAlert(remove = true, onClose) {
+            if (this.instance) {
+                this.animateAlert('hide');
+
+                window.setTimeout(() => {
+                    const alertWrap = this.instance.parents('.ja_wrap');
+
+                    if (remove) {
+                        alertWrap.remove();
+                    } else {
+                        alertWrap.hide();
+                    }
+
+                    if (typeof onClose === 'function') {
+                        onClose(this.instance);
+                    } else if (typeof this.onClose === 'function') {
+                        this.onClose(this.instance);
+                    }
+
+                    if ($('.jAlert:visible').length === 0) {
+                        $('html,body').css('overflow', '');
+                    }
+                }, this.animationTimeout);
+            }
+            return this;
+        }
+
+        showAlert(replaceOthers = true, removeOthers = true, onOpen, onClose) {
+            if (replaceOthers) {
+                $('.jAlert:visible').data('jAlert').jAlert().closeAlert(removeOthers);
+            }
+
+            // Put this one above the last one by moving to end of dom
+            const wrap = this.instance.parents('.ja_wrap');
+            $('body').append(wrap);
+
+            this.animateAlert('show');
+
+            if (typeof onClose === 'function') {
+                this.onClose = onClose;
+            }
+
+            window.setTimeout(() => {
+                if (typeof onOpen === 'function') {
+                    onOpen(this.instance);
+                }
+            }, this.animationTimeout);
+
+            return this;
+        }
+    }
+
+    // Main plugin function
     $.fn.jAlert = function(options) {
+        // Remove focus from current element to prevent multiple popups
+        $('body').focus().blur();
 
-        //remove focus from current element so you can't just hit enter a bunch to popup the same alert over and over again
-        $('body').focus();
-        $('body').blur();
-
-        var themes = ['default', 'green', 'dark_green', 'red', 'dark_red', 'black', 'brown', 'gray', 'dark_gray', 'blue', 'dark_blue', 'yellow'],
-            sizes = ['xsm', 'sm', 'md', 'lg', 'xlg', 'full', 'auto'],
-            sizeAliases = {'xsmall': 'xsm', 'small':'sm','medium':'md','large':'lg','xlarge':'xlg'},
-            backgroundColors = ['white', 'black'],
-            styles = [], //array of styles that gets joined together with a space between in a style tag on the jalert div
-            classes = ['animated'], //array of classes that get joined together with a space between on the jalert div
-            backgroundClasses = []; //array of classes that get joined together with a space between on the jalert background div
-
-        /* Block Multiple Instances by running jAlert for each one */
-        if (this.length > 1){
+        // Block Multiple Instances by running jAlert for each one
+        if (this.length > 1) {
             this.each(function() {
                 $.fn.jAlert(options);
             });
             return this;
         }
 
-        /* If this is an existing jAlert, return it so you can access public methods and properties */
-        if( typeof $(this)[0] != 'undefined' )
-        {
-            if( $(this)[0]['jAlert'] != 'undefined' )
-            {
-                return $(this)[0]['jAlert'];
-            }
+        // If this is an existing jAlert, return it so you can access public methods and properties
+        if (typeof $(this)[0] !== 'undefined' && $(this)[0]['jAlert'] !== 'undefined') {
+            return $(this)[0]['jAlert'];
         }
 
-        /**
-         * Use the defaults object to find any accidentally lowercased keys from the options object and convert them.
-         */
-        $.each($.fn.jAlert.defaults, function(key, val){
-            var lowerKey = key.toLowerCase();
-            if( typeof options[lowerKey] !== 'undefined' )
-            {
-                options[key] = options[lowerKey];
-            }
-        });
+        // Normalize options
+        options = utils.normalizeOptions(options);
 
-        /* Combine user options with default */
+        // Combine user options with defaults
         options = $.extend({}, $.fn.jAlert.defaults, options);
-
-        /* If they didn't set an id, just create a random one */
-        if( !options.id )
-        {
-            var unique = Date.now().toString() + Math.floor(Math.random() * 100000);
-            var alert_id = 'ja_' + unique;
-        }
-        else
-        {
-            var alert_id = options.id;
+        
+        // Deep merge slideshowOptions if they exist
+        if (options.slideshowOptions && $.fn.jAlert.defaults.slideshowOptions) {
+            options.slideshowOptions = $.extend({}, $.fn.jAlert.defaults.slideshowOptions, options.slideshowOptions);
         }
 
-        /**
-         * This is the alert object with the public properties/methods you can call
-         */
-        var alert = {
-            set: function(key, val)
-            {
-                alert[key] = val;
-                return alert;
-            },
-            __set: function(key, val)
-            {
-                return alert.set(key, val);
-            },
-            get: function(key)
-            {
-                return alert[key];
-            },
-            __get: function(key)
-            {
-                return alert.get(key);
-            },
-            animateAlert: function(which){
-                if( which == 'hide' )
-                {
-                    if( alert.instance.data('jAlert').blurBackground )
-                    {
-                        $('body').removeClass('ja_blur');
-                    }
+        // Set ID
+        const alertId = options.id || utils.generateId();
+        options.id = alertId;
 
-                    alert.instance.removeClass(alert.showAnimation).addClass(alert.hideAnimation);
-                }
-                else
-                {
-                    if( alert.instance.data('jAlert').blurBackground )
-                    {
-                        $('body').addClass('ja_blur');
-                    }
-                    alert.instance.addClass(alert.showAnimation).removeClass(alert.hideAnimation).show();
-                }
+        // Create alert instance
+        const alert = new Alert(options);
 
-                return alert;
-            },
-            /* Hides an alert and optionally removes it */
-            closeAlert: function(remove, onClose)
-            {
-                if( remove != false )
-                {
-                    remove = true;
-                }
+        // Process content
+        alert.content = utils.processContent(alert.content, alert);
 
-                if(alert.instance)
-                {
-                    alert.animateAlert('hide');
-
-                    window.setTimeout(function()
-                    {
-                        var alertWrap = alert.instance.parents('.ja_wrap');
-
-                        if( remove )
-                        {
-                            alertWrap.remove();
-                        }
-                        else
-                        {
-                            alertWrap.hide();
-                        }
-
-                        if(typeof onClose == 'function')
-                        {
-                            onClose(alert.instance);
-                        }
-                        else if(typeof alert.onClose == 'function')
-                        {
-                            alert.onClose(alert.instance);
-                        }
-
-                        if( $('.jAlert:visible').length === 0 )
-                        {
-                            $('html,body').css('overflow', '');
-                        }
-
-                    }, alert.animationTimeout);
-                }
-
-                return alert;
-            },
-            /* Shows an alert that already exists */
-            showAlert: function(replaceOthers, removeOthers, onOpen, onClose){
-
-                if( replaceOthers != false )
-                {
-                    replaceOthers = true;
-                }
-
-                if( removeOthers !== false )
-                {
-                    removeOthers = true;
-                }
-
-                if( replaceOthers )
-                {
-                    $('.jAlert:visible').data('jAlert').jAlert().closeAlert(removeOthers);
-                }
-
-                /* Put this one above the last one by moving to end of dom */
-                var wrap = alert.instance.parents('.ja_wrap');
-
-                $('body').append(wrap);
-
-                alert.animateAlert('show');
-
-                if( typeof onClose == 'function' )
-                {
-                    alert.onClose = onClose;
-                }
-
-                window.setTimeout(function(){
-
-                    if(typeof onOpen == 'function')
-                    {
-                        onOpen(alert.instance);
-                    }
-
-                }, alert.animationTimeout);
-
-                return alert;
-            }
-        };
-
-        /**
-         * Add all options to the alert object as properties
-         */
-        $.each(options, function(key, val){
-            alert.set(key, val);
-        });
-
-        /**
-         * Add this instance's unique ID to the alert object
-         */
-        alert.set('id', alert_id);
-
-        /**
-         * If content is a selector (id only) and the element exists, grab it's content
-         */
-        if( alert.content && alert.content.indexOf('#') === 0 )
-        {
-            if( $(alert.content).length > 0 )
-            {
-                alert.content = $(alert.content).html();
-            }
+        // Process video URL
+        if (alert.video) {
+            alert.video = utils.processVideoUrl(alert.video);
         }
 
-        /**
-         * If content is a dom element, grab it's HTML
-         */
-        if( typeof alert.content === 'object' && alert.jquery )
-        {
-            alert.content = alert.content.html();
-        }
-
-        /**
-         * Automatically convert a youtube video's URL to the embed version
-         */
-        if( alert.video && alert.video.indexOf('youtube.com/watch?v=') > -1 && alert.video.indexOf('embed') === -1 )
-        {
-            alert.video = alert.video.replace('watch?v=', 'embed/');
-        }
-
-        /**
-         * If this is a confirm popup, set the buttons, content, etc
-         */
-        if( alert.type == 'confirm' )
-        {
-            if( !alert.content )
-            {
-                alert.content = alert.confirmQuestion;
-            }
-
-            alert.btns = [
-                { 'text': alert.confirmBtnText, 'theme': 'green', 'class': 'confirmBtn', 'closeAlert': true, 'onClick': alert.onConfirm },
-                { 'text': alert.denyBtnText, 'theme': 'red', 'class': 'denyBtn', 'closeAlert': true, 'onClick': alert.onDeny }
-            ];
-
-            alert.autofocus = alert.confirmAutofocus;
-        }
-
-        /* If used the alias color, swap to theme */
-        if( alert.color )
-        {
-            alert.theme = alert.color;
-        }
-
-        /**
-         * Make sure theme is a real class
-         */
-        if( $.inArray(alert.theme, themes) == -1 )
-        {
-            console.log('jAlert Config Error: Invalid theme selection.');
-            return false;
-        }
-
-        /**
-         * Push the theme to the classes array
-         */
-        classes.push('ja_'+alert.theme);
-
-        /* If they set custom classes */
-        if( alert['class'] )
-        {
-            classes.push(alert['class']);
-        }
-        if( alert.classes )
-        {
-            classes.push(alert.classes);
-        }
-
-        //if fullscreen, add class
-        if( alert.fullscreen )
-        {
-            classes.push('ja_fullscreen');
-        }
-
-        //if no padding on the content
-        if( alert.noPadContent )
-        {
-            classes.push('ja_no_pad');
-        }
-
-        /* If no title, add class */
-        if( !alert.title )
-        {
-            classes.push( 'ja_noTitle' );
-        }
-
-        /* If used the alias width, swap to size */
-        if( alert.width )
-        {
-            alert.size = alert.width;
-        }
-
-        /* if it's set and it's not in the array of sizes OR it's an object and it's missing width/height */
-        if( alert.size && ((typeof alert.size == 'object' && (typeof alert.size.width == 'undefined' || typeof alert.size.height == 'undefined'))) ) {
-            console.log('jAlert Config Error: Invalid size selection (try a preset or make sure you\'re including height and width in your size object).');
-            return false;
-        }
-        /* If it's not set, set to md */
-        else if( !alert.size )
-        {
-            classes.push('ja_sm');
-        }
-        /* If it's set and it's an object */
-        else if( typeof alert.size == 'object' )
-        {
-            styles.push('width: '+alert.size.width+';');
-            styles.push('height: '+alert.size.height+';');
-            classes.push('ja_setheight');
-        }
-        /* If it's set and it's not an object */
-        else
-        {
-            //swap alias for actual size class
-            if( typeof sizeAliases[alert.size] !== 'undefined' )
-            {
-                alert.size = sizeAliases[alert.size];
-            }
-
-            //if it's one of the sizes, set the class
-            if( $.inArray(alert.size, sizes) > -1 )
-            {
-                classes.push('ja_'+alert.size);
-            }
-            //otherwise, we assume they provided a px or % width
-            else
-            {
-                styles.push('width: '+alert.size+';');
-            }
-        }
-
-        /* Add background color class */
-        if( $.inArray(alert.backgroundColor, backgroundColors) == -1 )
-        {
-            console.log('jAlert Config Error: Invalid background color selection.');
-            return false;
-        }
-
-        backgroundClasses.push('ja_wrap_'+alert.backgroundColor);
-
-        alert.onOpen = [ alert.onOpen ];
-
-        var onload = "onload='$.fn.jAlert.mediaLoaded($(this))'",
-            loader = "<div class='ja_loader'>Loading...</div>";
-
-        /**
-         * Picture is now an alias for image
-         */
-        if( alert.picture )
-        {
+        // Handle picture alias
+        if (alert.picture) {
             alert.image = alert.picture;
         }
 
-        /* Creates content */
-        if( alert.image )
-        {
-            //images should never have padding
-            alert.noPadContent = true;
-
-            alert.content = "<div class='ja_media_wrap'>"+
-                loader+
-                "<img src='"+alert.image+"' class='ja_img' "+onload+"'";
-            if( alert.imageWidth )
-            {
-                alert.content += " style='width: "+alert.imageWidth+"'";
-            }
-            alert.content += ">"+
-                "</div>";
-
-            /* Add to the onOpen callbacks array to shrink the alert to fit the size of the image if the image is smaller than it */
-            alert.onOpen.unshift( function(elem){
-                var img_elem = elem.find('.ja_img');
-                img_elem.on('load', function () {
-                    elem.css('width', img_elem.width() + 'px');
-                    elem.css('height', img_elem.height() + 'px');
-                });
-            });
-        }
-        else if( alert.video )
-        {
-            alert.content = "<div class='ja_media_wrap'>"+
-                loader+
-                "<div class='ja_video'>"+
-                "</div>"+
-                "</div>";
-
-            /* Add to the onOpen callbacks array to append the iframe and attach the onload callback in a crossbrowser compatible way (IE is a bizitch). */
-            alert.onOpen.unshift( function(elem){
-                var iframe = document.createElement("iframe");
-                iframe.src = elem.data('jAlert').video;
-
-                if(iframe.addEventListener)
-                {
-                    iframe.addEventListener('load', function(){
-                        $.fn.jAlert.mediaLoaded($(this));
-                    }, true)
-                }
-                else if (iframe.attachEvent){
-                    iframe.attachEvent("onload", function(){
-                        $.fn.jAlert.mediaLoaded($(this));
-                    });
-                } else {
-                    iframe.onload = function(){
-                        $.fn.jAlert.mediaLoaded($(this));
-                    };
-                }
-
-                elem.find('.ja_video').append(iframe);
-            });
-
-        }
-        else if( alert.iframe )
-        {
-            //if no height was provided, use flexbox to stretch the height to fit the window
-            if( !alert.iframeHeight ){
-                classes.push('ja_stretch_height');
-            }
-
-            alert.content = "<div class='ja_media_wrap'>"+
-                loader+
-                "</div>";
-
-            /* Add to the onOpen callbacks array to append the iframe and attach the onload callback in a crossbrowser compatible way (IE is a bizitch). */
-            alert.onOpen.unshift( function(elem){
-                var iframe = document.createElement("iframe");
-                iframe.src = elem.jAlert().iframe;
-                iframe.className = 'ja_iframe';
-
-                if(iframe.addEventListener)
-                {
-                    iframe.addEventListener('load', function(){
-                        $.fn.jAlert.mediaLoaded($(this));
-                    }, true)
-                }
-                else if (iframe.attachEvent){
-                    iframe.attachEvent("onload", function(){
-                        $.fn.jAlert.mediaLoaded($(this));
-                    });
-                } else {
-                    iframe.onload = function(){
-                        $.fn.jAlert.mediaLoaded($(this));
-                    };
-                }
-
-                elem.find('.ja_media_wrap').append(iframe);
-            });
-        }
-        else if( alert.ajax )
-        {
-            alert.content = "<div class='ja_media_wrap'>"+
-                loader+
-                "</div>";
-
-            /* Store as another var */
-            onAjaxCallbacks = alert.onOpen;
-
-            /* Overwrite the onOpen to be the ajax call */
-            alert.onOpen = [function(elem){
-                $.ajax(elem.jAlert().ajax, {
-                    async: true,
-                    complete: function(jqXHR, textStatus)
-                    {
-                        elem.find('.ja_media_wrap').replaceWith(jqXHR.responseText);
-
-                        /* Run onOpen callbacks here */
-                        $.each(onAjaxCallbacks, function(index, onAjax){
-                            onAjax(elem);
-                        });
-                    },
-                    error: function(jqXHR, textStatus, errorThrown)
-                    {
-                        alert.onAjaxFail(elem, 'Error getting content: Code: '+jqXHR.status+ ' : Msg: '+jqXHR.statusText);
-                    }
-                });
-            }];
+        // Handle color alias
+        if (alert.color) {
+            alert.theme = alert.color;
         }
 
-        var getBtnHTML = function(btn){
+        // Handle width alias
+        if (alert.width) {
+            alert.size = alert.width;
+        }
 
-            if(typeof btn.href == 'undefined'){ btn.href = ''; }
-            if(typeof btn['class'] == 'undefined'){ btn['class'] = ''; }
-            if(typeof btn.theme == 'undefined'){ btn['class'] += ' ja_btn_default'; }else{ btn['class'] += ' ja_btn_'+btn.theme; }
-            if(typeof btn.text == 'undefined'){ btn.text = ''; }
-            if(typeof btn.id == 'undefined'){ var unique = Date.now().toString() + Math.floor(Math.random() * 100000); btn.id = 'ja_btn_' + unique; }
-            if(typeof btn.target == 'undefined'){ btn.target = '_self'; }
-            if(typeof btn.closeAlert == 'undefined'){ btn.closeAlert = true; }
+        // Handle confirm type
+        if (alert.type === 'confirm') {
+            utils.setupConfirmButtons(alert);
+        }
 
-            $('body').off('click', '#'+btn.id); //remove handler before adding it to remove dupe handlers
+        // Validate options
+        if (!utils.validateTheme(alert.theme) || 
+            !utils.validateSize(alert.size) || 
+            !utils.validateBackgroundColor(alert.backgroundColor)) {
+            return false;
+        }
 
-            /* Attach on click handler */
-            $('body').on('click', '#'+btn.id, function(e){
+        // Ensure onOpen is an array
+        alert.onOpen = Array.isArray(alert.onOpen) ? alert.onOpen : [alert.onOpen];
 
-                var button = $(this);
+        // Create content based on type
+        let content = alert.content || '';
+        const mediaContent = utils.createMediaContent(alert);
+        if (mediaContent) {
+            content = mediaContent;
+        }
 
-                alert = button.parents('.jAlert').jAlert();
+        // Create and add alert to DOM
+        const addAlert = () => {
+            const html = utils.createAlertHTML(alert, content);
+            const alertHTML = $(html);
 
-                if( btn.closeAlert )
-                {
-                    alert.closeAlert();
-                }
-
-                var callbackResponse = true;
-
-                if( typeof btn.onClick == 'function' )
-                {
-                    callbackResponse = btn.onClick(e, button, alert);
-                }
-
-                if( !callbackResponse || btn.closeAlert )
-                {
-                    e.preventDefault();
-                    return false;
-                }
-
-                return callbackResponse;
-
-            });
-
-            return "<a href='"+btn.href+"' id='"+btn.id+"' target='"+btn.target+"' class='ja_btn "+btn['class']+"'>"+btn.text+"</a> ";
-        };
-
-        /* Adds a new alert to the dom */
-        var addAlert = function(content){
-
-            var html = '';
-
-            html += '<div class="ja_wrap '+backgroundClasses.join(' ')+'">'+
-                '<div class="jAlert '+classes.join(' ')+ '" style="' +styles.join(' ')+ '" id="' +alert.id+ '">'+
-                '<div>';
-
-            if( alert.closeBtn )
-            {
-                html += 		"<div class='closejAlert ja_close";
-                if( alert.closeBtnAlt )
-                {
-                    html += ' ja_close_alt';
-                }
-                else if( alert.closeBtnRoundWhite )
-                {
-                    html += ' ja_close_round_white';
-                }
-                else if( alert.closeBtnRound )
-                {
-                    html += ' ja_close_round';
-                }
-                html += "'>&times;</div>"; //closejAlert has a close handler attached, ja_close is for styling
-            }
-
-            if( alert.title )
-            {
-                html += 		"<div class='ja_title'><div>"+alert.title+"</div></div>";
-            }
-
-            html += 			'<div class="ja_body">'+content;
-
-
-            if( alert.btns )
-            {
-                html += 			'<div class="ja_btn_wrap ';
-
-                if( alert.btnBackground )
-                {
-                    html += 		'optBack';
-                }
-
-                html += 			'">';
-            }
-
-            if( typeof alert.btns[0] == 'object' )
-            {
-                $.each(alert.btns, function(index, btn){
-                    if( typeof btn == 'object' )
-                    {
-                        html += 		getBtnHTML(btn);
-                    }
-                });
-            }
-            else if( typeof alert.btns == 'object' )
-            {
-                html += 				getBtnHTML(alert.btns);
-            }
-            else if( alert.btns )
-            {
-                console.log('jAlert Config Error: Incorrect value for btns (must be object or array of objects): '+alert.btns);
-            }
-
-            if( alert.btns )
-            {
-                html += 			'</div>';
-            }
-
-            html += 			'</div>'+
-                '</div>'+
-                '</div>'+
-                '</div>';
-
-            var alertHTML = $(html);
-
-            if( alert.replaceOtherAlerts )
-            {
-                var alerts = $('.jAlert:visible');
-                alerts.each(function(){
+            if (alert.replaceOtherAlerts) {
+                $('.jAlert:visible').each(function() {
                     $(this).jAlert().closeAlert();
                 });
             }
 
             $('body').append(alertHTML);
-
             $('.jAlert:last').data('jAlert', alert);
 
-            //cache instance
-            alert.instance = $('#'+alert.id);
+            // Cache instance
+            alert.instance = $('#' + alert.id);
 
-            //attach alert object to dom element
+            // Attach alert object to dom element
             alert.instance[0]['jAlert'] = alert;
 
-            //doing this now will prevent it from happening mid-animation
+            // Prevent scrolling
             $('html,body').css('overflow', 'hidden');
 
-            //show the new alert
+            // Show the new alert
             alert.animateAlert('show');
 
-            //add close button handler
-            if( alert.closeBtn ){
-
-                alert.instance.on('click', '.closejAlert', function(e){
+            // Add close button handler
+            if (alert.closeBtn) {
+                alert.instance.on('click', '.closejAlert', function(e) {
                     e.preventDefault();
                     $(this).parents('.jAlert:first').closeAlert();
                     return false;
                 });
-
             }
 
-            /* Bind mouseup handler to document if this alert has closeOnClick enabled */
-            if( alert.closeOnClick ){
-
-                /* Unbind if already exists */
+            // Bind mouseup handler to document if this alert has closeOnClick enabled
+            if (alert.closeOnClick) {
                 $(document).off('mouseup touchstart', $.fn.jAlert.onMouseUp);
-
-                /* Bind mouseup */
                 $(document).on('mouseup touchstart', $.fn.jAlert.onMouseUp);
-
             }
 
-            /* Bind on keydown handler to document and if esc was pressed, find all visible jAlerts with that close option enabled and close them */
-            if( alert.closeOnEsc ){
-
-                /* Unbind if already exists */
+            // Bind on keydown handler to document for ESC key
+            if (alert.closeOnEsc) {
                 $(document).off('keydown', $.fn.jAlert.onEscKeyDown);
-
-                /* Bind keydown */
                 $(document).on('keydown', $.fn.jAlert.onEscKeyDown);
-
             }
 
-            /* If there are onOpen callbacks, run them. */
-            if( alert.onOpen )
-            {
-                $.each(alert.onOpen, function(index, onOpen){
+            // Run onOpen callbacks
+            if (alert.onOpen) {
+                alert.onOpen.forEach(function(onOpen) {
                     onOpen(alert.instance);
                 });
             }
 
-            /* If the alert has an element that should be focused by default */
-            if( alert.autofocus )
-            {
+            // Handle autofocus
+            if (alert.autofocus) {
                 alert.instance.find(alert.autofocus).focus();
-            }
-            else
-            {
+            } else {
                 alert.instance.focus();
             }
-            /*
-            	Set Auto
-            	usage $.jAlert({
-            		autoClose : 3500,
-            	});
-             */
-            if(alert.autoClose)
-            {
-                $.fn.closeTimer(function()
-                {
-                    var currentAlert = $.jAlert('current');
-                    if(currentAlert !== false)
-                    {
+
+            // Handle auto close
+            if (alert.autoClose) {
+                $.fn.closeTimer(function() {
+                    const currentAlert = $.jAlert('current');
+                    if (currentAlert !== false) {
                         currentAlert.closeAlert();
                     }
                 }, alert.autoClose);
             }
 
             return alert.instance;
-
         };
 
-        /* Shows an alert based on content type */
-        this.initialize = function(){
-
-            if( !alert.content && !alert.image && !alert.video && !alert.iframe && !alert.ajax )
-            {
-                console.log('jAlert potential error: No content defined');
-                return addAlert('');
+        // Initialize
+        if (!alert.content && !alert.image && !alert.video && !alert.iframe && !alert.ajax) {
+            console.log('jAlert potential error: No content defined');
+            return addAlert();
+        } else {
+            if (!alert.content) {
+                alert.content = '';
             }
-            else
-            {
-                if( !alert.content )
-                {
-                    alert.content = '';
-                }
+            return addAlert();
+        }
 
-                return addAlert(alert.content);
-            }
-
-        };
-
-        //initialize
-        this.initialize();
-
-        //return the object so you can chain public methods/properties
+        // Return the alert object for chaining
         return alert;
-
-        /* END OF PLUGIN */
     };
 
-    /* set closeTimer for preventing on duplicate */
-    $.fn.closeTimer = (function(){
-        var timer = 0;
-        return function(callback, ms){
-            clearTimeout (timer);
+    // Close timer utility
+    $.fn.closeTimer = (function() {
+        let timer = 0;
+        return function(callback, ms) {
+            clearTimeout(timer);
             timer = setTimeout(callback, ms);
         };
     })(jQuery);
 
-    /* Default alert */
+    // Default settings
     $.fn.jAlert.defaults = {
-        'title': false, //title for the popup (false = don't show)
-        'content': false, //html for the popup (replaced if you use image, ajax, or iframe)
-        'noPadContent': false, //remove padding from the body
-        'fullscreen': false, //make the jAlert completely fullscreen
-        'image': false, //adds a centered img tag
-        'imageWidth': 'auto', //defaults to max-width: 100%; width: auto;
-        'video': false, //adds a responsive iframe video - value is the "src" of the iframe
-        'ajax': false, //uses ajax call to get contents
-        'onAjaxFail': function(alert, errorThrown){ //callback for when ajax fails
+        'title': false,
+        'content': false,
+        'noPadContent': false,
+        'fullscreen': false,
+        'image': false,
+        'imageWidth': 'auto',
+        'video': false,
+        'ajax': false,
+        'onAjaxFail': function(alert, errorThrown) {
             alert.jAlert().closeAlert();
-            errorAlert(errorThrown);
+            if (typeof errorAlert === 'function') {
+                errorAlert(errorThrown);
+            }
         },
-        'iframe': false, //uses iframe as content
-        'iframeHeight': false, //string. height of the iframe within the popup (false = flex to fit)
-        'class': '', //adds a class to the jAlert (add as many as you want space delimited)
-        'classes': '', //add classes to the jAlert (space delimited)
-        'id': false, //adds an ID to the jAlert
+        'iframe': false,
+        'iframeHeight': false,
+        'slideshow': false,
+        'slideshowOptions': {
+            'autoAdvance': false,
+            'autoAdvanceInterval': 3000,
+            'keyboardNav': true,
+            'pauseOnHover': false,
+            'resizeMode': 'fitCurrent', // 'fitCurrent' or 'fitLargest'
+            'loop': true,
+            'showArrows': true,
+            'showCounter': 'numbers', // 'numbers', 'dots', or false
+            'arrowButtons': null // Custom arrow buttons DOM elements
+        },
+        'class': '',
+        'classes': '',
+        'id': false,
         'showAnimation': 'fadeInUp',
         'hideAnimation': 'fadeOutDown',
-        'animationTimeout': 600, //approx duration of animation to wait until onClose
-        'theme': 'default', // red, green, blue, black, default
-        'backgroundColor': 'black', //white, black
-        'blurBackground': false, //blurs background elements
-        'size': false, //false = css default, xsm, sm, md, lg, xlg, full, { height: 200, width: 200 }
-        'replaceOtherAlerts': false, //if there's already an open jAlert, remove it first
-        'closeOnClick': false, //close the alert when you click anywhere
-        'closeOnEsc': true, //close the alert when you click the escape key
-        'closeBtn': true, //adds a button to the top right of the alert that allows you to close it
-        'closeBtnAlt': false, //alternative close button
-        'closeBtnRound': true, //alternative round close button
-        'closeBtnRoundWhite': false, //alternative round close button (in white)
-        'btns': false, //adds buttons to the popup at the bottom. Pass an object for a single button, or an object of objects for many
-        'autoClose' : false, // By default we specify as false. You can add secound
-        /*
-         Variety of buttons you could create (also, an example of how to pass the object
-
-         'btns': [
-         {'text':'Open in new window', 'closeAlert':false, 'href': 'http://google.com', 'target':'_new'},
-         {'text':'Cool, close this alert', 'theme': 'blue', 'closeAlert':true},
-         {'text':'Buy Now', 'closeAlert':true, 'theme': 'green', 'onClick': function(){ console.log('You bought it!'); } },
-         {'text':'I do not want it', 'closeAlert': true, 'theme': 'red', 'onClick': function(){ console.log('Did not want it'); } },
-         {'text':'DOA', 'closeAlert': true, 'theme': 'black', 'onClick': function(){ console.log('Dead on arrival'); } }
-         ]
-         */
-        'btnBackground': true, //adds optional background to btns
-        'autofocus': false, //pass a selector to autofocus on it
-
-        'onOpen': function(alert){ //on open call back. Fires just after the alert has finished rendering
+        'animationTimeout': 600,
+        'theme': 'default',
+        'backgroundColor': 'black',
+        'blurBackground': false,
+        'size': false,
+        'replaceOtherAlerts': false,
+        'closeOnClick': false,
+        'closeOnEsc': true,
+        'closeBtn': true,
+        'closeBtnAlt': false,
+        'closeBtnRound': true,
+        'closeBtnRoundWhite': false,
+        'btns': false,
+        'autoClose': false,
+        'btnBackground': true,
+        'autofocus': false,
+        'onOpen': function(alert) {
             return false;
         },
-        'onClose': function(alert){ //fires when you close the alert
+        'onClose': function(alert) {
             return false;
         },
-
-        'type': 'modal', //modal, confirm, tooltip
-
-        /* The following only applies when type == 'confirm' */
+        'type': 'modal',
         'confirmQuestion': 'Are you sure?',
         'confirmBtnText': 'Yes',
         'denyBtnText': 'No',
-        'confirmAutofocus': '.confirmBtn', //confirmBtn or denyBtn
-        'onConfirm': function(e, btn){
+        'confirmAutofocus': '.confirmBtn',
+        'onConfirm': function(e, btn) {
             e.preventDefault();
             console.log('confirmed');
             return false;
         },
-        'onDeny': function(e, btn){
+        'onDeny': function(e, btn) {
             e.preventDefault();
-            //console.log('denied');
             return false;
         }
     };
 
-    /** Mouseup on document */
-    $.fn.jAlert.onMouseUp = function(e){
-        //cross browser
-        var target = e.target ? e.target : e.srcElement;
+    // Event handlers
+    $.fn.jAlert.onMouseUp = function(e) {
+        const target = e.target || e.srcElement;
+        const lastVisibleAlert = $('.jAlert:visible:last');
 
-        /* Find top visible jAlert and see if it has closeOnClick enabled */
-        var lastVisibleAlert = $('.jAlert:visible:last');
-
-        if( lastVisibleAlert.length > 0 && lastVisibleAlert.data('jAlert').closeOnClick )
-        {
-            //close only if clicked outside
-            if( !$(target).is('.jAlert *') )
-            {
+        if (lastVisibleAlert.length > 0 && lastVisibleAlert.data('jAlert').closeOnClick) {
+            if (!$(target).is('.jAlert *')) {
                 lastVisibleAlert.data('jAlert').closeAlert();
             }
         }
-
     };
 
-    /* Keydown on document (escape key) */
-    $.fn.jAlert.onEscKeyDown = function(e){
-
-        /* Escape = 27 */
-        if(e.keyCode === 27){
-
-            /* Find top visible jAlert and see if it has closeOnClick enabled */
-            var lastVisibleAlert = $('.jAlert:visible:last');
-
-            if( lastVisibleAlert.length > 0 && lastVisibleAlert.data('jAlert').closeOnEsc )
-            {
+    $.fn.jAlert.onEscKeyDown = function(e) {
+        if (e.keyCode === 27) {
+            const lastVisibleAlert = $('.jAlert:visible:last');
+            if (lastVisibleAlert.length > 0 && lastVisibleAlert.data('jAlert').closeOnEsc) {
                 lastVisibleAlert.data('jAlert').closeAlert();
             }
-
         }
-
     };
 
-    $.fn.attachjAlert = function(e){
+    // Utility functions
+    $.fn.attachjAlert = function(e) {
         e.preventDefault();
         $.jAlert($(this).data());
         return false;
     };
 
-    /* If you're not using the DOM (aka, you're not hiding or showing a specific alert, you can just use $.jAlert */
-    $.jAlert = function(options){
-
-        /**
-         * If you pass "current" to $.jAlert('current'); it should return the top-most visible jAlert
-         */
-        if( options == 'current' )
-        {
-            var latest = $('.jAlert:visible:last');
-            if( latest.length > 0 )
-            {
+    $.jAlert = function(options) {
+        // Return current alert
+        if (options === 'current') {
+            const latest = $('.jAlert:visible:last');
+            if (latest.length > 0) {
                 return latest.data('jAlert');
             }
-
             return false;
         }
 
-        /**
-         * Attaches the on-click handler to data-attributes
-         */
-        if( options == 'attach' )
-        {
-            /* If there are data attributes for showing jAlerts, add the click handler */
-            $('[data-jAlert]').off('click', $.fn.attachjAlert);
-            $('[data-jAlert]').on('click', $.fn.attachjAlert);
-            $('[data-jalert]').off('click', $.fn.attachjAlert);
-            $('[data-jalert]').on('click', $.fn.attachjAlert);
-
+        // Attach data attributes
+        if (options === 'attach') {
+            $('[data-jAlert]').off('click', $.fn.attachjAlert).on('click', $.fn.attachjAlert);
+            $('[data-jalert]').off('click', $.fn.attachjAlert).on('click', $.fn.attachjAlert);
             return false;
         }
 
         return $.fn.jAlert(options);
     };
 
-    /* Alert on click function - attach to existing dom */
-    $.fn.alertOnClick = function(options)
-    {
-        $(this).on('click', function(e){
+    $.fn.alertOnClick = function(options) {
+        $(this).on('click', function(e) {
             e.preventDefault();
             $.jAlert(options);
             return false;
         });
     };
 
-    /* Alert on click function - global, works for changing dom */
-    $.alertOnClick = function(selector, options)
-    {
-        $('body').on('click', selector, function(e){
+    $.alertOnClick = function(selector, options) {
+        $('body').on('click', selector, function(e) {
             e.preventDefault();
             $.jAlert(options);
             return false;
         });
     };
 
-    $.fn.closeAlert = function(remove, onClose){
-        if( $(this).data('jAlert') )
-        {
+    $.fn.closeAlert = function(remove, onClose) {
+        if ($(this).data('jAlert')) {
             $(this).data('jAlert').closeAlert(remove, onClose);
         }
     };
 
-    /* Onload callback for iframe, img, etc */
-    $.fn.jAlert.mediaLoaded = function(elem){
-        var wrap = elem.parents('.ja_media_wrap'),
-            vid_wrap = wrap.find('.ja_video'),
-            alert = elem.parents('.jAlert:first'),
-            jalert = alert.data('jAlert');
+    // Media loaded callback
+    $.fn.jAlert.mediaLoaded = function(elem) {
+        const wrap = elem.parents('.ja_media_wrap');
+        const vidWrap = wrap.find('.ja_video');
+        const alert = elem.parents('.jAlert:first');
+        const jalert = alert.data('jAlert');
 
         wrap.find('.ja_loader').remove();
 
-        if( vid_wrap.length > 0 )
-        {
-            vid_wrap.fadeIn('fast');
-        }
-        else
-        {
+        if (vidWrap.length > 0) {
+            vidWrap.fadeIn('fast');
+        } else {
             elem.fadeIn('fast');
         }
 
-        //if iframe, add height after load and set display: block
-        if( jalert.iframeHeight )
-        {
+        // If iframe, add height after load and set display: block
+        if (jalert.iframeHeight) {
             elem.css('flex', 'unset');
             elem.height(jalert.iframeHeight);
         }
-
     };
 
-    /* END OF ON JQUERY LOAD */
-})(jQuery);
+})(jQuery); 
