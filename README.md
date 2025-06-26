@@ -11,13 +11,13 @@
 
 **🎯 Perfect for jQuery Sites** - If you're already using jQuery, jAlert integrates seamlessly without adding bulky dependencies. No need to learn new frameworks or rewrite existing code.
 
-**⚡ Lightning Fast** - At just 14.9KB minified, jAlert loads instantly and performs beautifully. No bloat, just pure functionality.
+**⚡ Lightning Fast** - At just 40.8KB total (15.8KB JS + 25KB CSS), jAlert loads quickly and performs beautifully. No bloat, just pure functionality.
 
 **🎨 Beautiful by Default** - 12 built-in themes with smooth animations. Your modals will look professional out of the box.
 
-**📱 Mobile-First** - Responsive design that works perfectly on all devices. Touch-friendly controls and mobile-optimized interactions.
+**📱 Responsive Design** - Works perfectly on desktop, tablet, and mobile with touch-friendly controls and swipe gestures.
 
-**♿ Accessible** - Full keyboard navigation, screen reader support, and ARIA compliance. Everyone can use your modals.
+**♿ Basic Accessibility** - Keyboard navigation, screen reader support, and ARIA attributes for better usability.
 
 **🔄 Backward Compatible** - Upgrading from older versions? Your existing code will work without changes.
 
@@ -91,9 +91,9 @@ $.jAlert({
 
 ### ⌨️ **Keyboard & Accessibility**
 - Full keyboard navigation (ESC, arrow keys)
-- Screen reader support
-- ARIA compliance
-- Focus management
+- Basic screen reader support with ARIA attributes
+- Focus management and semantic HTML
+- Touch-friendly controls with swipe gestures
 
 ### ⚙️ **Flexible Configuration**
 - Custom sizes and positioning

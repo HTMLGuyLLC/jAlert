@@ -160,14 +160,14 @@
                 // Slideshow functionality
                 alert.noPadContent = true;
                 
-                let content = "<div class='ja_media_wrap ja_slideshow_wrap'>" + loader + 
+                let content = "<div class='ja_media_wrap ja_slideshow_wrap' role='region' aria-label='Image slideshow'>" + loader + 
                     "<div class='ja_slideshow_container'>" +
-                    "<div class='ja_slideshow_slide'></div>";
+                    "<div class='ja_slideshow_slide' role='img' aria-live='polite'></div>";
                 
                 // Add side arrows if enabled
                 if (alert.slideshowOptions && alert.slideshowOptions.showArrows !== false) {
-                    content += "<button class='ja_slideshow_arrow ja_slideshow_prev'>&lt;</button>" +
-                              "<button class='ja_slideshow_arrow ja_slideshow_next'>&gt;</button>";
+                    content += "<button type='button' class='ja_slideshow_arrow ja_slideshow_prev' aria-label='Previous image'>&lt;</button>" +
+                              "<button type='button' class='ja_slideshow_arrow ja_slideshow_next' aria-label='Next image'>&gt;</button>";
                 }
                 
                 content += "</div>";
@@ -175,9 +175,9 @@
                 // Add counter/dots if enabled
                 if (alert.slideshowOptions && alert.slideshowOptions.showCounter) {
                     if (alert.slideshowOptions.showCounter === 'dots') {
-                        content += "<div class='ja_slideshow_dots'></div>";
+                        content += "<div class='ja_slideshow_dots' role='tablist' aria-label='Slide navigation'></div>";
                     } else if (alert.slideshowOptions.showCounter === 'numbers') {
-                        content += "<div class='ja_slideshow_counter'>1 / 1</div>";
+                        content += "<div class='ja_slideshow_counter' aria-live='polite'>1 / 1</div>";
                     }
                 }
                 
@@ -236,7 +236,7 @@
                     if (slideshowOptions.showCounter === 'dots') {
                         let dotsHTML = '';
                         for (let i = 0; i < slides.length; i++) {
-                            dotsHTML += '<span class="ja_slideshow_dot" data-slide="' + i + '"></span>';
+                            dotsHTML += '<button type="button" class="ja_slideshow_dot" data-slide="' + i + '" role="tab" aria-label="Go to slide ' + (i + 1) + '" aria-selected="' + (i === 0 ? 'true' : 'false') + '"></button>';
                         }
                         dots.html(dotsHTML);
                     }
@@ -246,8 +246,8 @@
                         if (slideshowOptions.showCounter === 'numbers') {
                             counter.text(`${currentIndex + 1} / ${slides.length}`);
                         } else if (slideshowOptions.showCounter === 'dots') {
-                            dots.find('.ja_slideshow_dot').removeClass('active');
-                            dots.find('.ja_slideshow_dot[data-slide="' + currentIndex + '"]').addClass('active');
+                            dots.find('.ja_slideshow_dot').removeClass('active').attr('aria-selected', 'false');
+                            dots.find('.ja_slideshow_dot[data-slide="' + currentIndex + '"]').addClass('active').attr('aria-selected', 'true');
                         }
                     }
                     
@@ -439,6 +439,38 @@
                         });
                     }
                     
+                    // Touch support for mobile devices
+                    let touchStartX = 0;
+                    let touchEndX = 0;
+                    
+                    container.on('touchstart', function(e) {
+                        touchStartX = e.originalEvent.touches[0].clientX;
+                    });
+                    
+                    container.on('touchend', function(e) {
+                        touchEndX = e.originalEvent.changedTouches[0].clientX;
+                        handleSwipe();
+                    });
+                    
+                    function handleSwipe() {
+                        const swipeThreshold = 50;
+                        const diff = touchStartX - touchEndX;
+                        
+                        if (Math.abs(diff) > swipeThreshold) {
+                            if (diff > 0) {
+                                // Swipe left - next slide
+                                stopAutoAdvance();
+                                nextSlide();
+                                startAutoAdvance();
+                            } else {
+                                // Swipe right - previous slide
+                                stopAutoAdvance();
+                                prevSlide();
+                                startAutoAdvance();
+                            }
+                        }
+                    }
+                    
                     // Pause auto advance on hover
                     if (slideshowOptions.pauseOnHover) {
                         container.hover(
@@ -574,6 +606,7 @@
             btn.id = btn.id || 'ja_btn_' + utils.generateId();
             btn.target = btn.target || '_self';
             btn.closeAlert = btn.closeAlert !== false;
+            btn.ariaLabel = btn.ariaLabel || btn.text;
 
             // Remove handler before adding it to remove dupe handlers
             $('body').off('click', '#' + btn.id);
@@ -601,7 +634,11 @@
                 return callbackResponse;
             });
 
-            return "<a href='" + btn.href + "' id='" + btn.id + "' target='" + btn.target + "' class='ja_btn " + btn['class'] + "'>" + btn.text + "</a> ";
+            if (btn.href) {
+                return "<a href='" + btn.href + "' id='" + btn.id + "' target='" + btn.target + "' class='ja_btn " + btn['class'] + "' aria-label='" + btn.ariaLabel + "'>" + btn.text + "</a> ";
+            } else {
+                return "<button type='button' id='" + btn.id + "' class='ja_btn " + btn['class'] + "' aria-label='" + btn.ariaLabel + "'>" + btn.text + "</button> ";
+            }
         },
 
         createAlertHTML(alert, content) {
@@ -639,13 +676,13 @@
                 classes.push('ja_stretch_height');
             }
 
-            let html = '<div class="ja_wrap ' + backgroundClasses.join(' ') + '">' +
-                '<div class="jAlert ' + classes.join(' ') + '" style="' + styles.join(' ') + '" id="' + alert.id + '">' +
+            let html = '<div class="ja_wrap ' + backgroundClasses.join(' ') + '" role="dialog" aria-modal="true" aria-labelledby="' + alert.id + '_title" aria-describedby="' + alert.id + '_content">' +
+                '<div class="jAlert ' + classes.join(' ') + '" style="' + styles.join(' ') + '" id="' + alert.id + '" tabindex="-1">' +
                 '<div>';
 
             // Close button
             if (alert.closeBtn) {
-                html += "<div class='closejAlert ja_close";
+                html += "<button type='button' class='closejAlert ja_close";
                 if (alert.closeBtnAlt) {
                     html += ' ja_close_alt';
                 } else if (alert.closeBtnRoundWhite) {
@@ -653,16 +690,16 @@
                 } else if (alert.closeBtnRound) {
                     html += ' ja_close_round';
                 }
-                html += "'>&times;</div>";
+                html += "' aria-label='Close dialog'>&times;</button>";
             }
 
             // Title
             if (alert.title) {
-                html += "<div class='ja_title'><div>" + alert.title + "</div></div>";
+                html += "<div class='ja_title' id='" + alert.id + "_title'><div>" + alert.title + "</div></div>";
             }
 
             // Body
-            html += '<div class="ja_body">' + content;
+            html += '<div class="ja_body" id="' + alert.id + '_content">' + content;
 
             // Buttons
             if (alert.btns) {
