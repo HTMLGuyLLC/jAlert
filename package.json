@@ -2,7 +2,7 @@
   "type": "module",
   "name": "jAlert",
   "version": "5.0.0",
-  "description": "Simple jQuery (Modal | Popup | Lightbox | Alert) Plugin",
+  "description": "Simple jQuery (Modal | Popup | Lightbox | Alert) Plugin - ES5 compatible",
   "main": "dist/jAlert.min.js",
   "scripts": {
     "build": "webpack --mode=production",
@@ -30,6 +30,9 @@
     "url": "https://github.com/HTMLGuyLLC/jAlert/issues"
   },
   "homepage": "https://htmlguyllc.github.io/jAlert/",
+  "peerDependencies": {
+    "jquery": ">=3.7.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.23.0",
     "@babel/preset-env": "^7.23.0",
@@ -44,9 +47,17 @@
     "postcss-loader": "^7.3.3",
     "puppeteer": "^24.10.2",
     "webpack": "^5.89.0",
-    "webpack-cli": "^5.1.4"
-  },
-  "dependencies": {
+    "webpack-cli": "^5.1.4",
     "jquery": "^3.7.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie <= 10"
+  ],
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
   }
 }

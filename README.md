@@ -3,28 +3,227 @@
 ![Codeship](https://img.shields.io/badge/Build-Passing-green.svg)
 [![npm](https://img.shields.io/badge/NPM-v5.0.0-blue.svg)](https://npmjs.com/package/jAlert)
 
-# jAlert v5.0.0
-**Modern jQuery Modal/Popup/Lightbox Plugin**
+**🚀 Version 5.0.0 - Now Modernized!** This plugin has been completely rewritten with modern JavaScript practices (ES6+) while maintaining API compatibility. Requires jQuery 3.7.0+ and modern browsers.
 
-by HTMLGuy, LLC (https://htmlguy.com)
+# jAlert - jQuery Modal/Popup/Lightbox Plugin
 
-![jAlert Logo](https://htmlguyllc.github.io/jAlert/index-assets/img/logo.png)
+A simple, lightweight jQuery plugin for creating modals, popups, lightboxes, and alerts. **ES5 compatible** for maximum browser support.
 
-## 🚀 What's New in v5.0.0
+## Features
 
-**Complete Modernization!** jAlert has been completely rewritten with modern JavaScript practices while maintaining 100% backward compatibility:
+- **Modal/Popup/Lightbox**: Create beautiful modal dialogs, popups, and lightboxes
+- **Slideshow**: Built-in image slideshow with navigation controls
+- **Multiple Themes**: 12 built-in themes (default, green, red, blue, etc.)
+- **Responsive**: Works on desktop, tablet, and mobile devices
+- **Accessible**: Keyboard navigation and screen reader support
+- **Lightweight**: Minimal footprint with no external dependencies
+- **ES5 Compatible**: Works in all modern browsers and IE11+
 
-- **ES6+ Modern JavaScript** with Babel transpilation
-- **Webpack 5** for efficient bundling
-- **PostCSS** for modern CSS processing
-- **Comprehensive Test Suite** with Jest, Puppeteer, and visual regression testing
-- **Lightbox Slideshow Feature** with advanced navigation options
-- **Enhanced Performance** and smaller bundle size
-- **Full Backward Compatibility** with existing code
+## Requirements
 
-## 📖 Demo & Documentation
+- **jQuery 3.7.0+** (peer dependency)
+- **Modern browsers** (IE11+, Chrome, Firefox, Safari, Edge)
 
-**Live Demo:** https://htmlguyllc.github.io/jAlert/
+## Installation
+
+### NPM
+```bash
+npm install jalert
+```
+
+### Manual
+Download the latest release and include the files:
+```html
+<link rel="stylesheet" href="dist/jAlert.min.css">
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="dist/jAlert.min.js"></script>
+```
+
+## Quick Start
+
+```javascript
+// Basic alert
+$.jAlert({
+    title: 'Hello World',
+    content: 'This is a simple alert!'
+});
+
+// Image lightbox
+$.jAlert({
+    image: 'path/to/image.jpg',
+    title: 'My Image'
+});
+
+// Slideshow
+$.jAlert({
+    slideshow: ['image1.jpg', 'image2.jpg', 'image3.jpg'],
+    slideshowOptions: {
+        autoAdvance: true,
+        showArrows: true,
+        showCounter: 'dots'
+    }
+});
+```
+
+## API Documentation
+
+### Basic Usage
+```javascript
+$.jAlert(options)
+```
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `title` | string | false | Alert title |
+| `content` | string | false | Alert content (HTML supported) |
+| `theme` | string | 'default' | Theme color (default, green, red, blue, etc.) |
+| `size` | string/object | 'sm' | Size preset or custom dimensions |
+| `closeBtn` | boolean | true | Show close button |
+| `closeOnEsc` | boolean | true | Close on ESC key |
+| `closeOnClick` | boolean | false | Close on background click |
+
+### Media Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `image` | string | false | Image URL for lightbox |
+| `video` | string | false | Video URL (YouTube supported) |
+| `iframe` | string | false | Iframe URL |
+| `ajax` | string | false | AJAX URL to load content |
+
+### Slideshow Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `slideshow` | array/string | false | Array of images or selector |
+| `slideshowOptions.autoAdvance` | boolean | false | Auto-advance slides |
+| `slideshowOptions.showArrows` | boolean | true | Show navigation arrows |
+| `slideshowOptions.showCounter` | string | 'numbers' | Counter type ('numbers', 'dots') |
+| `slideshowOptions.keyboardNav` | boolean | true | Enable keyboard navigation |
+| `slideshowOptions.loop` | boolean | true | Loop slideshow |
+
+## Examples
+
+### Basic Alert
+```javascript
+$.jAlert({
+    title: 'Success!',
+    content: 'Your action was completed successfully.',
+    theme: 'green'
+});
+```
+
+### Image Lightbox
+```javascript
+$.jAlert({
+    image: 'https://example.com/image.jpg',
+    title: 'Beautiful Image',
+    size: 'lg'
+});
+```
+
+### Slideshow with Controls
+```javascript
+$.jAlert({
+    slideshow: [
+        'https://example.com/image1.jpg',
+        'https://example.com/image2.jpg',
+        'https://example.com/image3.jpg'
+    ],
+    slideshowOptions: {
+        autoAdvance: true,
+        autoAdvanceInterval: 3000,
+        showArrows: true,
+        showCounter: 'dots',
+        keyboardNav: true,
+        loop: true
+    }
+});
+```
+
+### Custom Size
+```javascript
+$.jAlert({
+    content: 'Custom sized alert',
+    size: {
+        width: '600px',
+        height: '400px'
+    }
+});
+```
+
+### AJAX Content
+```javascript
+$.jAlert({
+    ajax: '/api/content',
+    title: 'Dynamic Content'
+});
+```
+
+## Browser Compatibility
+
+- **IE11+** (ES5 compatible)
+- **Chrome 60+**
+- **Firefox 55+**
+- **Safari 12+**
+- **Edge 79+**
+
+## Development
+
+### Setup
+```bash
+git clone https://github.com/HTMLGuyLLC/jAlert.git
+cd jAlert
+npm install
+```
+
+### Build
+```bash
+npm run build      # Production build
+npm run dev        # Development with watch
+```
+
+### Testing
+```bash
+npm run test       # Unit tests
+npm run test:e2e   # End-to-end tests
+npm run test:all   # All tests
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Development Guidelines
+
+- Follow existing code style
+- Add tests for new features
+- Update documentation for API changes
+- Ensure ES5 compatibility is maintained
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Changelog
+
+### 5.0.0
+- **Major rewrite** with modern build system
+- **Slideshow feature** with navigation controls
+- **ES5 compatibility** for maximum browser support
+- **Improved accessibility** and keyboard navigation
+- **Better mobile support** and responsive design
+- **Comprehensive test suite** with unit, e2e, and visual tests
+- **Modern development workflow** with Webpack, Babel, and PostCSS
+
+### Previous Versions
+- See [GitHub releases](https://github.com/HTMLGuyLLC/jAlert/releases) for older versions
 
 ## 🎯 What is jAlert?
 
@@ -40,6 +239,10 @@ jAlert is a powerful, lightweight jQuery plugin for creating beautiful modals, p
 - **Keyboard Navigation** - Full keyboard support
 - **Accessibility** - ARIA compliant and screen reader friendly
 - **Modern Build System** - ES6+, Webpack, PostCSS
+
+## 📖 Demo & Documentation
+
+**Live Demo:** https://htmlguyllc.github.io/jAlert/
 
 ## 📦 Installation
 
@@ -62,45 +265,39 @@ Download the latest release from the [releases page](https://github.com/HTMLGuyL
 
 ## 🔧 Dependencies
 
-- **jQuery 3.7.0+** (supports 1.7+ for backward compatibility)
+jQuery 3.7.0+ (ES6+ features require modern browsers)
 
-## 🚀 Quick Start
+**Browser Support:**
+- Chrome 60+
+- Firefox 55+ 
+- Safari 12+
+- Edge 79+
+- Internet Explorer 11+
 
-### Basic Usage
-```html
-<!-- Include jQuery and jAlert -->
-<script src="jquery.min.js"></script>
-<script src="jAlert.min.js"></script>
-<link rel="stylesheet" href="jAlert.min.css">
+**Node.js Requirements:**
+- Node.js 14.0.0+
+- npm 6.0.0+
 
-<!-- Basic alert -->
-<script>
-$.jAlert({
-    'title': 'Hello World',
-    'content': 'This is a simple alert!'
-});
-</script>
-```
+## 🔄 Compatibility
 
-### Lightbox Slideshow
-```javascript
-$.jAlert({
-    'slideshow': [
-        'image1.jpg',
-        'image2.jpg',
-        'image3.jpg'
-    ],
-    'slideshowOptions': {
-        'showArrows': true,
-        'showCounter': 'numbers',
-        'autoAdvance': true,
-        'autoAdvanceInterval': 3000,
-        'loop': true,
-        'keyboardNav': true
-    },
-    'size': 'lg'
-});
-```
+**Important:** Version 5.0.0 is a complete rewrite with modern ES6+ JavaScript. While the API remains the same, the requirements have changed:
+
+### ✅ What's Compatible:
+- All existing API calls and options
+- Plugin initialization methods
+- Event handlers and callbacks
+- CSS classes and styling
+
+### ⚠️ What Changed:
+- **jQuery:** Now requires 3.7.0+ (was 1.7+)
+- **Browsers:** Modern browsers only (was IE6+)
+- **Build:** Uses modern build tools (was manual)
+
+### 🔧 Migration Guide:
+If you're upgrading from v4.x:
+1. Update jQuery to 3.7.0+
+2. Test in modern browsers
+3. No code changes needed (API is identical)
 
 ## 🛠️ Development
 
@@ -195,12 +392,6 @@ jAlert includes 12 built-in themes:
 - `blue`, `dark_blue`, `yellow`, `brown`
 - `gray`, `dark_gray`, `black`
 
-## 📱 Browser Support
-
-- **Modern Browsers:** Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
-- **Legacy Support:** IE11+ (with polyfills)
-- **Mobile:** iOS Safari 12+, Chrome Mobile 90+
-
 ## 🤝 Contributing
 
 We welcome contributions! Here's how to get started:
@@ -281,3 +472,10 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ---
 
 **Made with ❤️ by HTMLGuy, LLC**
+
+Getting the files
+=======
+Available on NPM (https://www.npmjs.com/package/jAlert):
+```html
+npm install jAlert
+```

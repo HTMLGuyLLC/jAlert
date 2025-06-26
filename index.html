@@ -105,12 +105,12 @@
       <div class="tabbable">
         <ul class="nav nav-tabs" id="pluginTab">
           <li class="active"><a href="#overview">Overview</a></li>
-          <li><a href="#howtouse">How To Use</a></li>
+          <li><a href="#gettingstarted">Getting Started</a></li>
           <li><a href="#examples">Examples</a></li>
           <li><a href="#documentation">Documentation</a></li>
-          <li><a href="#roadmap">Roadmap and changelog</a></li>
           <li><a href='#license'>License</a></li>
           <li><a href="https://github.com/HTMLGuyLLC/jAlert/issues" onclick="window.location.href = $(this).attr('href'); return false;">Submit Issues</a></li>
+          <li><a href="https://github.com/HTMLGuyLLC/jAlert/blob/master/CHANGELOG.md" onclick="window.location.href = $(this).attr('href'); return false;">Changelog</a></li>
         </ul>
           <script>
               /* Load page based on hash */
@@ -766,47 +766,45 @@ errorAlert('Could not save your profile.'); //default title is Error!</pre>
           How to Use Tab Content
           =====================================
           -->
-          <div class="tab-pane" id="howtouse">
-                    	<section class="sec-header">
-                <h3 class="font-bree-serif">Link Css</h3>
-                <p>Move the <strong>plugin CSS</strong> file to your server and link to it in the <code><abbr title="<head>">head</abbr></code> section of your document.</p>
-				<pre class="prettyprint linenums">&lt;link rel="stylesheet" href="jAlert-master/dist/jAlert.css" /&gt;</pre>
-			</section>
+          <div class="tab-pane" id="gettingstarted">
             <section class="sec-header">
-                <h3 class="font-bree-serif">Link JS</h3>
-                <p>Move the <strong>plugin JS</strong> file to your server and link to it before the closing <code><abbr title="<body>">body</abbr></code> tag.</p>
-                <p>Please note that you must include jQuery (v1.7 or later) before the jAlert JS file.</p>
-				<pre class="prettyprint linenums">
-&lt;script src="jquery-1.7.1.min.js"&gt;&lt;/script&gt;
-&lt;script src="jAlert-master/dist/jAlert.min.js"&gt;&lt;/script&gt;
-&lt;script src="jAlert-master/dist/jAlert-functions.min.js"&gt; //optional!!&lt;/script&gt;
-</pre>
-			</section>
-<section class="sec-header">
-                <h3 class="font-bree-serif">Call Plugin</h3>
-                <p>Just before the closing <code><abbr title="<body>">body</abbr></code> tag (after any JS file includes), call the plugin with code below:</p>
-                <pre class="prettyprint linenums">
-&lt;script&gt;
-$(document).ready(function () {
-      $.jAlert({
-        'title': 'It works!',
-        'content': 'YAY!',
-        'theme': 'green',
-        'btns': { 'text': 'close' }
-      });
+              <h3 class="font-bree-serif">Getting Started</h3>
+              
+              <h4>1. Install</h4>
+              <p><b>Via npm:</b></p>
+              <pre class="prettyprint linenums">npm install jalert</pre>
+              <p><b>Or download from GitHub and include manually.</b></p>
+
+              <h4>2. Include Files</h4>
+              <pre class="prettyprint linenums">
+&lt;link rel="stylesheet" href="dist/jAlert.min.css"&gt;
+&lt;script src="https://code.jquery.com/jquery-3.7.0.min.js"&gt;&lt;/script&gt;
+&lt;script src="dist/jAlert.min.js"&gt;&lt;/script&gt;
+              </pre>
+
+              <h4>3. Basic Usage</h4>
+              <pre class="prettyprint linenums">
+$.jAlert({
+  title: 'Hello!',
+  content: 'Welcome to jAlert!',
+  theme: 'green'
 });
-&lt;/script&gt;</pre>
-                <h3 class="font-bree-serif">To use "data-jAlert" attributes to toggle jAlerts, use the attach function</h3>
-                <p>This means you can add a button like this: &lt;a href='#' data-jAlert data-title='Hi' data-content='I opened!'>Click me&lt;/a></p>
-                <pre class="prettyprint linenums">
-&lt;script&gt;
-$(document).ready(function () {
-    $.jAlert('attach');
+              </pre>
+
+              <h4>4. Data Attributes (Optional)</h4>
+              <p>
+                You can use <code>data-jAlert</code> attributes for simple triggers:
+              </p>
+              <pre class="prettyprint linenums">
+&lt;a href="#" data-jAlert data-title="Hi" data-content="I opened!">Click me&lt;/a&gt;
+              </pre>
+              <pre class="prettyprint linenums">
+$(function() {
+  $.jAlert('attach');
 });
-&lt;/script&gt;</pre>
-                <div class="alert alert-danger"><b>Warning!</b> The attach function binds to the current DOM. If you add elements dynamically, you must run attach again!</div>
-</section>
-          </div><!--end howtouse-content-->
+              </pre>
+            </section>
+          </div><!--end gettingstarted-content-->
           <!-- 
           =====================================
           Documentation Tab Content
@@ -1310,624 +1308,30 @@ slideshowAlert([
 });</code></pre>
            </section>
           </div><!--end documentation-content-->
-           <!-- 
-          =====================================
-          Roadmap and changelog Tab Content
-          =====================================
-          -->
-          <div class="tab-pane" id="roadmap">
-            <section class="sec-header">
-              <h3 class="font-bree-serif">Changelog</h3>              
-              <div class="accordion" id="changelog-accordion">
-                  <!--
-                        --- VERSION 5.0.0 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#fivezerozero">
-                              <strong>Version 5.0.0</strong>
-                          </a>
-                      </div>
-                      <div id="fivezerozero" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-info">Added</span> Lightbox slideshow functionality with navigation controls (arrows, dots, counter, keyboard, auto-advance, loop, pause on hover, fit modes, captions, etc.)</li>
-                                  <li><span class="label label-info">Added</span> Support for both array-based and DOM-based slideshows</li>
-                                  <li><span class="label label-info">Added</span> Auto-advance slideshow with configurable intervals</li>
-                                  <li><span class="label label-info">Added</span> Keyboard navigation (arrow keys, optional per instance)</li>
-                                  <li><span class="label label-info">Added</span> Pause on hover functionality</li>
-                                  <li><span class="label label-info">Added</span> Image sizing options (fit current vs fit largest, responsive to viewport)</li>
-                                  <li><span class="label label-info">Added</span> Caption support for slides</li>
-                                  <li><span class="label label-info">Added</span> Modern ES6+ JavaScript with Babel transpilation</li>
-                                  <li><span class="label label-info">Added</span> Webpack build system with optimization</li>
-                                  <li><span class="label label-info">Added</span> Autoprefixer for CSS compatibility</li>
-                                  <li><span class="label label-info">Added</span> Source maps for debugging</li>
-                                  <li><span class="label label-info">Added</span> Comprehensive automated test suite (unit, e2e, visual regression) with Jest and Puppeteer</li>
-                                  <li><span class="label label-success">Improved</span> Code organization, maintainability, and error handling</li>
-                                  <li><span class="label label-success">Improved</span> Performance optimizations</li>
-                                  <li><span class="label label-success">Improved</span> Documentation and contribution guidelines</li>
-                                  <li><span class="label label-success">Improved</span> Loader and image sizing logic for slideshows</li>
-                                  <li><span class="label label-success">Improved</span> Slideshow controls: show/hide arrows, dots, counter, keyboard, etc.</li>
-                                  <li><span class="label label-success">Improved</span> Accessibility and responsive design</li>
-                                  <li><span class="label label-success">Updated</span> jQuery dependency to 3.7.0+ (maintains 1.7+ compatibility)</li>
-                                  <li><span class="label label-warning">Changed</span> Build process - now uses npm scripts and dist/ folder</li>
-                                  <li><span class="label label-success">Fixed</span> Slideshow options are now deeply merged with defaults (fixes loop and other option issues)</li>
-                                  <li><span class="label label-success">Fixed</span> Loader and fitLargest issues in slideshows</li>
-                                  <li><span class="label label-success">Fixed</span> Legacy files and hooks removed (auto-compile-pre-commit-hook.txt, etc.)</li>
-                                  <li><span class="label label-success">Fixed</span> Demo and asset references (ajax-dummy.html moved to index-assets/)</li>
-                                  <li><span class="label label-success">Maintained</span> 100% backward compatibility with all existing APIs</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-                  <!--
-                        --- VERSION 4.6.6 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#foursixsix">
-                              <strong>Version 4.6.6</strong>
-                          </a>
-                      </div>
-                      <div id="foursixsix" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-success">Added</span> alert margin to make sure the alt circle close button is visible</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-                  <!--
-                        --- VERSION 4.6.5 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#foursixfive">
-                              <strong>Version 4.6.5</strong>
-                          </a>
-                      </div>
-                      <div id="foursixfive" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-success">Fixed</span> scroll issue with flex</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-                  <!--
-                        --- VERSION 4.6.4 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#foursixfour">
-                              <strong>Version 4.6.4</strong>
-                          </a>
-                      </div>
-                      <div id="foursixfour" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-success">Rewritten</span> alert positioning to be flexbox</li>
-                                  <li><span class="label label-danger">Removed</span> centerAlert method</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-                  <!--
-                        --- VERSION 4.6.3 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#foursixthree">
-                              <strong>Version 4.6.3</strong>
-                          </a>
-                      </div>
-                      <div id="foursixthree" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-success">Fixed</span> all links to new github username "HTMLGuyLLC" (prev: "VersatilityWerks").</li>
-                                  <li><span class="label label-success">Fixed</span> all references to the version in the code to match</li>
-                                  <li><span class="label label-success">Fixed</span> Codepen demos.</li>
-                                  <li><span class="label label-success">Fixed</span> NPM.</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-                  <!--
-                        --- VERSION 4.6.2 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#foursixtwo">
-                              <strong>Version 4.6.2</strong>
-                          </a>
-                      </div>
-                      <div id="foursixtwo" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-success">Fixed</span> top-margin when alert is larger than screen.</li>
-                                  <li><span class="label label-success">Fixed</span> round close button default font color to stand out better.</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-                  <!--
-                        --- VERSION 4.6.1 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#foursixone">
-                              <strong>Version 4.6.1</strong>
-                          </a>
-                      </div>
-                      <div id="foursixone" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-success">Fixed</span> autoclose option.</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-                  <!--
-                        --- VERSION 4.6.0 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#foursixzero">
-                              <strong>Version 4.6.0</strong>
-                          </a>
-                      </div>
-                      <div id="foursixzero" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-info">Added</span> autoclose option.</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-                  <!--
-                        --- VERSION 4.5.1 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#fourfiveone">
-                              <strong>Version 4.5.1</strong>
-                          </a>
-                      </div>
-                      <div id="fourfiveone" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-info">Added</span> fullscreen option.</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-                  <!--
-                        --- VERSION 4.5 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#fourfive">
-                              <strong>Version 4.5</strong>
-                          </a>
-                      </div>
-                      <div id="fourfive" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-danger">Removed</span> minified files from src folder.</li>
-                                  <li><span class="label label-info">Added</span> distribution folder (dist).</li>
-                                  <li><span class="label label-success">Fixed</span> duplicate button callbacks.</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-                  <!--
-                        --- VERSION 4.036 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#fourzerothreesix">
-                              <strong>Version 4.036</strong>
-                          </a>
-                      </div>
-                      <div id="fourzerothreesix" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-danger">Removed</span> Borders for no-title alerts and iframes.</li>
-                                  <li><span class="label label-info">Added</span> Box-shadow back in.</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-                  <!--
-                        --- VERSION 4.035 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#fourzerothreefive">
-                              <strong>Version 4.035</strong>
-                          </a>
-                      </div>
-                      <div id="fourzerothreefive" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-success">Improved</span> Comments to include exact version number.</li>
-                                  <li><span class="label label-info">Added</span> noPadContent option.</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-
-                  <!--
-                        --- VERSION 4.03 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#fourzerothree">
-                              <strong>Version 4.03</strong>
-                          </a>
-                      </div>
-                      <div id="fourzerothree" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-success">Improved</span> iFrame height handling.</li>
-                                  <li><span class="label label-success">Fixed</span> Positioning so there is no longer an unnecessary scroll bar.</li>
-                                  <li><span class="label label-info">Added</span> blurBackground option.</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-
-                  <!--
-                        --- VERSION 4.02 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#fourzerotwo">
-                              <strong>Version 4.02</strong>
-                          </a>
-                      </div>
-                      <div id="fourzerotwo" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-success">Improved</span> The body will have overflow: hidden before the popup animated to prevent weird animation.</li>
-                                  <li><span class="label label-success">Fixed</span> Body background will now stretch to match jAlert height (if set in size object).</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-
-                  <!--
-                        --- VERSION 4.01 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#fourzeroone">
-                              <strong>Version 4.01</strong>
-                          </a>
-                      </div>
-                      <div id="fourzeroone" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-success">Fixed</span> $.jAlert('attach') was attaching the callback multiple times if run multiple times for dynamically added content.</li>
-                                  <li><span class="label label-info">Added</span> the alias "color" for "theme".</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-
-                  <!--
-                        --- VERSION 4.0 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#fourzero">
-                              <strong>Version 4</strong>
-                          </a>
-                      </div>
-                      <div id="fourzero" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-success">Improved</span> massive changes in 3.98 and entire backbone.</li>
-                                  <li><span class="label label-info">Added</span> ability to pass "px" or "%" as size.</li>
-                                  <li><span class="label label-info">Added</span> ability to pass an object with dimensions as size (ex: {height:'400px', width: '400px'}.</li>
-                                  <li><span class="label label-info">Added</span> alias for size - "width".</li>
-                                  <li><span class="label label-info">Added</span> alias for sizes - "sm" can now be called using "small".</li>
-                                  <li><span class="label label-info">Added</span> ability to get current top-most jAlert using $.jAlert('current').</li>
-                                  <li><span class="label label-info">Added</span> ability to access public methods and properties of jAlert calling .jAlert() on the opened alert (ex: $('.jAlert:visible:last').jAlert();).</li>
-                                  <li><span class="label label-info">Added</span> data-jAlert data attribute option. Just use $.jAlert('attach') in your on dom ready function and create elements with data-jAlert. Clicking the element will open a jAlert with whatever options you provided via data attributes. (ex: &gt;a href='#' data-jAlert data-title="Hi" data-content="Nice work!">Click Me&gt;/a></li>
-                                  <li><span class="label label-info">Added</span> ability to get contents from an element using it's ID via the content option. Simply pass the ID selector as "content". (ex: content: "#mydiv").</li>
-                                  <li><span class="label label-warning">Changed</span> default jAlert font to Arial - remove from the CSS to allow your template's font to override.</li>
-                                  <li><span class="label label-warning">Changed</span> make the options case-insensitive.</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-
-                  <!--
-                        --- VERSION 3.99 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#threeninenine">
-                              <strong>Version 3.99</strong>
-                          </a>
-                      </div>
-                      <div id="threeninenine" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-success">Confirmed</span> massive changes in 3.98 haven't added bugs. New release version.</li>
-                                  <li><span class="label label-info">Added</span> "auto" size.</li>
-                                  <li><span class="label label-info">Added</span> "gray", "brown", "dark_gray", "dark_red", "dark_blue" themes.</li>
-                                  <li><span class="label label-warning">Changed</span> default close button to a new round one.</li>
-                                  <li><span class="label label-warning">Changed</span> Now removes focus from focused element on open.</li>
-                                  <li><span class="label label-warning">Changed</span> flattened out the design.</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-
-                  <!--
-                        --- VERSION 3.98 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#threenineeight">
-                              <strong>Version 3.98</strong>
-                          </a>
-                      </div>
-                      <div id="threenineeight" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-success">Fixed</span> options being overridden by the next alert that is opened.</li>
-                                  <li><span class="label label-success">Fixed</span> IE7 compatibility.</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-
-
-                  <!--
-                        --- VERSION 3.97 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#threenineseven">
-                              <strong>Version 3.97</strong>
-                          </a>
-                      </div>
-                      <div id="threenineseven" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-success">Fixed</span> .off bug. jAlert was removing all handlers instead of just it's own</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-
-                  <!--
-                        --- VERSION 3.96 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#threeninesix">
-                              <strong>Version 3.96</strong>
-                          </a>
-                      </div>
-                      <div id="threeninesix" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-success">Fixed</span> tall alert background is now position: fixed.</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-
-                  <!--
-                        --- VERSION 3.95 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#threeninefive">
-                              <strong>Version 3.95</strong>
-                          </a>
-                      </div>
-                      <div id="threeninefive" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-success">Fixed</span> body and fixed overflow: hidden bug.</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-
-                  <!--
-                        --- VERSION 3.91 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#threenineone">
-                              <strong>Version 3.91</strong>
-                          </a>
-                      </div>
-                      <div id="threenineone" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-warning">Moved</span> optional functions into their own file.</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-
-                  <!--
-                        --- VERSION 3.9 ---
-                    -->
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#threenine">
-                              <strong>Version 3.9</strong>
-                          </a>
-                      </div>
-                      <div id="threenine" class="accordion-body collapse in">
-                          <div class="accordion-inner">
-                              <ul>
-                                  <li><span class="label label-info">Added</span> "yellow" theme.</li>
-                                  <li><span class="label label-success">Improved</span> overlapping.</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-
-                  <!--
-	                    --- VERSION 3.66 ---
-	                -->          
-                    <div class="accordion-group">
-                      <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#threesixsix">
-                          <strong>Version 3.66</strong>
-                        </a>
-                      </div>
-                      <div id="threesixsix" class="accordion-body collapse in">
-                        <div class="accordion-inner">
-	                        <ul>
-								<li><span class="label label-danger">Removed</span> z-index from javascript. It's now entirely dependent on the CSS.</li>
-							</ul>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- 
-	                    --- VERSION 3.65 ---
-	                -->          
-                    <div class="accordion-group">
-                      <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#threesixfixe">
-                          <strong>Version 3.65</strong>
-                        </a>
-                      </div>
-                      <div id="threesixfixe" class="accordion-body collapse in">
-                        <div class="accordion-inner">
-	                        <ul>
-								<li><span class="label label-info">Added</span> imageWidth param.</li>
-							</ul>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- 
-	                    --- VERSION 3.6 ---
-	                -->          
-                    <div class="accordion-group">
-                      <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#threesix">
-                          <strong>Version 3.6</strong>
-                        </a>
-                      </div>
-                      <div id="threesix" class="accordion-body collapse in">
-                        <div class="accordion-inner">
-	                        <ul>
-								<li><span class="label label-danger">Removed</span> z-index plugin (because it had GLP license).</li>
-								<li><span class="label label-danger">Removed</span> debug mode (not necessary now that it's been fully tested).</li>
-							</ul>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- 
-	                    --- VERSION 3 ---
-	                -->
-                    <div class="accordion-group">
-                      <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#three">
-                          <strong>Version 3</strong>
-                        </a>
-                      </div>
-                      <div id="three" class="accordion-body collapse in">
-                        <div class="accordion-inner">
-	                        <ul>
-								<li><span class="label label-success">Completely</span> rebuilt</li>
-								<li><span class="label label-warning">Changed</span> default size to "sm".</li>
-								<li><span class="label label-warning">Changed</span> "message" param to "content". Seems to make more sense since it's HTML, not just a simple message.</li>
-								<li><span class="label label-warning">Changed</span> "clickAnywhere" param to "closeOnClick". In an attempt to keep things more uniform.</li>
-								<li><span class="label label-warning">Changed</span> "hideOnEsc" param to "closeOnEsc". (same as above)</li>
-								<li><span class="label label-warning">Changed</span> "btn" to "btns" so you can easily tell it allows multiple.</li>
-								<li><span class="label label-warning">Changed</span> "cssClass" param to "class" or "classes" to keep it simple.</li>
-								<li><span class="label label-warning">Changed</span> themes from "success", "error", "info" etc to "red", "green", "black", "default", and "blue". Hopefully this is easier.</li>
-								<li><span class="label label-warning">Changed</span> "iframeUrl", "ajaxUrl", and "imgUrl" to "iframe", "ajax", "image" to keep it simple.</li>
-								<li><span class="label label-warning">Changed</span> "label" to "text" in the button parameters.</li>
-								<li><span class="label label-danger">Removed</span> full name option for declaring size.</li>
-								<li><span class="label label-info">Added</span> imageWidth param</li>
-								<li><span class="label label-info">Added</span> animate.css so you can pick from a couple dozen animations</li>
-								<li><span class="label label-info">Added</span> "video" param that displays a responsive video</li>
-								<li><span class="label label-info">Added</span> more sizes (xsm, xlg).</li>
-								<li><span class="label label-info">Added</span> a CSS loader to image, ajax, and iframe alerts before the content loads.</li>
-								<li><span class="label label-info">Added</span> $.jAlert syntax so you only have to use $.fn.jAlert when interacting with existing alerts like $('.jAlert').closeAlert();</li>
-								<li><span class="label label-info">Added</span> $.fn.jAlert.defaults object so you can easily override default settings.</li>
-								<li><span class="label label-info">Added</span> numerous default settings.</li>
-								<li><span class="label label-info">Added</span> "type" param with "confirm" option which automatically creates a confirmation popup.</li>
-								<li><span class="label label-info">Added</span> optional "confirm()" function that overrides javascript's built in one. WARNING: Works differently and requires a callback be passed as a parameter.</li>
-								<li><span class="label label-info">Added</span> "theme" to buttons - options are the same colors as 'theme' for jAlert.</li>
-								<li><span class="label label-info">Added</span> "btnBackground" (boolean) param and background behind buttons. </li>
-								<li><span class="label label-info">Added</span> $.alertOnClick(options) and $('.btn').alertOnClick(options)</li>
-							</ul>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- 
-	                    --- VERSION 2 ---
-	                -->
-                    <div class="accordion-group">
-                      <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseab">
-                          <strong>Version 2</strong>
-                        </a>
-                      </div>
-                      <div id="collapseab" class="accordion-body collapse">
-                        <div class="accordion-inner">
-                            <ul>
-								<li><span class="label label-success">Completely</span> revamped documentation.</li>
-								<li><span class="label label-success">Completely</span> rebuilt as a jQuery plugin.</li>
-							</ul>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- 
-	                    --- VERSION 1 ---
-	                -->
-                    <div class="accordion-group">
-                      <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseac">
-                          <strong>Version 1</strong>
-                        </a>
-                      </div>
-                      <div id="collapseac" class="accordion-body collapse">
-                        <div class="accordion-inner">
-							<ul>
-		                        <li>Initial Release</li>
-	                        </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div><!--end accordion-->
-            </section>
-          </div><!--end roadmap-content-->
-   
-           <!-- 
-          =====================================
-          License Tab Content
-          =====================================
-          -->
+          
           <div class="tab-pane" id="license">
             <section class="sec-header">
               <h3 class="font-bree-serif">License</h3>
               <p>
-		          Copyright (c) 2018 HTMLGuy, LLC<br><br>
-	      		
-				Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: <br><br>
-				
-				The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. <br><br>
-				
-				THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-             </p>
+                Copyright (c) 2018 HTMLGuy, LLC<br><br>
+                Permission is hereby granted, free of charge, to any person obtaining a copy
+                of this software and associated documentation files (the "Software"), to deal
+                in the Software without restriction, including without limitation the rights
+                to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                copies of the Software, and to permit persons to whom the Software is
+                furnished to do so, subject to the following conditions: <br><br>
+                The above copyright notice and this permission notice shall be included in all
+                copies or substantial portions of the Software. <br><br>
+                THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+                SOFTWARE.
+              </p>
             </section>
-          </div><!--end license-content-->
-          
+          </div>
           
           </div><!--end tab-content-->
       </div><!--end tabbable-->
