@@ -11,7 +11,7 @@
 
 **🎯 Perfect for jQuery Sites** - If you're already using jQuery, jAlert integrates seamlessly without adding bulky dependencies. No need to learn new frameworks or rewrite existing code.
 
-**⚡ Lightning Fast** - At just 12KB minified, jAlert loads instantly and performs beautifully. No bloat, just pure functionality.
+**⚡ Lightning Fast** - At just 14.9KB minified, jAlert loads instantly and performs beautifully. No bloat, just pure functionality.
 
 **🎨 Beautiful by Default** - 12 built-in themes with smooth animations. Your modals will look professional out of the box.
 
