@@ -9,3 +9,6 @@
 
 # Ignore node modules
 node_modules/
+
+# Test images
+tests/visual/images/*
