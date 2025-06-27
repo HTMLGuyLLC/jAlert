@@ -1,0 +1,65 @@
+# Cursor Rules for jAlert jQuery Plugin
+
+## Project Overview
+jAlert is a jQuery plugin for creating modals, popups, lightboxes, and alerts. It's built with ES6+ and transpiled to ES5 for maximum browser compatibility.
+
+## Build & Test Commands
+- Build: `npm run build`
+- Test: `npm test`
+- E2E Tests: `npm run test:e2e`
+- All Tests: `npm run test:all`
+
+## Required Checks for Every Change
+
+### 1. Testing Requirements
+- Update tests if they are impacted by changes
+- Add tests for any new logic or functionality
+- Ensure all new features have proper test coverage
+
+### 2. Documentation Requirements
+- Update index.html to maintain demos for each option
+- Document every setting and its default value
+- Update README.md for any development or release flow changes
+
+### 3. Release Process
+- Rebuild the project before any release
+- Update CHANGELOG.md with new version details
+- Update README.md and index.html to reflect latest version
+
+### 4. Compatibility & Quality
+- Maintain backwards compatibility with older versions
+- Ensure feature parity across versions
+- Recalculate package size and update README with correct numbers
+
+### 5. Accessibility & Mobile
+- Consider accessibility in all changes (ARIA attributes, keyboard navigation)
+- Ensure mobile-friendliness and responsive design
+- Test touch interactions and mobile layouts
+
+### 6. Code Quality
+- Follow best practices and DRY principles
+- Make code extendable and extensible
+- Use consistent coding standards
+
+### 7. User Experience
+- Provide all options for user control
+- Ensure users don't feel trapped or limited by the plugin
+- Give users full flexibility to customize behavior
+
+## Key Files
+- Main JS: dist/jAlert.min.js
+- Main CSS: dist/jAlert.min.css
+- Source: src/jAlert.js, src/jAlert.css
+- Tests: tests/unit/, tests/e2e/, tests/visual/
+
+## Dependencies
+- jQuery >= 3.7.0 (peer dependency)
+- Node >= 14.0.0
+- NPM >= 6.0.0
+
+## Browser Support
+- IE11+ (ES5 compatible)
+- Chrome 60+
+- Firefox 55+
+- Safari 12+
+- Edge 79+ 
