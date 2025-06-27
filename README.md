@@ -1,11 +1,11 @@
 [![Join the chat at https://gitter.im/jAlert/Lobby](https://badges.gitter.im/jAlert/Lobby.svg)](https://gitter.im/jAlert/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Build](https://img.shields.io/badge/Build-Passing-green.svg)
-[![npm](https://img.shields.io/badge/NPM-v5.0.1-blue.svg)](https://npmjs.com/package/jAlert)
+[![npm](https://img.shields.io/badge/NPM-v5.0.4-blue.svg)](https://npmjs.com/package/jAlert)
 
 # jAlert - The Ultimate jQuery Modal & Lightbox Plugin
 
-**🚀 Version 5.0.1 - Completely Modernized!** A powerful, lightweight jQuery plugin for creating stunning modals, popups, lightboxes, and image slideshows. Perfect for modern web applications that need beautiful, accessible, and responsive dialogs.
+**🚀 Version 5.0.4 - Completely Modernized!** A powerful, lightweight jQuery plugin for creating stunning modals, popups, lightboxes, and image slideshows. Perfect for modern web applications that need beautiful, accessible, and responsive dialogs.
 
 ## ✨ Why Choose jAlert?
 
