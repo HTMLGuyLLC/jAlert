@@ -151,9 +151,15 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🆘 Support
 
-- **Issues:** [GitHub Issues](https://github.com/HTMLGuyLLC/jAlert/issues)
+- **Issues & Bug Reports:** [GitHub Issues](https://github.com/HTMLGuyLLC/jAlert/issues)
+- **Questions & Discussions:** [GitHub Discussions](https://github.com/HTMLGuyLLC/jAlert/discussions)
 - **Chat:** [Gitter](https://gitter.im/jAlert/Lobby)
-- **Email:** support@htmlguy.com
+
+## ☕ Support the Project
+
+If jAlert has been helpful to you, consider buying me a coffee! Your support helps maintain and improve this project.
+
+**[☕ Buy me a coffee](https://github.com/sponsors/HTMLGuyLLC)**
 
 ---
 
