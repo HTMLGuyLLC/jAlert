@@ -132,7 +132,7 @@
             <div class="row features">
               <div class="span4">
                 <h3><i class="fa fa-expand"></i> Plenty-o Sizes</h3>
-                <p>Completely responsive (just under full width on small screens), but for tablets and desktops, you have a lot of control over how large the alert is.</p>
+                <p>Completely responsive (just under full width on small screens), but for tablets and desktops, you have a lot of control over how large the alert is. Enhanced tablet support with optimized button sizing for better touch interaction.</p>
  	                <a href='#' class='btn btn-primary jsize'>xsm</a>
 	                <a href='#' class='btn btn-primary jsize'>sm</a>
 	                <a href='#' class='btn btn-primary jsize'>md</a>
@@ -275,6 +275,10 @@
                   <a href='#' class='jslideshow-no-controls btn btn-primary'>No Controls</a>
                   <a href='#' class='jslideshow-keyboard btn btn-primary'>Keyboard Only</a>
                   <a href='#' class='jslideshow-dots-arrows btn btn-primary'>Dots + Arrows</a>
+                  <br><br>
+                  <h4><i class="fa fa-expand"></i> Dynamic Resize</h4>
+                  <a href='#' class='jresize btn btn-primary'>Manual Resize</a>
+                  <a href='#' class='jresize-auto btn btn-primary'>Auto-Resize on Change</a>
 
                 <script>
                     // Image alerts
@@ -457,6 +461,60 @@
                             'keyboardNav': true
                         },
                         'size': 'lg'
+                    });
+                </script>
+                
+                <!-- Resize Demo Scripts -->
+                <script>
+                    // Manual Resize Demo
+                    $('.jresize').on('click', function(e) {
+                        e.preventDefault();
+                        var modalContent = 'Short content.';
+                        $.jAlert({
+                            title: 'Manual Resize Demo',
+                            content: '<div id="manual-resize-content">' + modalContent + '</div>',
+                            size: 'sm',
+                            theme: 'blue',
+                            onOpen: function(alert) {
+                                window.currentManualResizeAlert = alert.data('jAlert');
+                                // Auto-change content after 3 seconds and trigger resize
+                                setTimeout(function() {
+                                    $('#manual-resize-content').text('This is a much longer content that should trigger a resize when we call autoResize() manually.');
+                                    window.currentManualResizeAlert.autoResize();
+                                }, 3000);
+                            }
+                        });
+                    });
+
+                    // Auto-Resize on Change Demo
+                    $('.jresize-auto').on('click', function(e) {
+                        e.preventDefault();
+                        var modalContent = 'Small content.';
+                        $.jAlert({
+                            title: 'Auto-Resize on Change Demo',
+                            content: '<div id="auto-resize-content">' + modalContent + '</div>',
+                            size: 'sm',
+                            theme: 'green',
+                            autoResizeOnContentChange: true,
+                            onOpen: function(alert) {
+                                // Change content multiple times with varying sizes
+                                setTimeout(function() {
+                                    $('#auto-resize-content').html('<h3>HUGE Content!</h3><p>This is a much larger content with multiple paragraphs and lots of text to demonstrate how the modal automatically resizes to fit the content. The autoResizeOnContentChange option is enabled, so the modal will automatically adjust its size whenever the content changes.</p><p>This should make the modal quite large to accommodate all this text.</p>');
+                                }, 2000);
+                                
+                                setTimeout(function() {
+                                    $('#auto-resize-content').text('Medium content with some additional text to make it a reasonable size.');
+                                }, 5000);
+                                
+                                setTimeout(function() {
+                                    $('#auto-resize-content').html('<h4>Large Content</h4><p>This is a large content block with a heading and some paragraphs. It should be bigger than medium but smaller than huge.</p><ul><li>List item 1</li><li>List item 2</li><li>List item 3</li></ul>');
+                                }, 8000);
+                                
+                                setTimeout(function() {
+                                    $('#auto-resize-content').text('Back to small content.');
+                                }, 11000);
+                            }
+                        });
                     });
                 </script>
                   <h3 style="margin-top:20px"><i class="fa fa-adjust"></i>Blurred Background</h3>
@@ -1306,6 +1364,142 @@ slideshowAlert([
     autoAdvanceInterval: 2000,
     loop: true
 });</code></pre>
+
+                <h3 class="font-bree-serif">Dynamic Resize Functionality</h3>
+                <p>jAlert now supports dynamic resizing of modals to fit content changes. This is particularly useful for modals with dynamic content that changes after the modal is opened.</p>
+                
+                <h4>Basic Usage</h4>
+                <pre><code>// Manual resize to fit content
+$.jAlert({
+    title: 'Dynamic Content',
+    content: '&lt;div id="dynamic-content"&gt;Short content&lt;/div&gt;'
+});
+
+// Later, after content changes
+$('#dynamic-content').text('Much longer content that needs more space');
+$('.jAlert').autoResize();
+
+// Or use the global function
+$.autoResize();</code></pre>
+
+                <h4>Auto-Resize on Content Changes</h4>
+                <pre><code>// Enable automatic resizing when content changes
+$.jAlert({
+    title: 'Auto-Resize Demo',
+    content: '&lt;div id="auto-content"&gt;Initial content&lt;/div&gt;',
+    autoResizeOnContentChange: true
+});
+
+// Content changes will automatically trigger resize
+$('#auto-content').html('&lt;h3&gt;New Content&lt;/h3&gt;&lt;p&gt;This will automatically resize the modal&lt;/p&gt;');</code></pre>
+
+                <h4>Resize Options</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th><strong>Option</strong></th>
+                            <th><strong>Type</strong></th>
+                            <th><strong>Default</strong></th>
+                            <th><strong>Description</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>autoResizeOnContentChange</td>
+                            <td>boolean</td>
+                            <td>false</td>
+                            <td>Automatically resize the modal when content changes (uses MutationObserver)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Resize Methods</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th><strong>Method</strong></th>
+                            <th><strong>Sample</strong></th>
+                            <th><strong>Params</strong></th>
+                            <th><strong>Description</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>autoResize</td>
+                            <td>$('.jAlert').autoResize();<br>OR<br>$.autoResize();</td>
+                            <td>none</td>
+                            <td>Automatically resize the modal to fit its current content (height only)</td>
+                        </tr>
+                        <tr>
+                            <td>resizeToFit</td>
+                            <td>$('.jAlert').resizeToFit();<br>OR<br>$.resizeToFit();</td>
+                            <td>none</td>
+                            <td>Alias for autoResize() - resize modal to fit content</td>
+                        </tr>
+                        <tr>
+                            <td>resizeModal</td>
+                            <td>$('.jAlert').resizeModal(null, 300);<br>OR<br>$.resizeModal(300);</td>
+                            <td>height (optional)</td>
+                            <td>Resize modal to specific height (in pixels) or auto-fit if no height provided</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Advanced Usage</h4>
+                <pre><code>// Get the alert instance and call methods
+const alert = $.jAlert('current');
+if (alert) {
+    alert.autoResize();
+    alert.resizeModal(null, 400); // Set specific height
+}
+
+// Resize after AJAX content loads
+$.jAlert({
+    ajax: 'dynamic-content.html',
+    onOpen: function(alert) {
+        // Content is loaded, now resize to fit
+        alert.autoResize();
+    }
+});
+
+// Resize after dynamic content changes
+$('#dynamic-content').load('new-content.html', function() {
+    $('.jAlert').autoResize();
+});</code></pre>
+
+                <h4>Notes</h4>
+                <ul>
+                    <li>Resize functionality only adjusts <strong>height</strong> - width is controlled by the size option (sm, md, lg, etc.)</li>
+                    <li>Auto-resize uses MutationObserver to detect content changes</li>
+                    <li>Manual resize methods should be called after content changes are complete</li>
+                    <li>Resize works with all content types: text, HTML, AJAX-loaded content, etc.</li>
+                </ul>
+
+                <h3 class="font-bree-serif">Enhanced Reliability & Performance</h3>
+                <p>jAlert v5.0.4 includes significant improvements to error handling and API consistency for better reliability in production environments.</p>
+                
+                <h4>Enhanced Error Handling</h4>
+                <ul>
+                    <li><strong>Defensive Programming</strong>: Added robust guards to prevent undefined access errors in async scenarios</li>
+                    <li><strong>AJAX Error Handling</strong>: Improved error handling for AJAX content loading with proper type checking</li>
+                    <li><strong>Async Safety</strong>: Better handling of race conditions and DOM removal timing</li>
+                    <li><strong>Memory Management</strong>: Proper cleanup of MutationObserver instances and event handlers</li>
+                </ul>
+
+                <h4>API Consistency</h4>
+                <ul>
+                    <li><strong>Standardized Access</strong>: Consistent use of <code>.jAlert()</code> method for API access</li>
+                    <li><strong>Method Chaining</strong>: All methods return <code>this</code> for better chaining support</li>
+                    <li><strong>Better Encapsulation</strong>: Improved error prevention through proper method access patterns</li>
+                    <li><strong>Backward Compatibility</strong>: All changes maintain 100% compatibility with existing code</li>
+                </ul>
+
+                <h4>Mobile & Tablet Enhancements</h4>
+                <ul>
+                    <li><strong>Optimized Button Sizing</strong>: Better touch-friendly button dimensions for tablet devices (451px - 1024px)</li>
+                    <li><strong>Improved Layout</strong>: Enhanced responsive design for button containers and spacing</li>
+                    <li><strong>Touch Interaction</strong>: Better padding and font sizes for improved user experience on touch devices</li>
+                </ul>
            </section>
           </div><!--end documentation-content-->
           

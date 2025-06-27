@@ -2,6 +2,71 @@
 
 All notable changes to jAlert will be documented in this file.
 
+## [5.0.4] - 2025-06-27
+
+### ✨ New Features
+
+- **🔄 Dynamic Resize Functionality**: Added comprehensive modal resizing capabilities
+  - `autoResize()` method to automatically resize modal to fit content
+  - `resizeToFit()` alias method for content-based resizing
+  - `resizeModal(width, height)` method for manual sizing
+  - `autoResizeOnContentChange` option for automatic resizing when content changes
+  - Global resize methods: `$.autoResize()`, `$.resizeToFit()`, `$.resizeModal(height)`
+  - MutationObserver integration for detecting content changes
+  - Comprehensive API documentation and interactive demos
+
+- **📱 Enhanced Mobile/Tablet Support**: Improved button sizing and layout
+  - Optimized button sizing for tablet devices (451px - 1024px viewport)
+  - Better touch-friendly button padding and font sizes
+  - Improved responsive layout for button containers
+  - Enhanced user experience on touch devices
+
+### 🔧 Technical Improvements
+
+- **🛡️ Enhanced Error Handling**: Added defensive programming patterns
+  - Robust guards in `animateAlert()` method to prevent undefined access errors
+  - Improved error handling in `closeAlert()` method
+  - Enhanced AJAX error handling with proper type checking
+  - Better async scenario handling to prevent race conditions
+
+- **🔗 API Consistency**: Standardized method access patterns
+  - Consistent use of `.jAlert()` method instead of `.data('jAlert')` for API access
+  - Better encapsulation and error prevention
+  - Improved method chaining support
+
+### 🐛 Bug Fixes
+
+- **Async Safety**: Fixed `blurBackground` access errors in async scenarios
+- **Test Reliability**: Improved test stability in JSDOM environment
+- **AJAX Handling**: Enhanced error handling for AJAX content loading
+- **Memory Management**: Better cleanup of MutationObserver instances
+
+### 📚 Documentation
+
+- **Comprehensive Resize Documentation**: Added detailed API documentation
+  - Usage examples for all resize methods
+  - Configuration options and parameters
+  - Advanced usage patterns and best practices
+  - Interactive demos with real-time content changes
+
+- **Enhanced Examples**: Added interactive resize demonstrations
+  - Manual resize demo with dynamic content changes
+  - Auto-resize demo with MutationObserver integration
+  - Real-time content transformation examples
+
+### 🧪 Testing
+
+- **Improved Test Coverage**: Enhanced unit tests for resize functionality
+- **JSDOM Compatibility**: Fixed test compatibility issues with layout calculations
+- **Async Test Handling**: Better handling of async scenarios in test environment
+- **Defensive Test Patterns**: Added robust test patterns for edge cases
+
+### 🔄 Breaking Changes
+
+**None!** All changes maintain 100% backward compatibility.
+
+---
+
 ## [5.0.3] - 2025-06-26
 
 ### 🐛 Bug Fixes

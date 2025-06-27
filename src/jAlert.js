@@ -519,7 +519,8 @@
                 // Add to the onOpen callbacks array to append the iframe
                 alert.onOpen.unshift(function(elem) {
                     const iframe = document.createElement("iframe");
-                    iframe.src = elem.data('jAlert').video;
+                    iframe.src = elem.jAlert().video;
+                    iframe.className = 'ja_iframe';
 
                     if (iframe.addEventListener) {
                         iframe.addEventListener('load', function() {
@@ -739,14 +740,12 @@
         }
     };
 
-    // Alert class for better organization
+    // 1. Define the Alert class at the top
     class Alert {
         constructor(options) {
             this.options = options;
             this.id = options.id || utils.generateId();
             this.instance = null;
-            
-            // Add all options as properties
             Object.keys(options).forEach(key => {
                 this[key] = options[key];
             });
@@ -770,13 +769,16 @@
         }
 
         animateAlert(which) {
+            if (!this.instance || !this.instance.data('jAlert')) return this;
+            const jAlertData = this.instance.data('jAlert');
+            if (!jAlertData) return this; // Additional guard for undefined data
             if (which === 'hide') {
-                if (this.instance.data('jAlert').blurBackground) {
+                if (jAlertData && jAlertData.blurBackground) {
                     $('body').removeClass('ja_blur');
                 }
                 this.instance.removeClass(this.showAnimation).addClass(this.hideAnimation);
             } else {
-                if (this.instance.data('jAlert').blurBackground) {
+                if (jAlertData && jAlertData.blurBackground) {
                     $('body').addClass('ja_blur');
                 }
                 this.instance.addClass(this.showAnimation).removeClass(this.hideAnimation).show();
@@ -785,7 +787,7 @@
         }
 
         closeAlert(remove = true, onClose) {
-            if (this.instance) {
+            if (this.instance && this.instance.data('jAlert')) {
                 this.animateAlert('hide');
 
                 window.setTimeout(() => {
@@ -834,9 +836,54 @@
 
             return this;
         }
+
+        resizeModal(width, height) {
+            if (!this.instance) {
+                console.warn('jAlert: Cannot resize modal that is not currently displayed');
+                return this;
+            }
+
+            const modal = this.instance;
+            const body = modal.find('.ja_body');
+
+            if (!height) {
+                // Auto-fit to content height
+                const content = body.children();
+                const contentHeight = content.outerHeight();
+                
+                // Set body height to fit content
+                body.css('height', contentHeight + 'px');
+            } else {
+                // Apply specific height
+                body.css('height', typeof height === 'number' ? height + 'px' : height);
+            }
+
+            // Update size property
+            if (height) {
+                this.size = { height: typeof height === 'number' ? height + 'px' : height };
+            }
+
+            return this;
+        }
+
+        autoResize() {
+            if (!this.instance) return this;
+            const modal = this.instance;
+            const body = modal.find('.ja_body');
+            
+            const content = body.children();
+            // Calculate content height
+            const contentHeight = content.outerHeight();
+            
+            // Set body height to fit content
+            body.css('height', contentHeight + 'px');
+            
+            return this;
+        }
+        resizeToFit() { return this.autoResize(); }
     }
 
-    // Main plugin function
+    // 2. Define the main plugin function
     $.fn.jAlert = function(options) {
         // Remove focus from current element to prevent multiple popups
         $('body').focus().blur();
@@ -988,6 +1035,19 @@
                 }, alert.autoClose);
             }
 
+            if (alert.autoResizeOnContentChange) {
+                const content = alert.instance.find('.ja_body')[0];
+                if (window.MutationObserver && content) {
+                    const observer = new MutationObserver(() => {
+                        if (alert.instance && document.body.contains(alert.instance[0]) && alert.instance.is(':visible')) {
+                            alert.autoResize();
+                        }
+                    });
+                    observer.observe(content, { childList: true, subtree: true, characterData: true });
+                    alert._autoResizeObserver = observer;
+                }
+            }
+
             return alert.instance;
         };
 
@@ -1005,6 +1065,9 @@
         // Return the alert object for chaining
         return alert;
     };
+
+    // 3. After $.fn.jAlert is defined, assign the class
+    $.fn.jAlert.Alert = Alert;
 
     // Close timer utility
     $.fn.closeTimer = (function() {
@@ -1026,7 +1089,10 @@
         'video': false,
         'ajax': false,
         'onAjaxFail': function(alert, errorThrown) {
-            alert.jAlert().closeAlert();
+            var instance = alert.jAlert && typeof alert.jAlert === 'function' ? alert.jAlert() : null;
+            if (instance && typeof instance.closeAlert === 'function' && instance.instance && instance.instance.data('jAlert')) {
+                instance.closeAlert();
+            }
             if (typeof errorAlert === 'function') {
                 errorAlert(errorThrown);
             }
@@ -1178,6 +1244,52 @@
             elem.css('flex', 'unset');
             elem.height(jalert.iframeHeight);
         }
+    };
+
+    // Global resize functions
+    $.fn.resizeModal = function(height) {
+        if (this.data('jAlert')) {
+            return this.data('jAlert').resizeModal(null, height);
+        }
+        return this;
+    };
+
+    $.resizeModal = function(height) {
+        const currentAlert = $.jAlert('current');
+        if (currentAlert !== false) {
+            return currentAlert.resizeModal(null, height);
+        }
+        return false;
+    };
+
+    $.fn.autoResize = function() {
+        if (this.data('jAlert')) {
+            return this.data('jAlert').autoResize();
+        }
+        return this;
+    };
+
+    $.fn.resizeToFit = function() {
+        if (this.data('jAlert')) {
+            return this.data('jAlert').resizeToFit();
+        }
+        return this;
+    };
+
+    $.autoResize = function() {
+        const currentAlert = $.jAlert('current');
+        if (currentAlert !== false) {
+            return currentAlert.autoResize();
+        }
+        return false;
+    };
+
+    $.resizeToFit = function() {
+        const currentAlert = $.jAlert('current');
+        if (currentAlert !== false) {
+            return currentAlert.resizeToFit();
+        }
+        return false;
     };
 
 })(jQuery); 

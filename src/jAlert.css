@@ -3822,3 +3822,25 @@ body.ja_blur > *:not(.ja_wrap) {
         padding: 8px;
     }
 }
+
+/* Tablet button sizing */
+@media (min-width: 451px) and (max-width: 1024px) {
+    .ja_btn {
+        padding: 8px 16px !important;
+        font-size: 16px !important;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .ja_btn_wrap {
+        margin-top: 15px;
+        margin-bottom: -15px;
+    }
+    
+    .ja_btn_wrap.optBack {
+        margin-top: 30px;
+        margin: 30px -20px -20px -20px;
+        padding: 10px 0px;
+    }
+}
