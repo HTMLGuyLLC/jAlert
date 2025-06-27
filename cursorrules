@@ -29,7 +29,6 @@ jAlert is a jQuery plugin for creating modals, popups, lightboxes, and alerts. I
 ### 4. Compatibility & Quality
 - Maintain backwards compatibility with older versions
 - Ensure feature parity across versions
-- Recalculate package size and update README with correct numbers
 
 ### 5. Accessibility & Mobile
 - Consider accessibility in all changes (ARIA attributes, keyboard navigation)
