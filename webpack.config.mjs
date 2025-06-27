@@ -75,7 +75,12 @@ export default (env, argv) => {
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: isProduction ? '[name].min.css' : '[name].css'
+        filename: (pathData) => {
+          if (pathData.chunk.name === 'jAlert.css') {
+            return 'jAlert.min.css';
+          }
+          return isProduction ? '[name].min.css' : '[name].css';
+        }
       })
     ],
     optimization: {

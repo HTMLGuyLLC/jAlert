@@ -2,6 +2,45 @@
 
 All notable changes to jAlert will be documented in this file.
 
+## [5.0.2] - 2024-01-XX
+
+### 🐛 Bug Fixes
+
+- **Close Button Alignment**: Fixed "x" centering in round close buttons using flexbox and vertical transform
+- **Title Bar Positioning**: Moved close button inside title div for proper alignment when title is present
+- **Button Type Specifics**: Added specific positioning for different close button types (round, alt) in title bar
+- **Slideshow Dots**: Removed border from slideshow dots to prevent squashing appearance
+- **Build Output**: Updated webpack config to output CSS as `jAlert.min.css` instead of `jAlert.css.min.css`
+
+### 🔧 Technical Improvements
+
+- Enhanced close button markup with wrapped "x" span for better styling control
+- Improved visual consistency across different close button styles
+- Better CSS organization and specificity for button positioning
+
+---
+
+## [5.0.1] - 2024-01-XX
+
+### ✨ New Features
+
+- **Accessibility Improvements**: Added ARIA attributes and enhanced keyboard navigation
+- **Touch Support**: Added swipe gestures for mobile devices
+- **Enhanced Navigation**: Improved slideshow controls and user experience
+
+### 🐛 Bug Fixes
+
+- Fixed slideshow navigation controls positioning
+- Improved responsive design for mobile devices
+- Enhanced error handling and validation
+
+### 📦 Dependencies
+
+- Updated to latest jQuery compatibility
+- Improved build process and optimization
+
+---
+
 ## [5.0.0] - 2024-01-XX
 
 ### 🚀 Major Release - Complete Modernization

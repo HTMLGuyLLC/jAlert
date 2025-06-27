@@ -680,8 +680,22 @@
                 '<div class="jAlert ' + classes.join(' ') + '" style="' + styles.join(' ') + '" id="' + alert.id + '" tabindex="-1">' +
                 '<div>';
 
-            // Close button
-            if (alert.closeBtn) {
+            // Title and close button
+            if (alert.title) {
+                html += "<div class='ja_title' id='" + alert.id + "_title'>";
+                if (alert.closeBtn) {
+                    html += "<button type='button' class='closejAlert ja_close";
+                    if (alert.closeBtnAlt) {
+                        html += ' ja_close_alt';
+                    } else if (alert.closeBtnRoundWhite) {
+                        html += ' ja_close_round_white';
+                    } else if (alert.closeBtnRound) {
+                        html += ' ja_close_round';
+                    }
+                    html += "' aria-label='Close dialog'><span class='ja_close_x'>&times;</span></button>";
+                }
+                html += "<div>" + alert.title + "</div></div>";
+            } else if (alert.closeBtn) {
                 html += "<button type='button' class='closejAlert ja_close";
                 if (alert.closeBtnAlt) {
                     html += ' ja_close_alt';
@@ -690,12 +704,7 @@
                 } else if (alert.closeBtnRound) {
                     html += ' ja_close_round';
                 }
-                html += "' aria-label='Close dialog'>&times;</button>";
-            }
-
-            // Title
-            if (alert.title) {
-                html += "<div class='ja_title' id='" + alert.id + "_title'><div>" + alert.title + "</div></div>";
+                html += "' aria-label='Close dialog'><span class='ja_close_x'>&times;</span></button>";
             }
 
             // Body
