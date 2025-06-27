@@ -788,6 +788,12 @@
 
         closeAlert(remove = true, onClose) {
             if (this.instance && this.instance.data('jAlert')) {
+                // Clean up MutationObserver if it exists
+                if (this._autoResizeObserver) {
+                    this._autoResizeObserver.disconnect();
+                    this._autoResizeObserver = null;
+                }
+
                 this.animateAlert('hide');
 
                 window.setTimeout(() => {

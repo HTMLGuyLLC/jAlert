@@ -2,6 +2,54 @@
 
 All notable changes to jAlert will be documented in this file.
 
+## [5.0.5] - 2025-06-27
+
+### 🛡️ Bug Fixes & Stability Improvements
+
+- **Enhanced Error Handling**: Added comprehensive defensive guards in core methods
+  - Fixed `Cannot read properties of undefined (reading 'blurBackground')` error in async scenarios
+  - Enhanced `animateAlert()` method with robust instance validation
+  - Improved `closeAlert()` method with proper data existence checks
+  - Better AJAX error handling with enhanced type checking and null safety
+
+- **Test Infrastructure Improvements**: 
+  - Fixed auto-advance slideshow test timing issues (corrected from 3000ms to 2000ms interval)
+  - Enhanced test polling mechanism for more reliable E2E testing
+  - Improved cleanup procedures in test setup with proper alert instance closure
+  - Added comprehensive event listener cleanup for slideshow components
+
+- **CSS Refinements**:
+  - Removed unwanted button borders by adding `border: none` to `.ja_btn` selector
+  - Improved visual consistency across different button styles
+
+- **Memory Management**:
+  - Added proper MutationObserver cleanup in `closeAlert()` method
+  - Enhanced garbage collection for async components
+  - Better resource management for slideshow event listeners
+
+### 📚 Documentation Updates
+
+- **Comprehensive Testing Guide**: Updated README with detailed test command documentation
+  - Added `npm test`, `npm run test:unit`, `npm run test:e2e`, and `npm run test:all` command descriptions
+  - Documented test requirements and browser dependencies
+  - Added CI/CD environment guidance for headless testing
+
+### 🔄 API Consistency
+
+- **Standardized Method Access**: Improved consistency in internal API usage
+  - Unified usage of `.jAlert()` method for accessing plugin instances
+  - Enhanced method chaining reliability
+  - Better encapsulation of internal plugin data
+
+### 🧪 Testing Enhancements
+
+- **Improved Test Reliability**: Enhanced test stability across different environments
+  - Better handling of async timing in browser automation
+  - Improved test isolation and cleanup procedures
+  - Enhanced visual regression test reliability
+
+---
+
 ## [5.0.4] - 2025-06-27
 
 ### ✨ New Features

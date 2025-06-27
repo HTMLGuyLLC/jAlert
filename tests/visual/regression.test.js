@@ -9,6 +9,7 @@ const __dirname = path.dirname(__filename);
 describe('jAlert Visual Regression Tests', () => {
     let browser;
     let page;
+    let skipAllTests = false;
     const screenshotsDir = path.join(__dirname, 'screenshots');
 
     beforeAll(async () => {
@@ -20,41 +21,65 @@ describe('jAlert Visual Regression Tests', () => {
         try {
             browser = await puppeteer.launch({
                 headless: 'new',
-                args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security']
+                args: [
+                    '--no-sandbox', 
+                    '--disable-setuid-sandbox', 
+                    '--disable-web-security',
+                    '--disable-dev-shm-usage',
+                    '--disable-extensions',
+                    '--disable-gpu',
+                    '--no-first-run',
+                    '--no-default-browser-check'
+                ]
             });
         } catch (error) {
             console.warn('Puppeteer launch failed, skipping visual tests:', error.message);
             browser = null;
+            skipAllTests = true;
         }
-    });
+    }, 30000);
 
     afterAll(async () => {
         if (browser) {
-            await browser.close();
+            try {
+                await browser.close();
+            } catch (error) {
+                // Ignore errors during cleanup
+            }
+        }
+        // Force cleanup any remaining processes
+        if (typeof process !== 'undefined' && process.exit) {
+            // Don't actually exit, just ensure cleanup
         }
     });
 
     beforeEach(async () => {
-        if (!browser) {
+        if (skipAllTests || !browser) {
             // Skip tests if browser couldn't be launched
             return;
         }
 
         page = await browser.newPage();
+        await page.setDefaultTimeout(5000);
         await page.setViewport({ width: 1200, height: 800 });
         const htmlPath = path.join(__dirname, '../../index.html');
-        await page.goto(`file://${htmlPath}`);
-        await page.waitForSelector('body', { timeout: 10000 });
-    });
+        await page.goto(`file://${htmlPath}`, { waitUntil: 'domcontentloaded' });
+        await page.waitForSelector('body', { timeout: 5000 });
+    }, 10000);
 
     afterEach(async () => {
         if (page) {
-            await page.close();
+            try {
+                await page.close();
+            } catch (error) {
+                // Ignore errors during page cleanup
+            }
+            page = null;
         }
     });
 
     const takeScreenshot = async (name) => {
-        if (!browser) {
+        if (skipAllTests) {
             console.log('Skipping screenshot - browser not available');
             return null;
         }
@@ -70,7 +95,7 @@ describe('jAlert Visual Regression Tests', () => {
 
     describe('Alert Appearance', () => {
         test('should render basic alert consistently', async () => {
-            if (!browser) {
+            if (skipAllTests) {
                 console.log('Skipping test - browser not available');
                 return;
             }
@@ -84,7 +109,7 @@ describe('jAlert Visual Regression Tests', () => {
         });
 
         test('should render themed alerts consistently', async () => {
-            if (!browser) {
+            if (skipAllTests) {
                 console.log('Skipping test - browser not available');
                 return;
             }
@@ -98,7 +123,7 @@ describe('jAlert Visual Regression Tests', () => {
         });
 
         test('should render sized alerts consistently', async () => {
-            if (!browser) {
+            if (skipAllTests) {
                 console.log('Skipping test - browser not available');
                 return;
             }
@@ -114,7 +139,7 @@ describe('jAlert Visual Regression Tests', () => {
 
     describe('Slideshow Appearance', () => {
         test('should render basic slideshow consistently', async () => {
-            if (!browser) {
+            if (skipAllTests) {
                 console.log('Skipping test - browser not available');
                 return;
             }
@@ -132,7 +157,7 @@ describe('jAlert Visual Regression Tests', () => {
         });
 
         test('should render slideshow with dots consistently', async () => {
-            if (!browser) {
+            if (skipAllTests) {
                 console.log('Skipping test - browser not available');
                 return;
             }
@@ -148,7 +173,7 @@ describe('jAlert Visual Regression Tests', () => {
         });
 
         test('should render slideshow without controls consistently', async () => {
-            if (!browser) {
+            if (skipAllTests) {
                 console.log('Skipping test - browser not available');
                 return;
             }
@@ -166,7 +191,7 @@ describe('jAlert Visual Regression Tests', () => {
 
     describe('Media Alerts', () => {
         test('should render image alert consistently', async () => {
-            if (!browser) {
+            if (skipAllTests) {
                 console.log('Skipping test - browser not available');
                 return;
             }
@@ -181,7 +206,7 @@ describe('jAlert Visual Regression Tests', () => {
         });
 
         test('should render video alert consistently', async () => {
-            if (!browser) {
+            if (skipAllTests) {
                 console.log('Skipping test - browser not available');
                 return;
             }
@@ -198,7 +223,7 @@ describe('jAlert Visual Regression Tests', () => {
 
     describe('Responsive Design', () => {
         test('should render correctly on mobile', async () => {
-            if (!browser) {
+            if (skipAllTests) {
                 console.log('Skipping test - browser not available');
                 return;
             }
@@ -213,7 +238,7 @@ describe('jAlert Visual Regression Tests', () => {
         });
 
         test('should render correctly on tablet', async () => {
-            if (!browser) {
+            if (skipAllTests) {
                 console.log('Skipping test - browser not available');
                 return;
             }
@@ -232,7 +257,7 @@ describe('jAlert Visual Regression Tests', () => {
 
     describe('Animation States', () => {
         test('should capture animation states', async () => {
-            if (!browser) {
+            if (skipAllTests) {
                 console.log('Skipping test - browser not available');
                 return;
             }
@@ -251,7 +276,7 @@ describe('jAlert Visual Regression Tests', () => {
 
     describe('Button States', () => {
         test('should render buttons consistently', async () => {
-            if (!browser) {
+            if (skipAllTests) {
                 console.log('Skipping test - browser not available');
                 return;
             }

@@ -1,11 +1,11 @@
 [![Join the chat at https://gitter.im/jAlert/Lobby](https://badges.gitter.im/jAlert/Lobby.svg)](https://gitter.im/jAlert/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Build](https://img.shields.io/badge/Build-Passing-green.svg)
-[![npm](https://img.shields.io/badge/NPM-v5.0.4-blue.svg)](https://npmjs.com/package/jAlert)
+[![npm](https://img.shields.io/badge/NPM-v5.0.5-blue.svg)](https://npmjs.com/package/jAlert)
 
 # jAlert - The Ultimate jQuery Modal & Lightbox Plugin
 
-**🚀 Version 5.0.4 - Completely Modernized!** A powerful, lightweight jQuery plugin for creating stunning modals, popups, lightboxes, and image slideshows. Perfect for modern web applications that need beautiful, accessible, and responsive dialogs.
+**🚀 Version 5.0.5 - Enhanced Stability!** A powerful, lightweight jQuery plugin for creating stunning modals, popups, lightboxes, and image slideshows. Perfect for modern web applications that need beautiful, accessible, and responsive dialogs.
 
 ## ✨ Why Choose jAlert?
 
@@ -127,12 +127,26 @@ npm install
 
 ### Build & Test
 ```bash
-npm run build      # Production build
-npm run dev        # Development with watch
-npm test           # Run all tests
+# Build commands
+npm run build      # Production build (minified)
+npm run dev        # Development build with watch mode
+
+# Test commands
+npm test           # Run unit tests only (fastest)
+npm run test:unit  # Run unit tests only (alias)
+npm run test:e2e   # Run end-to-end tests with Puppeteer
+npm run test:all   # Run unit + e2e tests (full test suite)npm
 ```
 
-**📋 Test Coverage:** Unit tests, E2E tests with Puppeteer, and visual regression testing.
+**📋 Test Coverage:**
+- **Unit Tests:** Core functionality, slideshow features, and API methods
+- **E2E Tests:** Real browser testing with Puppeteer for user interactions
+- **Visual Regression:** Screenshot comparison testing for UI consistency
+
+**🧪 Test Requirements:**
+- E2E tests require Chrome/Chromium browser
+- Visual tests may skip if browser dependencies are unavailable
+- All tests work in CI/CD environments with `--no-sandbox` flag
 
 ## 🤝 Contributing
 

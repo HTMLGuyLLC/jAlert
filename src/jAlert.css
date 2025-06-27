@@ -449,6 +449,7 @@ body.ja_blur > *:not(.ja_wrap) {
     padding: 3px 10px;
     display: inline-block;
     text-decoration: none;
+    border: none;
     border-radius: 5px;
 }
 

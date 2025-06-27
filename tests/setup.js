@@ -156,8 +156,23 @@ global.testUtils = {
 
     // Clean up all alerts
     cleanupAlerts: () => {
+        // Close all alerts properly to ensure cleanup
+        $('.jAlert').each(function() {
+            const jalert = $(this).data('jAlert');
+            if (jalert && typeof jalert.closeAlert === 'function') {
+                jalert.closeAlert();
+            }
+        });
+        
+        // Remove any remaining elements
         $('.jAlert').remove();
+        $('.ja_wrap').remove();
+        
+        // Restore overflow
         $('html,body').css('overflow', '');
+        
+        // Clean up any remaining event listeners
+        $(document).off('keydown.ja_slideshow');
     }
 };
 

@@ -18,6 +18,8 @@ export default {
         '/node_modules/(?!(jquery|puppeteer)/)'
     ],
     testTimeout: 30000,
+    forceExit: true,
+    detectOpenHandles: true,
     // ESM support
     globals: {
         'ts-jest': {

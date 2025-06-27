@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "jAlert",
-  "version": "5.0.4",
+  "version": "5.0.5",
   "description": "Simple jQuery (Modal | Popup | Lightbox | Alert) Plugin - ES5 compatible",
   "main": "dist/jAlert.min.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --testPathIgnorePatterns='tests/e2e|tests/visual'",
     "test:e2e": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --config jest.e2e.config.mjs",
     "test:unit": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --testPathPattern='tests/unit'",
-    "test:all": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --testTimeout=30000"
+    "test:all": "npm run test && npm run test:e2e"
   },
   "keywords": [
     "jquery",
