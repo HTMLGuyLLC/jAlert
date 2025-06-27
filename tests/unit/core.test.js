@@ -12,7 +12,7 @@ describe('jAlert Core Functionality', () => {
             });
 
             const alert = await testUtils.waitForElement('.jAlert');
-            expect(alert.find('.ja_title').text()).toBe('Test Title');
+            expect(alert.find('.ja_title > div').text()).toBe('Test Title');
             expect(alert.find('.ja_body').text()).toBe('Test Content');
         });
 

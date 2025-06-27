@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "jAlert",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "Simple jQuery (Modal | Popup | Lightbox | Alert) Plugin - ES5 compatible",
   "main": "dist/jAlert.min.js",
   "scripts": {

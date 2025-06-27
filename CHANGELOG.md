@@ -2,7 +2,15 @@
 
 All notable changes to jAlert will be documented in this file.
 
-## [5.0.2] - 2024-01-XX
+## [5.0.3] - 2025-06-26
+
+### 🐛 Bug Fixes
+
+- **Test Compatibility**: Fixed unit test to account for close button being positioned inside title div
+- **Test Selector Update**: Updated test selector from `.ja_title` to `.ja_title > div` to target title text specifically
+- **Test Suite**: All 39 tests now pass with new close button positioning structure
+
+## [5.0.2] - 2025-06-26
 
 ### 🐛 Bug Fixes
 
@@ -20,7 +28,7 @@ All notable changes to jAlert will be documented in this file.
 
 ---
 
-## [5.0.1] - 2024-01-XX
+## [5.0.1] - 2025-06-26
 
 ### ✨ New Features
 
@@ -41,7 +49,7 @@ All notable changes to jAlert will be documented in this file.
 
 ---
 
-## [5.0.0] - 2024-01-XX
+## [5.0.0] - 2025-06-26
 
 ### 🚀 Major Release - Complete Modernization
 
