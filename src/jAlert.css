@@ -41,16 +41,10 @@ html, body {
 
 .ja_wrap.ja_wrap_white {
     background: rgba(255, 255, 255, .75);
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=1, StartColorStr='#BFFFFFFF', EndColorStr='#BFFFFFFF')";
-    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=1, StartColorStr='#BFFFFFFF', EndColorStr='#BFFFFFFF');
-    zoom: 1 !important;
 }
 
 .ja_wrap.ja_wrap_black {
     background: rgba(0, 0, 0, .75);
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=1, StartColorStr='#BF000000', EndColorStr='#BF000000')";
-    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=1, StartColorStr='#BF000000', EndColorStr='#BF000000');
-    zoom: 1 !important;
 }
 
 body.ja_blur > *:not(.ja_wrap) {
@@ -75,17 +69,8 @@ body.ja_blur > *:not(.ja_wrap) {
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.75);
     /* important for scrollability with flex */
     min-height: 0;
-}
-
-/*
-	 INSIDE WRAPPER (RELATIVE IN CASE THERE IS POSITION: ABSOLUTE CONTENT WITHIN
-*/
-.jAlert > div {
+    /* positioning context for absolutely positioned content */
     position: relative;
-}
-
-.jAlert.ja_setheight > div {
-    height: 100%;
 }
 
 /*
@@ -117,6 +102,11 @@ body.ja_blur > *:not(.ja_wrap) {
 
 .ja_auto {
     width: auto;
+}
+
+/* Allow auto-sized images to use their calculated dimensions */
+.ja_auto .ja_img {
+    max-width: none;
 }
 
 /*
@@ -158,6 +148,13 @@ body.ja_blur > *:not(.ja_wrap) {
     font-weight: bold;
 }
 
+/* Remove the transform for round buttons since they use flexbox centering */
+.ja_close_round .ja_close_x,
+.ja_close_round_white .ja_close_x,
+.ja_close_alt .ja_close_x {
+    transform: none;
+}
+
 .ja_default .ja_close_round, .ja_default .ja_close_round_white {
     color: #FFF;
     background: rgba(0, 0, 0, 0.3) none repeat scroll 0% 0%;
@@ -193,6 +190,7 @@ body.ja_blur > *:not(.ja_wrap) {
 
 .ja_close_round_white:hover, .ja_close_round_white:active {
     background: white;
+    color: #505050;
 }
 
 /*
@@ -221,6 +219,7 @@ body.ja_blur > *:not(.ja_wrap) {
 
 .ja_noTitle .ja_close_round_white:hover {
     background: white;
+    color: #505050;
 }
 
 .ja_title {
@@ -237,7 +236,7 @@ body.ja_blur > *:not(.ja_wrap) {
 }
 
 .ja_title > .ja_close_round, .ja_title > .ja_close_round_white {
-    top: 4px !important;
+    top: 8px !important;
 }
 
 .ja_title > .closejAlert {
@@ -257,7 +256,7 @@ body.ja_blur > *:not(.ja_wrap) {
 }
 
 .ja_green {
-    background: #00B700;
+    background: #049304;
 }
 
 .ja_dark_green {
@@ -266,6 +265,14 @@ body.ja_blur > *:not(.ja_wrap) {
 
 .ja_yellow {
     background: #FFFF54;
+}
+
+.ja_orange {
+    background: #ffc107;
+}
+
+.ja_dark_orange {
+    background: #b85c00;
 }
 
 .ja_gray {
@@ -321,6 +328,14 @@ body.ja_blur > *:not(.ja_wrap) {
     color: white !important;
 }
 
+.ja_orange .ja_title > div {
+    color: #2f2f2f !important;
+}
+
+.ja_dark_orange .ja_title > div {
+    color: white !important;
+}
+
 /*
 	 CONTENT WRAP
 */
@@ -335,12 +350,22 @@ body.ja_blur > *:not(.ja_wrap) {
     user-select: text;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    position: relative;
+    text-align: left;
+}
+
+/* Media modals use flexbox centering */
+.ja_media_modal .ja_body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .ja_stretch_height,
-.ja_stretch_height > div,
-.ja_stretch_height .ja_body,
-.ja_stretch_height .ja_media_wrap{
+.ja_stretch_height .ja_body{
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -354,17 +379,87 @@ body.ja_blur > *:not(.ja_wrap) {
     height: calc(100% - 40px);
 }
 
-/*
-	 CONTENT
-*/
-.ja_media_wrap {
-    position: relative;
-    text-align: center;
-    min-height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* Only apply min-height when loader is present in media modals */
+.ja_media_modal .ja_body:has(.ja_loader) {
+    min-height: 140px; /* Ensure there's space for the loader */
 }
+
+/* Fallback for browsers that don't support :has() */
+.ja_media_modal .ja_body.ja_loading {
+    min-height: 140px;
+}
+
+/* Ensure container has height when error message is present in media modals */
+.ja_media_modal .ja_body:has(.ja_img_error) {
+    min-height: 200px; /* Ensure there's space for the error message */
+}
+
+/* Fallback for browsers that don't support :has() */
+.ja_media_modal .ja_body.ja_error {
+    min-height: 200px;
+}
+
+/* Ensure full-screen media modals have enough height for loader centering */
+.ja_fullscreen.ja_media_modal .ja_body:has(.ja_loader) {
+    min-height: 300px; /* Ensure container height for proper loader centering */
+}
+
+/* Fallback for browsers that don't support :has() */
+.ja_fullscreen.ja_media_modal .ja_body.ja_loading {
+    min-height: 300px;
+}
+
+/* Auto-sized media modals: let content size naturally */
+.ja_auto.ja_media_modal .ja_body {
+    height: auto; /* Don't constrain the container height */
+}
+
+/* Apply larger footprint during loading and error states */
+.ja_auto.ja_media_modal .ja_body:has(.ja_loader),
+.ja_auto.ja_media_modal .ja_body:has(.ja_img_error) {
+    min-width: 400px; /* Larger footprint while loading or showing errors */
+    min-height: 300px; /* Larger footprint while loading or showing errors */
+}
+
+/* Apply larger footprint for auto-sized slideshow modals during loading */
+.ja_auto.ja_slideshow_modal .ja_body:has(.ja_loader),
+.ja_auto.ja_slideshow_modal .ja_body:has(.ja_loading) {
+    min-width: 400px; /* Larger footprint while slideshow is loading */
+    min-height: 300px; /* Larger footprint while slideshow is loading */
+}
+
+/* Fallback for browsers that don't support :has() */
+.ja_auto.ja_media_modal .ja_body.ja_loading,
+.ja_auto.ja_media_modal .ja_body.ja_error {
+    min-width: 400px; /* Larger footprint while loading or showing errors */
+    min-height: 300px; /* Larger footprint while loading or showing errors */
+}
+
+/* Fallback for auto-sized slideshow modals */
+.ja_auto.ja_slideshow_modal .ja_body.ja_loading,
+.ja_auto.ja_slideshow_modal .ja_body .ja_loading {
+    min-width: 400px; /* Larger footprint while slideshow is loading */
+    min-height: 300px; /* Larger footprint while slideshow is loading */
+}
+
+.ja_auto.ja_media_modal .ja_body img {
+    max-width: 100%;
+    max-height: calc(100vh - 200px); /* Account for modal overhead */
+    width: auto;
+    height: auto;
+    display: block;
+}
+
+/* Better loader positioning for auto-sized image modals */
+.ja_auto.ja_media_modal .ja_body > .ja_loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0; /* Override any margin */
+}
+
+
 
 .ja_iframe {
     flex: 1;
@@ -373,12 +468,28 @@ body.ja_blur > *:not(.ja_wrap) {
     border: 0;
 }
 
-.ja_video {
+/* Video iframes should always display and use absolute positioning */
+.ja_video .ja_iframe {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 0;
-    padding-bottom: 65%;
-    position: relative;
+    height: 100%;
+}
+
+/* Auto-sized iframes with explicit height should not stretch */
+.ja_auto .ja_iframe[style*="height"] {
+    flex: none;
+}
+
+.ja_video {
     display: none;
+}
+
+/* Show video container when it has loaded content */
+.ja_video.ja_video_loaded {
+    display: block;
 }
 
 .ja_video iframe {
@@ -395,6 +506,13 @@ body.ja_blur > *:not(.ja_wrap) {
     display: none;
 }
 
+/* jAlert video elements should not have baseline spacing and always fill container */
+.ja_video_element {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
 /**
     Full Screen
 */
@@ -407,17 +525,34 @@ body.ja_blur > *:not(.ja_wrap) {
     min-height: 100%;
     border-radius: 0;
     margin: 0 !important;
+    display: flex;
+    flex-direction: column;
 }
 
 .ja_fullscreen .ja_title {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+    flex-shrink: 0; /* Prevent title from shrinking */
 }
 
-.ja_fullscreen .ja_body,
-.ja_fullscreen .ja_media_wrap{
-    height: 100%;
+.ja_fullscreen .ja_body {
+    flex: 1; /* Take up remaining space after title */
+    height: auto; /* Remove fixed height */
 }
+
+/* Custom sized modals with explicit height should use flexbox */
+.jAlert[style*="height:"] {
+    display: flex;
+    flex-direction: column;
+}
+
+.jAlert[style*="height:"] .ja_body {
+    flex: 1; /* Take up remaining space after title */
+    display: flex;
+    flex-direction: column;
+}
+
+
 
 .ja_fullscreen .ja_close_round {
     right: 5px;
@@ -444,9 +579,10 @@ body.ja_blur > *:not(.ja_wrap) {
     border-bottom-right-radius: 5px;
 }
 
-.ja_btn, .ja_btn:link, .ja_btn:visited, .ja_btn:active {
+.ja_btn, .ja_btn:link, .ja_btn:visited, .ja_btn:active,
+.ja_btn_wrap button, .ja_btn_wrap a {
     margin-top: 3px;
-    padding: 3px 10px;
+    padding: 8px 14px;
     display: inline-block;
     text-decoration: none;
     border: none;
@@ -454,12 +590,19 @@ body.ja_blur > *:not(.ja_wrap) {
 }
 
 @media (max-width: 450px) {
-    .ja_btn {
+    .ja_btn,
+    .ja_btn_wrap button, .ja_btn_wrap a {
         width: 90%;
+    }
+    .ja_btn, .ja_btn:link, .ja_btn:visited, .ja_btn:active,
+    .ja_btn_wrap button, .ja_btn_wrap a {
+        margin-top: 8px;
+        padding: 8px 10px;
     }
 }
 
-.ja_btn:hover {
+.ja_btn:hover,
+.ja_btn_wrap button:hover, .ja_btn_wrap a:hover {
     text-decoration: none;
 }
 
@@ -580,12 +723,24 @@ body.ja_blur > *:not(.ja_wrap) {
     -webkit-box-shadow: rgba(0, 0, 51, 0.3) 1.5em 0 0 0, rgba(0, 0, 51, 0.3) 1.1em 1.1em 0 0, rgba(0, 0, 51, 0.3) 0 1.5em 0 0, rgba(0, 0, 51, 0.3) -1.1em 1.1em 0 0, rgba(0, 0, 51, 0.3) -1.5em 0 0 0, rgba(0, 0, 51, 0.3) -1.1em -1.1em 0 0, rgba(0, 0, 51, 0.3) 0 -1.5em 0 0, rgba(0, 0, 51, 0.3) 1.1em -1.1em 0 0;
     box-shadow: rgba(0, 0, 51, 0.3) 1.5em 0 0 0, rgba(0, 0, 51, 0.3) 1.1em 1.1em 0 0, rgba(0, 0, 51, 0.3) 0 1.5em 0 0, rgba(0, 0, 51, 0.3) -1.1em 1.1em 0 0, rgba(0, 0, 51, 0.3) -1.5em 0 0 0, rgba(0, 0, 51, 0.3) -1.1em -1.1em 0 0, rgba(0, 0, 51, 0.3) 0 -1.5em 0 0, rgba(0, 0, 51, 0.3) 1.1em -1.1em 0 0;
     display: inline-block;
-    font-size: 10px;
+    font-size: 20px;
     width: 1em;
     height: 1em;
     margin: auto;
     overflow: hidden;
     text-indent: 100%;
+}
+
+/* Center loaders for ajax/general content (not in media or slideshow contexts) */
+.ja_body > .ja_loader {
+    display: block;
+    margin: 20px auto;
+}
+
+/* Override for media modals - they use absolute positioning */
+.ja_media_modal .ja_body > .ja_loader {
+    display: inline-block;
+    margin: auto;
 }
 
 /*!Animate.css - http://daneden.me/animate Licensed under the MIT license -http://opensource.org/licenses/MIT Copyright (c) 2015 Daniel Eden*/
@@ -3577,43 +3732,200 @@ body.ja_blur > *:not(.ja_wrap) {
     padding: 0;
 }
 
+/* Fix button wrap margins when using no padding */
+.ja_no_pad .ja_btn_wrap.optBack {
+    margin-top: 25px;
+    margin-bottom: 0; /* Explicitly reset bottom margin */
+}
+
+/* Flexbox layout for slideshow modals */
+.jAlert.ja_slideshow_modal {
+    margin: 0 auto !important;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Full viewport height only for full-screen slideshow modals */
+.jAlert.ja_slideshow_modal.ja_fullscreen {
+    height: 100vh;
+    max-height: 100vh;
+}
+
+.jAlert.ja_slideshow_modal .ja_title {
+    flex-shrink: 0; /* Don't let title shrink */
+}
+
+.jAlert.ja_slideshow_modal .ja_body {
+    flex: 1; /* Take remaining space */
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* Important for flex shrinking */
+    padding: 0; /* Remove default padding for slideshow */
+}
+
+/* Allow slideshows to have padding when explicitly requested */
+.jAlert.ja_slideshow_modal:not(.ja_no_pad) .ja_body {
+    padding: 20px; /* Restore default padding when noPadContent is false */
+}
+
+.jAlert.ja_slideshow_modal .ja_slideshow_thumbnails {
+    flex-shrink: 0; /* Don't let thumbnails shrink */
+    order: 2; /* Put thumbnails at bottom */
+}
+
+.jAlert.ja_slideshow_modal .ja_slideshow_wrap {
+    order: 1; /* Put main slideshow first */
+}
+
+/* Override button margins specifically for slideshow modals to prevent layout issues */
+.jAlert.ja_slideshow_modal .ja_btn_wrap.optBack {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    flex-shrink: 0; /* Don't let buttons shrink */
+}
+
+/* Full-screen slideshow centering */
+.jAlert.ja_full.ja_slideshow_modal .ja_slideshow_main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.jAlert.ja_full.ja_slideshow_modal .ja_slideshow_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /*
     Slideshow styles
 */
 .ja_slideshow_wrap {
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.ja_slideshow_wrap > .ja_loader {
+    display: block;
+    margin: 120px auto;
     text-align: center;
-    margin: 0;
-    padding: 0;
+    z-index: 10;
+}
+
+.ja_slideshow_main {
+    flex: 1;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0; /* Important for flex shrinking */
 }
 
 .ja_slideshow_container {
+    width: 100%;
+    height: 100%;
     position: relative;
-    display: block;
-    max-width: 100%;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-    min-height: 200px;
-    overflow: visible;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .ja_slideshow_slide {
+    width: 100%;
+    height: 100%;
     position: relative;
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-    line-height: 0;
-    vertical-align: top;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Cover mode: Create square container with CSS */
+.ja_slideshow_slide.ja_cover_mode {
+    aspect-ratio: 1 / 1; /* Modern browsers - perfect square */
+    background-size: cover;
+    background-position: center center;
+    height: auto; /* Let aspect-ratio determine height */
+    max-height: none; /* Remove height constraints in cover mode */
+}
+
+/* Fallback for older browsers that don't support aspect-ratio */
+@supports not (aspect-ratio: 1 / 1) {
+    .ja_slideshow_slide.ja_cover_mode {
+        height: 0;
+        padding-bottom: 100%; /* Creates square via padding trick */
+        background-size: cover;
+        background-position: center center;
+    }
 }
 
 .ja_slideshow_img {
     max-width: 100%;
+    max-height: 100%;
+    width: auto;
     height: auto;
     display: block;
     margin: 0;
     padding: 0;
-    vertical-align: top;
+    object-fit: contain; /* Ensure proper scaling */
+}
+
+/* Fallback for browsers that don't support object-fit */
+@supports not (object-fit: contain) {
+    .ja_slideshow_img {
+        width: 100% !important;
+        height: 100% !important;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+    .ja_slideshow_img.cover {
+        background-size: cover;
+    }
+}
+
+/* Background-image approach for thumbnails - perfect squares */
+.ja_slideshow_thumbnail_bg {
+    width: 80px;  /* Desktop default */
+    height: 80px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.8;
+    position: relative;
+}
+
+.ja_slideshow_thumbnail_bg:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.ja_slideshow_thumbnail_bg.active {
+    opacity: 1;
+}
+
+/* Thumbnail error state */
+.ja_slideshow_thumbnail_bg.error {
+    background-color: rgba(220, 53, 69, 0.1);
+    background-image: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(220, 53, 69, 0.2);
+}
+
+.ja_slideshow_thumbnail_bg.error::before {
+    content: "⚠";
+    font-size: 24px;
+    color: rgba(220, 53, 69, 0.6);
+    line-height: 1;
 }
 
 .ja_slideshow_caption {
@@ -3626,6 +3938,27 @@ body.ja_blur > *:not(.ja_wrap) {
     padding: 10px;
     font-size: 14px;
     text-align: center;
+    line-height: 1em;
+    z-index: 5;
+    margin: 0;
+    border-radius: 0;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+}
+
+.ja_slideshow_error {
+    display: block;
+    margin: 120px auto;
+    background: rgba(220, 53, 69, 0.9);
+    color: white;
+    padding: 20px 30px;
+    border-radius: 8px;
+    font-size: 16px;
+    text-align: center;
+    z-index: 10;
+    min-width: 200px;
+    max-width: 80%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* Side arrows */
@@ -3824,9 +4157,185 @@ body.ja_blur > *:not(.ja_wrap) {
     }
 }
 
+/*
+    Thumbnail styles with touch/drag scrolling support
+    Static sizes for optimal touch/mouse interaction
+*/
+.ja_slideshow_thumbnails {
+    display: none;
+    height: 80px;  /* Desktop default */
+    width: 100%;
+    flex-shrink: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    will-change: scroll-position;
+}
+
+.ja_slideshow_thumbnails::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.ja_slideshow_thumbnails::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+}
+
+.ja_slideshow_thumbnails::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 3px;
+}
+
+.ja_slideshow_thumbnails::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.ja_slideshow_has_thumbnails .ja_slideshow_thumbnails {
+    display: flex;
+}
+
+.ja_slideshow_thumbnails.dragging {
+    cursor: grabbing;
+    scroll-behavior: auto;
+}
+
+.ja_slideshow_thumbnails_top,
+.ja_slideshow_thumbnails_bottom {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    padding: 0;
+    background: transparent;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    cursor: grab;
+}
+
+/* Ensure thumbnails appear in correct order within slideshow */
+.ja_slideshow_thumbnails_top {
+    order: 1; /* Show first */
+}
+
+.ja_slideshow_main {
+    order: 2; /* Show second */
+}
+
+.ja_slideshow_thumbnails_bottom {
+    order: 3; /* Show last */
+}
+
+/* Thumbnail buttons - static sizes for optimal device interaction */
+.ja_slideshow_thumbnail {
+    flex: 0 0 80px !important; /* Desktop: 80px (good for mouse precision) */
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.8;
+    overflow: hidden;
+    position: relative;
+    height: 80px;
+    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
+    min-height: 80px;
+    max-height: 80px;
+    display: inline-block;
+}
+
+.ja_slideshow_thumbnail:hover {
+    opacity: 1;
+}
+
+.ja_slideshow_thumbnail.active {
+    opacity: 1;
+}
+
+.ja_slideshow_thumbnail.active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.2);
+    pointer-events: none;
+}
+
+
+
+
+
+/* Static thumbnail sizes for optimal touch/mouse interaction */
+
+/* Phone: 60px - optimized for finger touch on small screens */
+@media (max-width: 480px) {
+    .ja_slideshow_thumbnails {
+        height: 60px;
+    }
+    
+    .ja_slideshow_thumbnail {
+        width: 60px;
+        height: 60px;
+        flex: 0 0 60px !important;
+        min-width: 60px;
+        max-width: 60px;
+        min-height: 60px;
+        max-height: 60px;
+    }
+    
+    .ja_slideshow_thumbnail_bg {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .ja_slideshow_thumbnail_bg.error::before {
+        font-size: 18px;
+    }
+}
+
+/* Tablet: 70px - balanced size for touch on larger screens */
+@media (min-width: 481px) and (max-width: 1024px) {
+    .ja_slideshow_thumbnails {
+        height: 70px;
+    }
+    
+    .ja_slideshow_thumbnail {
+        width: 70px;
+        height: 70px;
+        flex: 0 0 70px !important;
+        min-width: 70px;
+        max-width: 70px;
+        min-height: 70px;
+        max-height: 70px;
+    }
+    
+    .ja_slideshow_thumbnail_bg {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .ja_slideshow_thumbnail_bg.error::before {
+        font-size: 20px;
+    }
+}
+
+/* Desktop: 80px - precise mouse interaction (default above) */
+
 /* Tablet button sizing */
 @media (min-width: 451px) and (max-width: 1024px) {
-    .ja_btn {
+    .ja_btn,
+    .ja_btn_wrap button, .ja_btn_wrap a {
         padding: 8px 16px !important;
         font-size: 16px !important;
         display: inline-flex;
@@ -3844,4 +4353,109 @@ body.ja_blur > *:not(.ja_wrap) {
         margin: 30px -20px -20px -20px;
         padding: 10px 0px;
     }
+    
+    /* Fix button wrap margins when using no padding on tablets */
+    .ja_no_pad .ja_btn_wrap.optBack {
+        margin-top: 30px;
+        margin-bottom: 0; /* Explicitly reset bottom margin */
+    }
 }
+
+/* Loader positioning for media modals */
+.ja_media_modal .ja_body > .ja_loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+
+
+/* Loader inside slideshow slide container */
+.ja_slideshow_slide > .ja_loader {
+    display: block;
+    margin: 120px auto;
+    text-align: center;
+    z-index: 100;
+    pointer-events: none;
+}
+
+/* Loader for cover mode - simplified with flexbox */
+.ja_slideshow_slide.ja_cover_mode > .ja_loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -0.5em; /* Half the loader height (1em) for vertical centering */
+    margin-left: -0.5em; /* Half the loader width (1em) for horizontal centering */
+    z-index: 100;
+    pointer-events: none;
+}
+
+/* Ensure full-screen slideshow containers have proper height when loading */
+.ja_fullscreen .ja_slideshow_slide:has(.ja_loader) {
+    min-height: 300px; /* Ensure minimum height for loader visibility during loading */
+}
+
+/* Fallback for browsers that don't support :has() */
+.ja_fullscreen .ja_slideshow_slide.ja_loading {
+    min-height: 300px;
+}
+
+/* Loader positioning for full-screen slideshow slides */
+.ja_fullscreen .ja_slideshow_slide > .ja_loader {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    margin-top: -0.5em !important; /* Half the loader height (1em) for vertical centering */
+    margin-left: -0.5em !important; /* Half the loader width (1em) for horizontal centering */
+    margin-bottom: 0 !important;
+    margin-right: 0 !important;
+    display: block;
+    text-align: center;
+    z-index: 100;
+    pointer-events: none;
+}
+/* Cover mode error handling */
+.ja_slideshow_slide.ja_cover_mode > .ja_slideshow_error {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+}
+
+/* Error message for failed image loads */
+.ja_img_error {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(220, 53, 69, 0.9);
+    color: white;
+    padding: 20px 30px;
+    border-radius: 8px;
+    font-size: 16px;
+    text-align: center;
+    z-index: 10;
+    min-width: 200px;
+    max-width: calc(100% - 40px); /* Ensure 20px space on each side */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Error message for failed ajax loads */
+.ja_ajax_error {
+    display: block;
+    margin: 60px 20px;
+    background: rgba(220, 53, 69, 0.9);
+    color: white;
+    padding: 20px 30px;
+    border-radius: 8px;
+    font-size: 16px;
+    text-align: center;
+    z-index: 10;
+    min-width: 200px;
+    max-width: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+

@@ -2,6 +2,84 @@
 
 All notable changes to jAlert will be documented in this file.
 
+## [6.0.0] - 2025-07-03
+
+### 🚀 Major Release - Complete Feature Overhaul
+
+jAlert 6.0.0 represents a massive expansion with a complete slideshow system, enhanced video support, and comprehensive media handling capabilities. This release introduces significant new features while maintaining backward compatibility where possible.
+
+### ✨ New Features
+
+- **🎠 Complete Slideshow System**: Revolutionary slideshow functionality with advanced features
+  - **Image Navigation**: Next/previous arrows, dot navigation, and number counters
+  - **Video Support**: HTML5 videos and YouTube/Vimeo iframes within slideshows
+  - **Thumbnail Navigation**: Drag-scrollable thumbnails with top/bottom positioning
+  - **Auto-advance**: Configurable intervals with pause-on-hover functionality
+  - **Keyboard Navigation**: Arrow key support with proper event cleanup
+  - **Responsive Sizing**: Contain and cover modes for optimal image display
+  - **Advanced Callbacks**: `onSlideChange`, `onBeforeSlideChange`, `onSlideshowEnd`, `onSlideshowLoop`, `onContentLoad`
+  - **Loop Control**: Configurable looping with end-of-slideshow detection
+  - **Preloading**: Background image preloading for faster navigation
+  - **Touch Support**: Swipe gestures and touch-friendly controls for mobile devices
+
+- **🎥 Enhanced Video Support**: Comprehensive HTML5 video and iframe handling
+  - **HTML5 Video**: Full support for all video attributes (controls, autoplay, loop, mute, etc.)
+  - **Responsive Containers**: Proper aspect ratio handling with fallback defaults
+  - **Video Configuration**: Direct video object properties for complete video configuration
+  - **Error Handling**: Robust loading and error states with graceful fallbacks
+  - **Utility Functions**: `createHTML5Video()`, `createVideoContainer()`, `setupVideoEventHandlers()`
+  - **YouTube/Vimeo**: Enhanced iframe support with responsive containers
+
+- **🖼️ Improved Media Handling**: Enhanced image and iframe support
+  - **Auto-sizing**: Intelligent sizing for images, videos, and slideshows
+  - **Responsive Design**: Better mobile and tablet support
+  - **Error States**: Improved error handling and user feedback
+  - **Loader Positioning**: Better loading indicators and positioning
+
+### 🔧 Technical Improvements
+
+- **Performance**: Optimized slideshow rendering and video loading
+- **Memory Management**: Comprehensive event cleanup and timer management
+- **Error Handling**: Robust validation and fallback mechanisms
+- **Accessibility**: Enhanced ARIA attributes and keyboard navigation
+- **Mobile Support**: Touch-friendly controls and responsive layouts
+
+### 🐛 Bug Fixes
+
+- **Button Alias**: Fixed missing `buttons` alias for `btns` option - now both `buttons` and `btns` work identically
+  - Added proper alias handling so `buttons: [...]` gets converted to `btns: [...]` internally
+  - Updated unit tests to verify alias functionality works correctly
+- **Responsive Video**: Fixed extreme aspect ratio issues (450% padding-bottom)
+- **Event Cleanup**: Proper cleanup of slideshow timers and event handlers
+- **Theme Validation**: Invalid themes now return 'default' instead of false
+- **Size Defaults**: Media modals now default to 'auto' size for better UX
+- **Memory Leaks**: Comprehensive cleanup of MutationObserver and event listeners
+- **Button Sizing**: Enlarged buttons on all screen sizes for better touch interaction (8px 14px padding on desktop, 8px 10px on mobile)
+
+### 📚 Documentation
+
+- **Comprehensive API Documentation**: Complete slideshow and video API reference
+- **Interactive Demos**: 16 comprehensive demo sections with 200+ examples
+- **Test Coverage**: 205 unit tests, 153 E2E tests, and visual regression tests
+- **Migration Guide**: Detailed upgrade instructions for existing users
+
+### 🔄 Breaking Changes
+
+- **Default Size Behavior**: Media modals (images, videos, slideshows) now default to `size: 'auto'`
+- **Theme Validation**: Invalid themes now return `'default'` instead of `false`
+- **Slideshow API**: New slideshow system with different options structure
+- **Video API**: Direct video object properties for HTML5 video configuration
+- **Default Padding Behavior**: All modals now default to `noPadContent: true` (no padding around content)
+
+### Added
+- Video modals and slideshows now support an optional `embedType` property (`'iframe'` for YouTube/Vimeo, `'html5'` for direct video files). If not set, jAlert will auto-detect based on the video URL. If you set the wrong type, it will use what you specify.
+
+### ✨ New Features
+
+- **New Orange and Dark Orange Themes**: Added `orange` (bright, readable on light backgrounds) and `dark_orange` (deep orange, white text) themes for alerts and buttons. The `warningAlert` shortcut now uses the orange theme by default. If you want the old yellow warning, use `theme: 'yellow'`.
+
+---
+
 ## [5.0.5] - 2025-06-27
 
 ### 🛡️ Bug Fixes & Stability Improvements

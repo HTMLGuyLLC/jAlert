@@ -1,0 +1,1820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jAlert Comprehensive Demo</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="src/jAlert.js"></script>
+    <script src="src/jAlert-functions.js"></script>
+    <link rel="stylesheet" href="src/jAlert.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        h2 {
+            color: #444;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        h3 {
+            color: #555;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .demo-section {
+            margin-bottom: 30px;
+        }
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .demo-button {
+            padding: 10px 16px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        .demo-button:hover {
+            background: #0056b3;
+        }
+        .demo-button.red { background: #dc3545; }
+        .demo-button.red:hover { background: #c82333; }
+        .demo-button.green { background: #28a745; }
+        .demo-button.green:hover { background: #1e7e34; }
+        .demo-button.yellow { background: #ffc107; color: #333; }
+        .demo-button.yellow:hover { background: #e0a800; }
+        .demo-button.gray { background: #6c757d; }
+        .demo-button.gray:hover { background: #545b62; }
+        .note {
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 10px 15px;
+            margin: 10px 0;
+            font-style: italic;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>jAlert Comprehensive Demo</h1>
+        <p>A complete test suite for all jAlert features, variations, and edge cases.</p>
+
+        <!-- Basic Alerts -->
+        <h2>1. Basic Alerts</h2>
+        <div class="demo-section">
+            <h3>Simple Content</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="basicAlert()">Basic Alert</button>
+                <button class="demo-button" onclick="titleAlert()">With Title</button>
+                <button class="demo-button" onclick="noTitleAlert()">No Title</button>
+                <button class="demo-button" onclick="longContentAlert()">Long Content</button>
+                <button class="demo-button" onclick="htmlContentAlert()">HTML Content</button>
+                <button class="demo-button" onclick="emptyAlert()">Empty Alert</button>
+            </div>
+        </div>
+
+        <!-- Sizes -->
+        <h2>2. Sizes</h2>
+        <div class="demo-section">
+            <h3>Predefined Sizes</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="sizeAlert('xsm')">XSM</button>
+                <button class="demo-button" onclick="sizeAlert('sm')">SM</button>
+                <button class="demo-button" onclick="sizeAlert('md')">MD</button>
+                <button class="demo-button" onclick="sizeAlert('lg')">LG</button>
+                <button class="demo-button" onclick="sizeAlert('xlg')">XLG</button>
+                <button class="demo-button" onclick="sizeAlert('full')">Full Screen</button>
+                <button class="demo-button" onclick="sizeAlert('auto')">Auto</button>
+            </div>
+            <h3>Custom Sizes</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="customSizeAlert('300px')">300px</button>
+                <button class="demo-button" onclick="customSizeAlert('50%')">50%</button>
+                <button class="demo-button" onclick="customSizeAlert('600px')">600px</button>
+                <button class="demo-button" onclick="customSizeAlert({width:'400px', height:'300px'})">Custom W/H</button>
+            </div>
+        </div>
+
+        <!-- Themes -->
+        <h2>3. Themes</h2>
+        <div class="demo-section">
+            <div class="demo-grid">
+                <button class="demo-button" onclick="themeAlert('default')">Default</button>
+                <button class="demo-button red" onclick="themeAlert('red')">Red</button>
+                <button class="demo-button" style="background:#A20000;color:#fff" onclick="themeAlert('dark_red')">Dark Red</button>
+                <button class="demo-button green" onclick="themeAlert('green')">Green</button>
+                <button class="demo-button" style="background:#006D00;color:#fff" onclick="themeAlert('dark_green')">Dark Green</button>
+                <button class="demo-button" onclick="themeAlert('blue')">Blue</button>
+                <button class="demo-button" style="background:#024986;color:#fff" onclick="themeAlert('dark_blue')">Dark Blue</button>
+                <button class="demo-button yellow" onclick="themeAlert('yellow')">Yellow</button>
+                <button class="demo-button" style="background:#ffc107;color:#2f2f2f" onclick="themeAlert('orange')">Orange</button>
+                <button class="demo-button" style="background:#b85c00;color:#fff" onclick="themeAlert('dark_orange')">Dark Orange</button>
+                <button class="demo-button gray" onclick="themeAlert('gray')">Gray</button>
+                <button class="demo-button" style="background:#424242;color:#fff" onclick="themeAlert('dark_gray')">Dark Gray</button>
+                <button class="demo-button" onclick="themeAlert('black')">Black</button>
+                <button class="demo-button" onclick="themeAlert('brown')">Brown</button>
+            </div>
+        </div>
+
+        <!-- Close Button Variations -->
+        <h2>4. Close Button Variations</h2>
+        <div class="demo-section">
+            <div class="demo-grid">
+                <button class="demo-button" onclick="closeBtnAlert('default')">Default Close</button>
+                <button class="demo-button" onclick="closeBtnAlert('round')">Round Close</button>
+                <button class="demo-button" onclick="closeBtnAlert('round_white')">Round White</button>
+                <button class="demo-button" onclick="closeBtnAlert('alt')">Alt Close</button>
+                <button class="demo-button" onclick="closeBtnAlert('none')">No Close Button</button>
+            </div>
+        </div>
+
+        <!-- Close Options -->
+        <h2>5. Close Options</h2>
+        <div class="demo-section">
+            <div class="demo-grid">
+                <button class="demo-button" onclick="closeOptionAlert('click')">Close on Click</button>
+                <button class="demo-button" onclick="closeOptionAlert('esc')">Close on ESC</button>
+                <button class="demo-button" onclick="closeOptionAlert('both')">Both</button>
+                <button class="demo-button" onclick="closeOptionAlert('none')">Neither</button>
+                <button class="demo-button" onclick="autoCloseAlert(3000)">Auto Close (3s)</button>
+                <button class="demo-button" onclick="autoCloseAlert(1000)">Auto Close (1s)</button>
+            </div>
+        </div>
+
+        <!-- Background Colors -->
+        <h2>6. Background Colors</h2>
+        <div class="demo-section">
+            <div class="demo-grid">
+                <button class="demo-button" onclick="backgroundColorAlert('black')">Black Background</button>
+                <button class="demo-button" onclick="backgroundColorAlert('white')">White Background</button>
+            </div>
+        </div>
+
+        <!-- Animations -->
+        <h2>7. Animations</h2>
+        <div class="demo-section">
+            <h3>Show Animations</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="animationAlert('fadeInUp', 'fadeOutDown')">Fade Up/Down</button>
+                <button class="demo-button" onclick="animationAlert('bounceIn', 'bounceOut')">Bounce In/Out</button>
+                <button class="demo-button" onclick="animationAlert('slideInDown', 'slideOutUp')">Slide Down/Up</button>
+                <button class="demo-button" onclick="animationAlert('zoomIn', 'zoomOut')">Zoom In/Out</button>
+                <button class="demo-button" onclick="animationAlert('flipInX', 'flipOutX')">Flip X</button>
+                <button class="demo-button" onclick="animationAlert('rotateIn', 'rotateOut')">Rotate</button>
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <h2>8. Buttons</h2>
+        <div class="demo-section">
+            <h3>Single Buttons</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="singleBtnAlert()">Single Button</button>
+                <button class="demo-button" onclick="btnThemeAlert()">Button Themes</button>
+                <button class="demo-button" onclick="btnCallbackAlert()">Button Callbacks</button>
+            </div>
+            <h3>Multiple Buttons</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="multipleBtnsAlert()">Multiple Buttons</button>
+                <button class="demo-button" onclick="confirmAlert()">Confirm Dialog</button>
+                <button class="demo-button" onclick="customConfirmAlert()">Custom Confirm</button>
+            </div>
+            <h3>Button Options</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="btnBackgroundAlert()">Button Background</button>
+                <button class="demo-button" onclick="btnNoBackgroundAlert()">No Button Background</button>
+                <button class="demo-button" onclick="btnNoPadAlert()">No Pad + Buttons</button>
+                <button class="demo-button" onclick="customClassBtnAlert()">Custom Classes</button>
+            </div>
+        </div>
+
+        <!-- Images -->
+        <h2>9. Images</h2>
+        <div class="demo-section">
+            <h3>Basic Images</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="imageAlert('normal')">Normal Image</button>
+                <button class="demo-button" onclick="imageAlert('auto')">Auto Size</button>
+                <button class="demo-button" onclick="imageAlert('custom_width')">Custom Width</button>
+            </div>
+            <h3>Edge Cases</h3>
+            <div class="demo-grid">
+                <button class="demo-button red" onclick="imageAlert('broken')">Broken Image</button>
+                <button class="demo-button" onclick="imageAlert('tall')">Ultra Tall</button>
+                <button class="demo-button" onclick="imageAlert('wide')">Ultra Wide</button>
+                <button class="demo-button" onclick="imageAlert('tiny')">Tiny Image</button>
+            </div>
+            <h3>With Options</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="imageAlert('with_pad')">With Padding</button>
+                <button class="demo-button" onclick="imageAlert('with_title')">With Title</button>
+            </div>
+        </div>
+
+        <!-- Videos -->
+        <h2>10. Videos</h2>
+        <div class="demo-section">
+            <h3>Basic Videos</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="videoAlert('mp4')">MP4 Video</button>
+                <button class="demo-button" onclick="videoAlert('webm')">WebM Video</button>
+                <button class="demo-button" onclick="videoAlert('ogg')">OGV Video</button>
+            </div>
+            <h3>Video Options</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="videoAlert('no_controls')">Without Controls</button>
+                <button class="demo-button" onclick="videoAlert('autoplay')">Auto Play</button>
+                <button class="demo-button" onclick="videoAlert('muted')">Muted</button>
+                <button class="demo-button" onclick="videoAlert('loop')">Looping</button>
+            </div>
+            <h3>Video Sizing</h3>
+            <div class="demo-grid">
+                <button class="demo-button green" onclick="videoAlert('max_size')">Max Size (Responsive)</button>
+                <button class="demo-button" onclick="videoAlert('responsive')">Responsive</button>
+                <button class="demo-button" onclick="videoAlert('portrait')">Portrait Video</button>
+            </div>
+            <h3>YouTube & Vimeo</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="videoAlert('youtube')">YouTube Video</button>
+                <button class="demo-button" onclick="videoAlert('vimeo')">Vimeo Video</button>
+                <button class="demo-button" onclick="videoAlert('youtube_playlist')">YouTube Playlist</button>
+                <button class="demo-button green" onclick="videoAlert('youtube_responsive')">YouTube Responsive</button>
+            </div>
+            <h3>Edge Cases</h3>
+            <div class="demo-grid">
+                <button class="demo-button red" onclick="videoAlert('broken')">Broken Video</button>
+                <button class="demo-button" onclick="videoAlert('with_pad')">With Padding</button>
+                <button class="demo-button" onclick="videoAlert('no_title')">No Title</button>
+            </div>
+        </div>
+
+        <!-- Iframes -->
+        <h2>11. Iframes</h2>
+        <div class="demo-section">
+            <h3>Basic Iframes</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="iframeAlert('basic')">Basic Iframe</button>
+                <button class="demo-button" onclick="iframeAlert('custom_height')">Custom Height</button>
+                <button class="demo-button" onclick="iframeAlert('stretch')">Auto Height</button>
+            </div>
+            <h3>Auto-sizing</h3>
+            <div class="demo-grid">
+                <button class="demo-button green" onclick="iframeAlert('auto_local')">Auto (Local)</button>
+                <button class="demo-button" onclick="iframeAlert('auto_cross')">Auto (Cross-Origin)</button>
+                <button class="demo-button red" onclick="iframeAlert('auto_blocked')">Auto (Blocked)</button>
+            </div>
+            <h3>With Sizes</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="iframeAlert('full')">Full Screen</button>
+                <button class="demo-button" onclick="iframeAlert('large')">Large</button>
+                <button class="demo-button" onclick="iframeAlert('small')">Small</button>
+            </div>
+            <h3>Padding Options</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="iframeAlert('no_pad')">No Padding (Default)</button>
+                <button class="demo-button" onclick="iframeAlert('with_pad')">With Padding</button>
+            </div>
+        </div>
+
+        <!-- Slideshows -->
+        <h2>12. Slideshows</h2>
+        <div class="demo-section">
+            <h3>Basic Slideshows</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="slideshowAlert('basic')">Basic (3 images)</button>
+                <button class="demo-button" onclick="slideshowAlert('single')">Single Image</button>
+                <button class="demo-button" onclick="slideshowAlert('many')">Many Images (8)</button>
+            </div>
+            <h3>Controls</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="slideshowAlert('arrows_only')">Arrows Only</button>
+                <button class="demo-button" onclick="slideshowAlert('dots_only')">Dots Only</button>
+                <button class="demo-button" onclick="slideshowAlert('counter_only')">Counter Only</button>
+                <button class="demo-button" onclick="slideshowAlert('no_controls')">No Controls</button>
+            </div>
+            <h3>Thumbnails</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="slideshowAlert('thumbs_bottom')">Thumbnails Bottom</button>
+                <button class="demo-button" onclick="slideshowAlert('thumbs_top')">Thumbnails Top</button>
+                <button class="demo-button red" onclick="slideshowAlert('thumbs_error')">Thumbnail Errors</button>
+                <button class="demo-button green" onclick="thumbnailSlideshowAlert()">Advanced Thumbnails</button>
+            </div>
+            <h3>Image Modes</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="slideshowAlert('contain')">Contain Mode</button>
+                <button class="demo-button" onclick="slideshowAlert('cover')">Cover Mode</button>
+                <button class="demo-button green" onclick="coverModeSlideshowAlert()">Cover Mode + Large Size</button>
+            </div>
+            <h3>Auto-advance</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="slideshowAlert('auto_fast')">Auto Fast (1s)</button>
+                <button class="demo-button" onclick="slideshowAlert('auto_slow')">Auto Slow (3s)</button>
+                <button class="demo-button" onclick="slideshowAlert('loop')">Loop</button>
+                <button class="demo-button" onclick="slideshowAlert('no_loop')">No Loop</button>
+            </div>
+            <h3>Performance</h3>
+            <div class="demo-grid">
+                <button class="demo-button green" onclick="slideshowAlert('preload')">Preload Images (Default)</button>
+                <button class="demo-button red" onclick="slideshowAlert('no_preload')">No Preload (Disabled)</button>
+            </div>
+            <h3>Padding Options</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="slideshowAlert('no_pad')">No Padding (Default)</button>
+                <button class="demo-button" onclick="slideshowAlert('with_pad')">With Padding</button>
+            </div>
+            <h3>Edge Cases</h3>
+            <div class="demo-grid">
+                <button class="demo-button red" onclick="slideshowAlert('broken_images')">Broken Images</button>
+                <button class="demo-button" onclick="slideshowAlert('mixed_sizes')">Mixed Sizes</button>
+                <button class="demo-button" onclick="slideshowAlert('captions')">With Captions</button>
+            </div>
+            <h3>Callbacks</h3>
+            <div class="demo-grid">
+                <button class="demo-button green" onclick="slideshowCallbacksDemo()">All Callbacks (Check Console)</button>
+                <button class="demo-button yellow" onclick="slideshowCallbacksNoLoopDemo()">Callbacks (No Loop) - Check Console</button>
+            </div>
+            <h3>Video Slideshows</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="videoSlideshowAlert('single_youtube')">Single YouTube Video</button>
+                <button class="demo-button" onclick="videoSlideshowAlert('single_html5')">Single HTML5 Video</button>
+                <button class="demo-button" onclick="videoSlideshowAlert('with_thumbnail')">Video with Thumbnail</button>
+                <button class="demo-button" onclick="videoSlideshowAlert('no_thumbnail')">Video without Thumbnail</button>
+                <button class="demo-button" onclick="videoSlideshowAlert('images_before_video')">Images + Video</button>
+                <button class="demo-button" onclick="videoSlideshowAlert('video_between_images')">Video Between Images</button>
+                <button class="demo-button" onclick="videoSlideshowAlert('mixed_video_types')">Mixed Video Types</button>
+            </div>
+        </div>
+
+        <!-- Ajax -->
+        <h2>13. Ajax</h2>
+        <div class="demo-section">
+            <div class="demo-grid">
+                <button class="demo-button" onclick="ajaxAlert('json')">JSON Content</button>
+                <button class="demo-button" onclick="ajaxAlert('html')">HTML Content</button>
+                <button class="demo-button red" onclick="ajaxAlert('error')">Ajax Error</button>
+            </div>
+        </div>
+
+        <!-- Special Options -->
+        <h2>14. Special Options</h2>
+        <div class="demo-section">
+            <h3>Content Options</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="specialAlert('no_pad')">No Padding</button>
+                <button class="demo-button" onclick="specialAlert('blur_bg')">Blur Background</button>
+                <button class="demo-button" onclick="specialAlert('custom_class')">Custom Classes</button>
+            </div>
+            <h3>Behavior Options</h3>
+            <div class="demo-grid">
+                <button class="demo-button" onclick="specialAlert('replace_others')">Replace Others</button>
+                <button class="demo-button" onclick="specialAlert('autofocus')">Auto Focus</button>
+                <button class="demo-button" onclick="specialAlert('callbacks')">Event Callbacks</button>
+            </div>
+        </div>
+
+        <!-- Multiple Alerts -->
+        <h2>15. Multiple Alerts</h2>
+        <div class="demo-section">
+            <div class="demo-grid">
+                <button class="demo-button" onclick="multipleAlert('stack')">Stack Alerts</button>
+                <button class="demo-button" onclick="multipleAlert('replace')">Replace Alerts</button>
+                <button class="demo-button" onclick="multipleAlert('rapid')">Rapid Fire</button>
+            </div>
+        </div>
+
+        <!-- Error Cases -->
+        <h2>16. Error Cases & Edge Tests</h2>
+        <div class="demo-section">
+            <div class="demo-grid">
+                <button class="demo-button red" onclick="errorAlert('no_content')">No Content</button>
+                <button class="demo-button red" onclick="errorAlert('invalid_theme')">Invalid Theme</button>
+                <button class="demo-button red" onclick="errorAlert('invalid_size')">Invalid Size</button>
+                <button class="demo-button red" onclick="errorAlert('circular_callbacks')">Circular Callbacks</button>
+            </div>
+        </div>
+
+        <!-- Event Handler Cleanup Tests -->
+        <h2>17. Event Handler Cleanup Tests</h2>
+        <div class="demo-section">
+            <div class="demo-grid">
+                <button class="demo-button red" onclick="eventCleanupTest('rapid_open_close')">Rapid Open/Close</button>
+                <button class="demo-button red" onclick="eventCleanupTest('keyboard_after_close')">Keyboard After Close</button>
+                <button class="demo-button red" onclick="eventCleanupTest('multiple_slideshows')">Multiple Slideshows</button>
+            </div>
+            <p><strong>Test Instructions:</strong> These tests verify that event handlers are properly cleaned up. Watch the console for any error messages about handlers firing after modal closure.</p>
+        </div>
+
+        <div class="note">
+            <strong>Note:</strong> This demo tests all jAlert features systematically. Check the browser console for detailed logs during iframe auto-sizing and other operations.
+        </div>
+    </div>
+
+    <script>
+        // Basic Alerts
+        function basicAlert() {
+            $.jAlert({
+                content: 'This is a basic alert with minimal configuration.'
+            });
+        }
+
+        function titleAlert() {
+            $.jAlert({
+                title: 'Alert Title',
+                content: 'This alert has a title at the top.'
+            });
+        }
+
+        function noTitleAlert() {
+            $.jAlert({
+                content: 'This alert has no title, just content.'
+            });
+        }
+
+        function longContentAlert() {
+            $.jAlert({
+                title: 'Long Content Test',
+                content: 'This is a test of long content to see how the alert handles wrapping and sizing. '.repeat(20)
+            });
+        }
+
+        function htmlContentAlert() {
+            $.jAlert({
+                title: 'HTML Content',
+                content: '<h3>HTML is supported!</h3><p>You can use <strong>bold</strong>, <em>italic</em>, and <a href="#">links</a>.</p><ul><li>Lists work too</li><li>Second item</li></ul>'
+            });
+        }
+
+        function emptyAlert() {
+            $.jAlert({
+                title: 'Empty Alert',
+                content: ''
+            });
+        }
+
+        // Sizes
+        function sizeAlert(size) {
+            $.jAlert({
+                title: `Size: ${size}`,
+                content: `This alert uses size="${size}". The modal should be sized accordingly.`,
+                size: size
+            });
+        }
+
+        function customSizeAlert(size) {
+            $.jAlert({
+                title: `Custom Size: ${JSON.stringify(size)}`,
+                content: `This alert uses a custom size configuration.`,
+                size: size
+            });
+        }
+
+        // Themes
+        function themeAlert(theme) {
+            $.jAlert({
+                title: `${theme.charAt(0).toUpperCase() + theme.slice(1)} Theme`,
+                content: `This alert uses the "${theme}" theme.`,
+                theme: theme
+            });
+        }
+
+        // Close Button Variations
+        function closeBtnAlert(type) {
+            const config = {
+                title: `Close Button: ${type}`,
+                content: `Testing ${type} close button style.`
+            };
+
+            switch(type) {
+                case 'default':
+                    config.closeBtn = true;
+                    break;
+                case 'round':
+                    config.closeBtn = true;
+                    config.closeBtnRound = true;
+                    break;
+                case 'round_white':
+                    config.closeBtn = true;
+                    config.closeBtnRoundWhite = true;
+                    break;
+                case 'alt':
+                    config.closeBtn = true;
+                    config.closeBtnAlt = true;
+                    break;
+                case 'none':
+                    config.closeBtn = false;
+                    config.closeOnClick = true; // Enable click to close since no button
+                    config.content += ' (Click outside to close)';
+                    break;
+            }
+
+            $.jAlert(config);
+        }
+
+        // Close Options
+        function closeOptionAlert(type) {
+            const config = {
+                title: `Close Option: ${type}`
+            };
+
+            switch(type) {
+                case 'click':
+                    config.content = 'Click outside this modal to close it.';
+                    config.closeOnClick = true;
+                    config.closeOnEsc = false;
+                    break;
+                case 'esc':
+                    config.content = 'Press ESC to close this modal.';
+                    config.closeOnClick = false;
+                    config.closeOnEsc = true;
+                    break;
+                case 'both':
+                    config.content = 'Click outside OR press ESC to close.';
+                    config.closeOnClick = true;
+                    config.closeOnEsc = true;
+                    break;
+                case 'none':
+                    config.content = 'Only the close button will work.';
+                    config.closeOnClick = false;
+                    config.closeOnEsc = false;
+                    break;
+            }
+
+            $.jAlert(config);
+        }
+
+        function autoCloseAlert(delay) {
+            $.jAlert({
+                title: `Auto Close (${delay/1000}s)`,
+                content: `This alert will automatically close in ${delay/1000} seconds.`,
+                autoClose: delay
+            });
+        }
+
+        // Background Colors
+        function backgroundColorAlert(backgroundColor) {
+            $.jAlert({
+                title: `Background Color: ${backgroundColor}`,
+                content: `This alert uses backgroundColor="${backgroundColor}". Notice how the overlay behind the modal changes color.`,
+                backgroundColor: backgroundColor,
+                size: 'md'
+            });
+        }
+
+        // Animations
+        function animationAlert(showAnim, hideAnim) {
+            $.jAlert({
+                title: `Animation: ${showAnim}/${hideAnim}`,
+                content: `Show: ${showAnim}, Hide: ${hideAnim}`,
+                showAnimation: showAnim,
+                hideAnimation: hideAnim
+            });
+        }
+
+        // Buttons
+        function singleBtnAlert() {
+            $.jAlert({
+                title: 'Single Button',
+                content: 'This alert has a single custom button.',
+                btns: {
+                    text: 'Got it!',
+                    theme: 'blue',
+                    onClick: function() {
+                        alert('Button clicked!');
+                    }
+                }
+            });
+        }
+
+        function btnThemeAlert() {
+            $.jAlert({
+                title: 'Button Themes',
+                content: 'Different button theme colors.',
+                btns: [
+                    { text: 'Default', theme: 'default' },
+                    { text: 'Green', theme: 'green' },
+                    { text: 'Red', theme: 'red' },
+                    { text: 'Blue', theme: 'blue' }
+                ]
+            });
+        }
+
+        function btnCallbackAlert() {
+            $.jAlert({
+                title: 'Button Callbacks',
+                content: 'Each button has a different callback.',
+                btns: [
+                    { text: 'Alert', onClick: () => alert('Alert button!') },
+                    { text: 'Console', onClick: () => console.log('Console button!') },
+                    { text: 'Close', closeAlert: true }
+                ],
+                closeBtn: false
+            });
+        }
+
+        function multipleBtnsAlert() {
+            $.jAlert({
+                title: 'Multiple Buttons',
+                content: 'This alert has several buttons.',
+                btns: [
+                    { text: 'First', theme: 'green' },
+                    { text: 'Second', theme: 'blue' },
+                    { text: 'Third', theme: 'red' },
+                    { text: 'Fourth', theme: 'default' }
+                ]
+            });
+        }
+
+        function confirmAlert() {
+            $.jAlert({
+                type: 'confirm',
+                confirmQuestion: 'Are you sure you want to proceed?',
+                onConfirm: function() {
+                    alert('Confirmed!');
+                },
+                onDeny: function() {
+                    alert('Cancelled!');
+                }
+            });
+        }
+
+        function customConfirmAlert() {
+            $.jAlert({
+                title: 'Custom Confirm',
+                content: 'Choose your action:',
+                btns: [
+                    { text: 'Yes, do it!', theme: 'green', onClick: () => alert('Yes!') },
+                    { text: 'Maybe later', theme: 'yellow', onClick: () => alert('Maybe!') },
+                    { text: 'No way', theme: 'red', onClick: () => alert('No!') }
+                ]
+            });
+        }
+
+        function btnBackgroundAlert() {
+            $.jAlert({
+                title: 'Button Background',
+                content: 'Buttons have a background panel.',
+                btns: [
+                    { text: 'Save', theme: 'green' },
+                    { text: 'Cancel', theme: 'red' }
+                ],
+                btnBackground: true
+            });
+        }
+
+        function btnNoBackgroundAlert() {
+            $.jAlert({
+                title: 'No Button Background',
+                content: 'Buttons without a background panel - they appear directly in the content area.',
+                btns: [
+                    { text: 'Save', theme: 'green' },
+                    { text: 'Cancel', theme: 'red' }
+                ],
+                btnBackground: false
+            });
+        }
+
+        function btnNoPadAlert() {
+            $.jAlert({
+                title: 'No Padding + Buttons',
+                content: 'Content with no padding and button background.',
+                btns: [
+                    { text: 'Action', theme: 'blue' },
+                    { text: 'Close' }
+                ],
+                noPadContent: true,
+                btnBackground: true
+            });
+        }
+
+        function customClassBtnAlert() {
+            $.jAlert({
+                title: 'Custom Button Classes',
+                content: 'These buttons use custom CSS classes instead of jAlert\'s default styling.',
+                btns: [
+                    { text: 'Primary Action', class: 'btn btn-primary' },
+                    { text: 'Secondary Action', class: 'btn btn-secondary' }
+                ]
+            });
+        }
+
+        // Images
+        function imageAlert(type) {
+            const configs = {
+                normal: {
+                    image: 'https://picsum.photos/600/400?random=1'
+                },
+                auto: {
+                    title: 'Auto Size Image',
+                    image: 'https://picsum.photos/500/300?random=2',
+                    size: 'auto'
+                },
+                custom_width: {
+                    title: 'Custom Width Image',
+                    image: 'https://picsum.photos/800/600?random=3',
+                    imageWidth: '400px'
+                },
+                broken: {
+                    title: 'Broken Image',
+                    image: 'https://invalid-url.com/broken.jpg'
+                },
+                tall: {
+                    title: 'Ultra Tall Image',
+                    image: 'https://picsum.photos/300/1200?random=4'
+                },
+                wide: {
+                    title: 'Ultra Wide Image',
+                    image: 'https://picsum.photos/1200/300?random=5'
+                },
+                tiny: {
+                    title: 'Tiny Image',
+                    image: 'https://picsum.photos/100/100?random=6'
+                },
+                with_pad: {
+                    image: 'https://picsum.photos/600/400?random=7',
+                    noPadContent: false
+                },
+                with_title: {
+                    title: 'Image with Title',
+                    image: 'https://picsum.photos/600/400?random=8'
+                }
+            };
+
+            $.jAlert(configs[type]);
+        }
+
+        // Videos
+        function videoAlert(type) {
+            const configs = {
+                mp4: {
+                    title: 'MP4 Video',
+                    video: {src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'}
+                },
+                webm: {
+                    title: 'WebM Video', 
+                    video: {src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.webm'}
+                },
+                ogg: {
+                    title: 'OGV Video',
+                    video: {src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.ogv'}
+                },
+                no_controls: {
+                    title: 'Video without Controls',
+                    video: {src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', controls: false}
+                },
+                autoplay: {
+                    title: 'Auto Play Video (Muted)',
+                    video: {src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', autoplay: true, muted: true}
+                },
+                muted: {
+                    title: 'Muted Video',
+                    video: {src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', muted: true}
+                },
+                loop: {
+                    title: 'Looping Video',
+                    video: {src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4', loop: true}
+                },
+                html5_loop_autoplay: {
+                    title: 'HTML5 Video with Loop & Autoplay',
+                    video: {src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4', loop: true, autoplay: true, muted: true, controls: true}
+                },
+
+                max_size: {
+                    title: 'Max Size Video (Responsive)',
+                    video: {src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4'}
+                },
+                responsive: {
+                    title: 'Responsive Video',
+                    video: {src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4'}
+                },
+                portrait: {
+                    title: 'Portrait Video (9:16)',
+                    video: {src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4', maxHeight: '960px', maxWidth: '540px'}
+                },
+                youtube: {
+                    title: 'YouTube Video (Enhanced URL Processing)',
+                    video: {src: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', autoplay: true, muted: true, modestbranding: true, rel: false}
+                },
+                vimeo: {
+                    title: 'Vimeo Video (Enhanced URL Processing)',
+                    video: {src: 'https://vimeo.com/56974716', autoplay: true, muted: true, controls: true}
+                },
+                youtube_playlist: {
+                    title: 'YouTube Playlist',
+                    video: {src: 'https://www.youtube.com/embed/videoseries?list=PLrAXtmRdnEQy6nuLMHjMZpZcjuMn93R5', autoplay: true, muted: true}
+                },
+                youtube_responsive: {
+                    title: 'YouTube Responsive (Enhanced URL Processing)',
+                    video: {src: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', autoplay: true, muted: true, controls: true, loop: true}
+                },
+                broken: {
+                    title: 'Broken Video URL',
+                    video: {src: 'https://invalid-url.com/broken-video.mp4'}
+                },
+                with_pad: {
+                    title: 'Video with Padding (Explicit)',
+                    content: '<p>This video explicitly overrides the default no-padding behavior.</p>',
+                    noPadContent: false,
+                    video: {src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4'}
+                },
+                no_pad_default: {
+                    title: 'Video with No Padding (Default)',
+                    content: '<p>This video uses the default no-padding behavior for videos.</p>',
+                    video: {src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4'}
+                },
+                no_title: {
+                    content: '<p>This video has no title - just the video content in the modal.</p>',
+                    video: {src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTISportVision.mp4'}
+                }
+            };
+
+            $.jAlert(configs[type]);
+        }
+
+        // Iframes
+        function iframeAlert(type) {
+            const configs = {
+                basic: {
+                    iframe: 'https://httpbin.org/html'
+                },
+                custom_height: {
+                    title: 'Custom Height Iframe',
+                    iframe: 'https://httpbin.org/html',
+                    iframeHeight: '400px'
+                },
+                stretch: {
+                    title: 'Auto Height Iframe',
+                    iframe: 'https://httpbin.org/html'
+                },
+                auto_local: {
+                    title: 'Auto-sizing Iframe (Same-Origin)',
+                    content: '<p><strong>Same-origin iframe:</strong> Content dimensions detected, iframe sized to fit content.</p>',
+                    iframe: '<html><body style="margin:20px;font-family:Arial;background:#f9f9f9"><h1 style="color:#333;margin:0 0 20px 0">Fixed Size Test Content</h1><div style="width:300px;height:200px;background:linear-gradient(45deg,#007bff,#0056b3);color:white;display:flex;align-items:center;justify-content:center;margin:20px 0;border-radius:8px;font-weight:bold;font-size:18px">Fixed Box: 300x200px</div><p style="line-height:1.6;margin:20px 0">This content has predictable dimensions for testing iframe auto-sizing. The blue box above is exactly 300x200px.</p><div style="background:#e9ecef;padding:15px;border-radius:4px;margin:20px 0"><strong>Test Info:</strong> This iframe should size to fit this content exactly, not use the full viewport height.</div></body></html>',
+                    size: 'auto'
+                },
+                auto_cross: {
+                    title: 'Auto-sizing Iframe (Cross-Origin)',
+                    content: '<p><strong>Cross-origin iframe:</strong> Uses viewport-based sizing since content cannot be accessed.</p>',
+                    iframe: 'https://www.wikipedia.org/',
+                    size: 'auto'
+                },
+                auto_blocked: {
+                    title: 'Auto-sizing Iframe (Blocked)',
+                    content: '<p><strong>X-Frame-Options blocked:</strong> This site blocks iframe embedding entirely.</p>',
+                    iframe: 'https://www.google.com',
+                    size: 'auto'
+                },
+                full: {
+                    title: 'Full Screen Iframe',
+                    iframe: 'https://httpbin.org/html',
+                    size: 'full'
+                },
+                large: {
+                    title: 'Large Iframe',
+                    iframe: 'https://httpbin.org/html',
+                    size: 'xlg'
+                },
+                small: {
+                    title: 'Small Iframe',
+                    iframe: 'https://httpbin.org/html',
+                    size: 'sm'
+                },
+                no_pad: {
+                    title: 'Iframe with No Padding (Default)',
+                    content: '<p>This iframe uses the default no-padding behavior for iframes.</p>',
+                    iframe: 'https://httpbin.org/html'
+                },
+                with_pad: {
+                    title: 'Iframe with Padding (Explicit)',
+                    content: '<p>This iframe explicitly overrides the default no-padding behavior to show padding around the iframe content.</p>',
+                    noPadContent: false,
+                    iframe: 'https://httpbin.org/html'
+                }
+            };
+
+            $.jAlert(configs[type]);
+        }
+
+        // Slideshows
+        function slideshowAlert(type) {
+            const basicImages = [
+                'https://picsum.photos/600/400?random=10',
+                'https://picsum.photos/600/400?random=11',
+                'https://picsum.photos/600/400?random=12'
+            ];
+
+            const manyImages = [
+                'https://picsum.photos/600/400?random=20',
+                'https://picsum.photos/600/400?random=21',
+                'https://picsum.photos/600/400?random=22',
+                'https://picsum.photos/600/400?random=23',
+                'https://picsum.photos/600/400?random=24',
+                'https://picsum.photos/600/400?random=25',
+                'https://picsum.photos/600/400?random=26',
+                'https://picsum.photos/600/400?random=27'
+            ];
+
+            const mixedSizes = [
+                'https://picsum.photos/800/600?random=30', // Landscape
+                'https://picsum.photos/400/800?random=31', // Portrait
+                'https://picsum.photos/1000/400?random=32', // Wide
+                'https://picsum.photos/300/300?random=33'   // Square
+            ];
+
+            const brokenImages = [
+                'https://picsum.photos/600/400?random=40',
+                'https://invalid-url.com/broken1.jpg',
+                'https://picsum.photos/600/400?random=41',
+                'https://invalid-url.com/broken2.jpg'
+            ];
+
+            const captionImages = [
+                { src: 'https://picsum.photos/600/400?random=50', caption: 'First image with a caption' },
+                { src: 'https://picsum.photos/600/400?random=51', caption: 'This is a much longer caption that should definitely wrap to multiple lines even in wide modals, demonstrating how the caption text flows naturally and handles longer descriptions gracefully across different viewport sizes and modal widths' },
+                { src: 'https://picsum.photos/600/400?random=52', caption: 'Third image caption' }
+            ];
+
+            const configs = {
+                basic: {
+                    slideshow: basicImages
+                },
+                single: {
+                    title: 'Single Image Slideshow',
+                    slideshow: ['https://picsum.photos/600/400?random=100']
+                },
+                many: {
+                    title: 'Many Images Slideshow (8)',
+                    slideshow: manyImages
+                },
+                arrows_only: {
+                    title: 'Arrows Only',
+                    slideshow: basicImages,
+                    slideshowOptions: {
+                        showArrows: true,
+                        showCounter: false
+                    }
+                },
+                dots_only: {
+                    title: 'Dots Only',
+                    slideshow: basicImages,
+                    slideshowOptions: {
+                        showArrows: false,
+                        showCounter: 'dots'
+                    }
+                },
+                counter_only: {
+                    title: 'Counter Only',
+                    slideshow: basicImages,
+                    slideshowOptions: {
+                        showArrows: false,
+                        showCounter: 'numbers'
+                    }
+                },
+                no_controls: {
+                    title: 'No Controls',
+                    slideshow: basicImages,
+                    slideshowOptions: {
+                        showArrows: false,
+                        showCounter: false,
+                        keyboardNav: true
+                    }
+                },
+                thumbs_bottom: {
+                    title: 'Thumbnails Bottom',
+                    slideshow: basicImages,
+                    slideshowOptions: {
+                        showThumbnails: true,
+                        thumbnailLocation: 'bottom'
+                    }
+                },
+                thumbs_top: {
+                    title: 'Thumbnails Top',
+                    slideshow: basicImages,
+                    slideshowOptions: {
+                        showThumbnails: true,
+                        thumbnailLocation: 'top'
+                    }
+                },
+                thumbs_error: {
+                    title: 'Thumbnail Errors',
+                    slideshow: brokenImages,
+                    slideshowOptions: {
+                        showThumbnails: true,
+                        thumbnailLocation: 'bottom'
+                    }
+                },
+                contain: {
+                    title: 'Contain Mode',
+                    slideshow: mixedSizes,
+                    slideshowOptions: {
+                        imageSize: 'contain'
+                    }
+                },
+                cover: {
+                    title: 'Cover Mode',
+                    slideshow: mixedSizes,
+                    size: 'lg',
+                    slideshowOptions: {
+                        imageSize: 'cover'
+                    }
+                },
+                auto_fast: {
+                    title: 'Auto-advance Fast (1s)',
+                    slideshow: basicImages,
+                    slideshowOptions: {
+                        autoAdvance: true,
+                        autoAdvanceInterval: 1000
+                    }
+                },
+                auto_slow: {
+                    title: 'Auto-advance Slow (3s)',
+                    slideshow: basicImages,
+                    slideshowOptions: {
+                        autoAdvance: true,
+                        autoAdvanceInterval: 3000
+                    }
+                },
+                loop: {
+                    title: 'Loop Enabled',
+                    slideshow: basicImages,
+                    slideshowOptions: {
+                        loop: true
+                    }
+                },
+                no_loop: {
+                    title: 'Loop Disabled',
+                    slideshow: basicImages,
+                    slideshowOptions: {
+                        loop: false
+                    }
+                },
+                broken_images: {
+                    title: 'Broken Images',
+                    slideshow: brokenImages
+                },
+                mixed_sizes: {
+                    title: 'Mixed Image Sizes',
+                    slideshow: mixedSizes
+                },
+                captions: {
+                    title: 'With Captions',
+                    slideshow: captionImages
+                },
+                preload: {
+                    title: 'Preload Images (Default - Fast Navigation)',
+                    slideshow: manyImages,
+                    slideshowOptions: {
+                        preload: true,
+                        showCounter: 'numbers'
+                    }
+                },
+                no_preload: {
+                    title: 'No Preload (Disabled)',
+                    slideshow: manyImages,
+                    slideshowOptions: {
+                        preload: false,
+                        showCounter: 'numbers'
+                    }
+                },
+                no_pad: {
+                    title: 'Slideshow with No Padding (Default)',
+                    content: '<p>This slideshow uses the default no-padding behavior for slideshows.</p>',
+                    slideshow: basicImages
+                },
+                with_pad: {
+                    title: 'Slideshow with Padding (Explicit)',
+                    content: '<p>This slideshow explicitly overrides the default no-padding behavior to show padding around the slideshow content.</p>',
+                    noPadContent: false,
+                    slideshow: basicImages
+                }
+            };
+
+            $.jAlert(configs[type]);
+        }
+
+        // Video Slideshows
+        function videoSlideshowAlert(type) {
+            const configs = {
+                single_youtube: {
+                    title: 'Single YouTube Video Slideshow',
+                    slideshow: [
+                        {
+                            type: 'video',
+                            src: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                        }
+                    ]
+                },
+                single_html5: {
+                    title: 'Single HTML5 Video Slideshow',
+                    slideshow: [
+                        {
+                            type: 'video',
+                            src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+                        }
+                    ],
+                    slideshowOptions: {
+                        showThumbnails: true,
+                        thumbnailLocation: 'bottom',
+                    }
+                },
+                with_thumbnail: {
+                    title: 'Video with Thumbnail',
+                    slideshow: [
+                        {
+                            type: 'video',
+                            src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+                            thumbnail: 'https://picsum.photos/100/100?random=1',
+                        }
+                    ],
+                    slideshowOptions: {
+                        showThumbnails: true,
+                        thumbnailLocation: 'bottom',
+                        autoplay: true,
+                        muted: true
+                    }
+                },
+                no_thumbnail: {
+                    title: 'Video without Thumbnail',
+                    slideshow: [
+                        {
+                            type: 'video',
+                            src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+                        }
+                    ],
+                    slideshowOptions: {
+                        showThumbnails: true,
+                        thumbnailLocation: 'bottom',
+                        autoplay: true,
+                        muted: true
+                    }
+                },
+                images_before_video: {
+                    title: 'Images + Video Slideshow',
+                    slideshow: [
+                        'https://picsum.photos/600/400?random=1',
+                        'https://picsum.photos/600/400?random=2',
+                        {
+                            type: 'video',
+                            src: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                        }
+                    ],
+                    slideshowOptions: {
+                        showThumbnails: true,
+                        thumbnailLocation: 'bottom',
+                        showArrows: true,
+                        showCounter: 'numbers',
+                        autoplay: true,
+                        muted: true
+                    }
+                },
+                video_between_images: {
+                    title: 'Video Between Images Slideshow',
+                    slideshow: [
+                        'https://picsum.photos/600/400?random=3',
+                        {
+                            type: 'video',
+                            src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+                        },
+                        'https://picsum.photos/600/400?random=5'
+                    ],
+                    slideshowOptions: {
+                        showThumbnails: true,
+                        thumbnailLocation: 'bottom',
+                        showArrows: true,
+                        showCounter: 'numbers',
+                        autoplay: true,
+                        muted: true
+                    }
+                },
+                mixed_video_types: {
+                    title: 'Mixed Video Types Slideshow (no type defined)',
+                    slideshow: [
+                        {
+                            src: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                        },
+                        {
+                            src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+                        },
+                        {
+                            src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+                        }
+                    ],
+                    slideshowOptions: {
+                        showThumbnails: true,
+                        thumbnailLocation: 'bottom',
+                        showArrows: true,
+                        showCounter: 'numbers',
+                        autoplay: true,
+                        muted: true
+                    }
+                }
+            };
+
+            if (!configs[type]) {
+                console.error('Unknown video slideshow type:', type);
+                return;
+            }
+            $.jAlert(configs[type]);
+        }
+
+        function thumbnailSlideshowAlert() {
+            $.jAlert({
+                title: 'Slideshow with Thumbnails',
+                slideshow: [
+                    {src: 'https://picsum.photos/800/600?random=201', thumbnail: 'https://picsum.photos/150/100?random=301', caption: 'Beautiful landscape'},
+                    {src: 'https://picsum.photos/600/800?random=202', thumbnail: 'https://picsum.photos/150/100?random=302', caption: 'Portrait orientation'},
+                    {src: 'https://picsum.photos/900/500?random=203', thumbnail: 'https://picsum.photos/150/100?random=303', caption: 'Wide panoramic view'},
+                    {src: 'https://picsum.photos/700/700?random=204', thumbnail: 'https://picsum.photos/150/100?random=304', caption: 'Square composition'},
+                    {src: 'https://picsum.photos/1200/400?random=205', thumbnail: 'https://picsum.photos/150/100?random=305', caption: 'Ultra-wide format'}
+                ],
+                slideshowOptions: {
+                    showThumbnails: true,
+                    thumbnailLocation: 'bottom',
+                    showArrows: true,
+                    showCounter: 'numbers',
+                    keyboardNav: true
+                }
+            });
+        }
+
+        function coverModeSlideshowAlert() {
+            $.jAlert({
+                title: 'Cover Mode - Mixed Sizes (Large Modal)',
+                slideshow: [
+                    {src: 'https://picsum.photos/400/300?random=401', caption: 'Small image (400x300) - will be cropped to fill'},
+                    {src: 'https://picsum.photos/1200/800?random=402', caption: 'Large image (1200x800) - will be cropped to fit'},
+                    {src: 'https://picsum.photos/300/600?random=403', caption: 'Tall image (300x600) - will be cropped to fill'},
+                    {src: 'https://picsum.photos/1600/400?random=404', caption: 'Wide image (1600x400) - will be cropped to fit'},
+                    {src: 'https://picsum.photos/500/500?random=405', caption: 'Square image (500x500) - will be cropped to fill'}
+                ],
+                size: 'lg',
+                slideshowOptions: {
+                    imageSize: 'cover',
+                    showArrows: true,
+                    showCounter: 'dots',
+                    keyboardNav: true,
+                    autoAdvance: false
+                }
+            });
+        }
+
+        // Ajax
+        function ajaxAlert(type) {
+            const configs = {
+                json: {
+                    title: 'Ajax JSON Content',
+                    ajax: 'https://httpbin.org/json'
+                },
+                html: {
+                    title: 'Ajax HTML Content',
+                    ajax: 'https://httpbin.org/html'
+                },
+                error: {
+                    title: 'Ajax Error',
+                    ajax: 'https://invalid-url.com/error.json'
+                }
+            };
+
+            $.jAlert(configs[type]);
+        }
+
+        // Special Options
+        function specialAlert(type) {
+            const configs = {
+                no_pad: {
+                    title: 'No Padding',
+                    content: 'This content has no padding around it.',
+                    noPadContent: true
+                },
+                blur_bg: {
+                    title: 'Blur Background',
+                    content: 'The background behind this modal is blurred.',
+                    blurBackground: true
+                },
+                custom_class: {
+                    title: 'Custom Classes',
+                    content: 'This modal has custom CSS classes applied.',
+                    class: 'my-custom-modal',
+                    classes: 'another-class test-class'
+                },
+                replace_others: {
+                    title: 'Replace Others',
+                    content: 'This modal replaces any existing modals.',
+                    replaceOtherAlerts: true
+                },
+                autofocus: {
+                    title: 'Auto Focus',
+                    content: '<p>Auto focus test:</p><input type="text" id="test-input" placeholder="This should be focused">',
+                    autofocus: '#test-input'
+                },
+                callbacks: {
+                    title: 'Event Callbacks',
+                    content: 'Check console for callback events.',
+                    onOpen: function(modal) {
+                        console.log('Modal opened:', modal);
+                    },
+                    onClose: function(modal) {
+                        console.log('Modal closed:', modal);
+                    },
+                    onResize: function(modal, width, height) {
+                        console.log('Modal resized:', width, height);
+                    }
+                }
+            };
+
+            $.jAlert(configs[type]);
+        }
+
+        // Multiple Alerts
+        function multipleAlert(type) {
+            switch(type) {
+                case 'stack':
+                    $.jAlert({
+                        title: 'First Alert',
+                        content: 'This is the first alert. A second will appear on top.'
+                    });
+                    setTimeout(() => {
+                        $.jAlert({
+                            title: 'Second Alert',
+                            content: 'This is the second alert, stacked on top.',
+                            replaceOtherAlerts: false
+                        });
+                    }, 500);
+                    break;
+                case 'replace':
+                    $.jAlert({
+                        title: 'First Alert',
+                        content: 'This alert will be replaced in 2 seconds.'
+                    });
+                    setTimeout(() => {
+                        $.jAlert({
+                            title: 'Replacement Alert',
+                            content: 'This alert replaced the first one.',
+                            replaceOtherAlerts: true
+                        });
+                    }, 2000);
+                    break;
+                case 'rapid':
+                    for(let i = 1; i <= 3; i++) {
+                        setTimeout(() => {
+                            $.jAlert({
+                                title: `Rapid Alert #${i}`,
+                                content: `This is rapid-fire alert number ${i}.`,
+                                autoClose: 2000
+                            });
+                        }, i * 200);
+                    }
+                    break;
+            }
+        }
+
+        // Error Cases
+        function errorAlert(type) {
+            switch(type) {
+                case 'no_content':
+                    $.jAlert({
+                        title: 'No Content Test'
+                        // No content property
+                    });
+                    break;
+                case 'invalid_theme':
+                    $.jAlert({
+                        title: 'Invalid Theme',
+                        content: 'Testing invalid theme handling.',
+                        theme: 'nonexistent_theme'
+                    });
+                    break;
+                case 'invalid_size':
+                    $.jAlert({
+                        title: 'Invalid Size',
+                        content: 'Testing invalid size handling.',
+                        size: 'invalid_size'
+                    });
+                    break;
+                case 'circular_callbacks':
+                    $.jAlert({
+                        title: 'Circular Callbacks',
+                        content: 'Testing circular callback references.',
+                        onOpen: function() {
+                            console.log('Callback called');
+                        },
+                        onClose: function() {
+                            // This would create infinite recursion if not handled
+                            $.jAlert({ content: 'Should not create infinite loop' });
+                        }
+                    });
+                    break;
+            }
+        }
+
+        // Event Handler Cleanup Tests
+        function eventCleanupTest(type) {
+            const testImages = [
+                'https://picsum.photos/300/200?random=990',
+                'https://picsum.photos/300/200?random=991',
+                'https://picsum.photos/300/200?random=992'
+            ];
+
+            switch(type) {
+                case 'rapid_open_close':
+                    console.log('=== Rapid Open/Close Test ===');
+                    console.log('Opening slideshow and immediately closing...');
+                    
+                    const modal = $.jAlert({
+                        title: 'Rapid Open/Close Test',
+                        slideshow: testImages,
+                        slideshowOptions: {
+                            autoAdvance: true,
+                            autoAdvanceInterval: 1000,
+                            keyboardNav: true,
+                            pauseOnHover: true,
+                            onSlideChange: function(modal, slideNumber) {
+                                console.error('PROBLEM: onSlideChange fired after modal should be closed!', slideNumber);
+                            }
+                        }
+                    });
+                    
+                    // Close immediately
+                    setTimeout(() => {
+                        console.log('Closing modal...');
+                        modal.closeAlert();
+                        
+                        // Test if events still fire
+                        setTimeout(() => {
+                            console.log('Testing if keyboard events still work...');
+                            // Simulate arrow key press
+                            const event = new KeyboardEvent('keydown', { keyCode: 39 });
+                            document.dispatchEvent(event);
+                            console.log('Arrow key test completed - check for error messages above');
+                        }, 500);
+                    }, 100);
+                    break;
+
+                case 'keyboard_after_close':
+                    console.log('=== Keyboard After Close Test ===');
+                    
+                    $.jAlert({
+                        title: 'Keyboard Test - Close this modal and try arrow keys',
+                        slideshow: testImages,
+                        slideshowOptions: {
+                            keyboardNav: true,
+                            onSlideChange: function(modal, slideNumber) {
+                                console.error('PROBLEM: Keyboard handler still active!', slideNumber);
+                            }
+                        },
+                        btns: {
+                            text: 'Close and test keyboard',
+                            onClick: function() {
+                                this.closeAlert();
+                                setTimeout(() => {
+                                    alert('Now try pressing left/right arrow keys. Check console for any error messages.');
+                                }, 200);
+                            }
+                        }
+                    });
+                    break;
+
+                case 'multiple_slideshows':
+                    console.log('=== Multiple Slideshows Test ===');
+                    
+                    // Open first slideshow
+                    const modal1 = $.jAlert({
+                        title: 'First Slideshow',
+                        slideshow: testImages,
+                        slideshowOptions: {
+                            onSlideChange: function(modal, slideNumber) {
+                                console.log('First slideshow slide change:', slideNumber);
+                            }
+                        },
+                        replaceOtherAlerts: false
+                    });
+                    
+                    setTimeout(() => {
+                        // Open second slideshow
+                        const modal2 = $.jAlert({
+                            title: 'Second Slideshow',
+                            slideshow: testImages,
+                            slideshowOptions: {
+                                onSlideChange: function(modal, slideNumber) {
+                                    console.log('Second slideshow slide change:', slideNumber);
+                                }
+                            },
+                            replaceOtherAlerts: false
+                        });
+                        
+                        setTimeout(() => {
+                            console.log('Closing first slideshow...');
+                            modal1.closeAlert();
+                            
+                            setTimeout(() => {
+                                console.log('Closing second slideshow...');
+                                modal2.closeAlert();
+                                
+                                setTimeout(() => {
+                                    console.log('Testing keyboard after both closed...');
+                                    const event = new KeyboardEvent('keydown', { keyCode: 39 });
+                                    document.dispatchEvent(event);
+                                    console.log('Multiple slideshows test completed');
+                                }, 200);
+                            }, 1000);
+                        }, 1000);
+                    }, 500);
+                    break;
+            }
+        }
+
+        function slideshowCallbacksDemo() {
+            console.log('=== Slideshow Callbacks Demo ===');
+            console.log('Opening slideshow with all callbacks enabled...');
+            
+            const modal = $.jAlert({
+                title: 'Slideshow Callbacks Demo',
+                content: 'Navigate through the slides to see all callbacks in action. Check the console for detailed logs.',
+                slideshow: [
+                    'https://picsum.photos/600/400?random=100',
+                    'https://picsum.photos/600/400?random=101', 
+                    'https://picsum.photos/600/400?random=102',
+                    'https://picsum.photos/600/400?random=103'
+                ],
+                slideshowOptions: {
+                    autoAdvance: true,
+                    autoAdvanceInterval: 3000,
+                    keyboardNav: true,
+                    pauseOnHover: true,
+                    loop: true,
+                    showArrows: true,
+                    showCounter: 'numbers',
+                    showThumbnails: true,
+                    thumbnailLocation: 'bottom',
+                    imageSize: 'contain',
+                    preload: true,
+                    
+                    // Core callbacks
+                    onSlideChange: function(modal, slideNumber) {
+                        const slideshowData = modal.data('slideshow');
+                        const totalSlides = slideshowData && slideshowData.slides ? slideshowData.slides.length : 'unknown';
+                        console.log(`🔄 onSlideChange: Slide ${slideNumber} of ${totalSlides} (1-based slide number)`);
+                        console.log('   Modal element:', modal);
+                        console.log('   Current slide data:', slideshowData && slideshowData.slides ? slideshowData.slides[slideNumber - 1] : 'N/A');
+                    },
+                    
+                    onBeforeSlideChange: function(modal, fromSlide, toSlide) {
+                        console.log(`⏳ onBeforeSlideChange: From slide ${fromSlide + 1} to slide ${toSlide + 1}`);
+                        console.log('   Modal element:', modal);
+                    },
+                    
+                    onSlideshowEnd: function(modal) {
+                        console.log(`🏁 onSlideshowEnd: Slideshow completed (no loop mode)`);
+                        console.log('   Modal element:', modal);
+                    },
+                    
+                    onSlideshowLoop: function(modal, direction) {
+                        console.log(`🔄 onSlideshowLoop: Slideshow looped ${direction} (first/last slide)`);
+                        console.log('   Modal element:', modal);
+                        console.log('   Direction:', direction);
+                    },
+                    
+                    onContentLoad: function(modal, slideNumber, slideElement) {
+                        console.log(`📸 onContentLoad: Image ${slideNumber + 1} loaded`);
+                        console.log('   Modal element:', modal);
+                        console.log('   Slide element:', slideElement);
+                        const imgElement = slideElement ? slideElement.find('img') : null;
+                        console.log('   Image element:', imgElement);
+                        console.log('   Image src:', imgElement ? imgElement.attr('src') : 'N/A');
+                    }
+                },
+                
+                // Modal-level callbacks
+                onOpen: function(modal) {
+                    console.log(`🚀 Modal onOpen: Slideshow modal opened`);
+                    console.log('   Modal element:', modal);
+                },
+                
+                onClose: function(modal) {
+                    console.log(`🔒 Modal onClose: Slideshow modal closed`);
+                    console.log('   Modal element:', modal);
+                    console.log('   ⚠️  This callback fires AFTER animation timeout - slideshow may still be running!');
+                },
+                
+                onResize: function(modal, width, height) {
+                    console.log(`📏 Modal onResize: Modal resized to ${width}x${height}`);
+                    console.log('   Modal element:', modal);
+                },
+                
+                // Add buttons for manual testing
+                btns: [
+                    {
+                        text: 'Next Slide',
+                        theme: 'blue',
+                        onClick: function() {
+                            console.log('👆 Manual Next button clicked');
+                            const slideshow = modal.data('slideshow');
+                            if (slideshow && slideshow.nextSlide) {
+                                slideshow.nextSlide();
+                            }
+                        }
+                    },
+                    {
+                        text: 'Previous Slide', 
+                        theme: 'green',
+                        onClick: function() {
+                            console.log('👆 Manual Previous button clicked');
+                            const slideshow = modal.data('slideshow');
+                            if (slideshow && slideshow.prevSlide) {
+                                slideshow.prevSlide();
+                            }
+                        }
+                    },
+                    {
+                        text: 'Close',
+                        theme: 'red',
+                        closeAlert: true
+                    },
+                    {
+                        text: 'Force Cleanup',
+                        theme: 'gray',
+                        onClick: function() {
+                            console.log('🧹 Manual cleanup test...');
+                            const slideshow = modal.data('slideshow');
+                            if (slideshow && slideshow.stopAutoAdvance) {
+                                console.log('   Stopping auto-advance...');
+                                slideshow.stopAutoAdvance();
+                                console.log('   Auto-advance stopped');
+                            } else {
+                                console.log('   No slideshow data found');
+                            }
+                        }
+                    }
+                ]
+            });
+            
+            console.log('Slideshow opened! Try:');
+            console.log('- Click arrow buttons');
+            console.log('- Use keyboard arrows');
+            console.log('- Click thumbnails');
+            console.log('- Wait for auto-advance');
+            console.log('- Hover to pause auto-advance');
+            console.log('- Resize the browser window');
+        }
+
+        function slideshowCallbacksNoLoopDemo() {
+            console.log('=== Slideshow Callbacks Demo (No Loop) ===');
+            console.log('Opening slideshow with loop disabled...');
+            
+            const modal = $.jAlert({
+                title: 'Slideshow Callbacks Demo (No Loop)',
+                content: 'Navigate through the slides to see callbacks in action. Check the console for detailed logs.',
+                slideshow: [
+                    'https://picsum.photos/600/400?random=100',
+                    'https://picsum.photos/600/400?random=101', 
+                    'https://picsum.photos/600/400?random=102',
+                    'https://picsum.photos/600/400?random=103'
+                ],
+                slideshowOptions: {
+                    autoAdvance: true,
+                    autoAdvanceInterval: 3000,
+                    keyboardNav: true,
+                    pauseOnHover: true,
+                    loop: false,
+                    showArrows: true,
+                    showCounter: 'numbers',
+                    showThumbnails: true,
+                    thumbnailLocation: 'bottom',
+                    imageSize: 'contain',
+                    preload: true,
+                    
+                    // Core callbacks
+                    onSlideChange: function(modal, slideNumber) {
+                        const slideshowData = modal.data('slideshow');
+                        const totalSlides = slideshowData && slideshowData.slides ? slideshowData.slides.length : 'unknown';
+                        console.log(`🔄 onSlideChange: Slide ${slideNumber} of ${totalSlides} (1-based slide number)`);
+                        console.log('   Modal element:', modal);
+                        console.log('   Current slide data:', slideshowData && slideshowData.slides ? slideshowData.slides[slideNumber - 1] : 'N/A');
+                    },
+                    
+                    onBeforeSlideChange: function(modal, fromSlide, toSlide) {
+                        console.log(`⏳ onBeforeSlideChange: From slide ${fromSlide + 1} to slide ${toSlide + 1}`);
+                        console.log('   Modal element:', modal);
+                    },
+                    
+                    onSlideshowEnd: function(modal) {
+                        console.log(`🏁 onSlideshowEnd: Slideshow completed (no loop mode)`);
+                        console.log('   Modal element:', modal);
+                    },
+                    
+                    onSlideshowLoop: function(modal, direction) {
+                        console.log(`🔄 onSlideshowLoop: Slideshow looped ${direction} (first/last slide)`);
+                        console.log('   Modal element:', modal);
+                        console.log('   Direction:', direction);
+                    },
+                    
+                    onContentLoad: function(modal, slideNumber, slideElement) {
+                        console.log(`📸 onContentLoad: Image ${slideNumber + 1} loaded`);
+                        console.log('   Modal element:', modal);
+                        console.log('   Slide element:', slideElement);
+                        const imgElement = slideElement ? slideElement.find('img') : null;
+                        console.log('   Image element:', imgElement);
+                        console.log('   Image src:', imgElement ? imgElement.attr('src') : 'N/A');
+                    }
+                },
+                
+                // Modal-level callbacks
+                onOpen: function(modal) {
+                    console.log(`🚀 Modal onOpen: Slideshow modal opened`);
+                    console.log('   Modal element:', modal);
+                },
+                
+                onClose: function(modal) {
+                    console.log(`🔒 Modal onClose: Slideshow modal closed`);
+                    console.log('   Modal element:', modal);
+                },
+                
+                onResize: function(modal, width, height) {
+                    console.log(`📏 Modal onResize: Modal resized to ${width}x${height}`);
+                    console.log('   Modal element:', modal);
+                },
+                
+                // Add buttons for manual testing
+                btns: [
+                    {
+                        text: 'Next Slide',
+                        theme: 'blue',
+                        onClick: function() {
+                            console.log('👆 Manual Next button clicked');
+                            const slideshow = modal.data('slideshow');
+                            if (slideshow && slideshow.nextSlide) {
+                                slideshow.nextSlide();
+                            }
+                        }
+                    },
+                    {
+                        text: 'Previous Slide', 
+                        theme: 'green',
+                        onClick: function() {
+                            console.log('👆 Manual Previous button clicked');
+                            const slideshow = modal.data('slideshow');
+                            if (slideshow && slideshow.prevSlide) {
+                                slideshow.prevSlide();
+                            }
+                        }
+                    },
+                    {
+                        text: 'Close',
+                        theme: 'red',
+                        closeAlert: true
+                    },
+                    {
+                        text: 'Force Cleanup',
+                        theme: 'gray',
+                        onClick: function() {
+                            console.log('🧹 Manual cleanup test...');
+                            const slideshow = modal.data('slideshow');
+                            if (slideshow && slideshow.stopAutoAdvance) {
+                                console.log('   Stopping auto-advance...');
+                                slideshow.stopAutoAdvance();
+                                console.log('   Auto-advance stopped');
+                            } else {
+                                console.log('   No slideshow data found');
+                            }
+                        }
+                    }
+                ]
+            });
+            
+            console.log('Slideshow opened! Try:');
+            console.log('- Click arrow buttons');
+            console.log('- Use keyboard arrows');
+            console.log('- Click thumbnails');
+            console.log('- Wait for auto-advance');
+            console.log('- Hover to pause auto-advance');
+            console.log('- Resize the browser window');
+        }
+    </script>
+</body>
+</html> 

@@ -58,7 +58,7 @@ function warningAlert(title, msg) {
         msg = title;
         title = 'Warning';
     }
-    showAlert(title, msg, 'yellow');
+    showAlert(title, msg, 'orange');
 }
 
 function blackAlert(title, msg) {

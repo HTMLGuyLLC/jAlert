@@ -1,17 +1,15 @@
 [![Join the chat at https://gitter.im/jAlert/Lobby](https://badges.gitter.im/jAlert/Lobby.svg)](https://gitter.im/jAlert/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Build](https://img.shields.io/badge/Build-Passing-green.svg)
-[![npm](https://img.shields.io/badge/NPM-v5.0.5-blue.svg)](https://npmjs.com/package/jAlert)
+[![npm](https://img.shields.io/badge/NPM-v6.0.0-blue.svg)](https://npmjs.com/package/jAlert)
 
 # jAlert - The Ultimate jQuery Modal & Lightbox Plugin
-
-**🚀 Version 5.0.5 - Enhanced Stability!** A powerful, lightweight jQuery plugin for creating stunning modals, popups, lightboxes, and image slideshows. Perfect for modern web applications that need beautiful, accessible, and responsive dialogs.
 
 ## ✨ Why Choose jAlert?
 
 **🎯 Perfect for jQuery Sites** - If you're already using jQuery, jAlert integrates seamlessly without adding bulky dependencies. No need to learn new frameworks or rewrite existing code.
 
-**⚡ Lightning Fast** - Lightweight and optimized for performance. No bloat, just pure functionality.
+**⚡ Zero Config** - Include JS/CSS and add a modal immediately, no complicated setup.
 
 **🎨 Beautiful by Default** - 12 built-in themes with smooth animations. Your modals will look professional out of the box.
 
@@ -19,16 +17,26 @@
 
 **♿ Basic Accessibility** - Keyboard navigation, screen reader support, and ARIA attributes for better usability.
 
-**🔄 Backward Compatible** - Upgrading from older versions? Your existing code will work without changes.
-
 ## 🎯 When to Use jAlert
 
 - **Simple Modal Needs** - Quick alerts, confirmations, or information dialogs
-- **Image Galleries** - Lightbox slideshows with navigation controls
+- **Image & Video Galleries** - Lightbox slideshows with navigation controls
 - **Content Previews** - Show videos, iframes, or AJAX content in modals
 - **Form Dialogs** - Login forms, contact forms, or any interactive content
 - **jQuery Projects** - Perfect addition to existing jQuery-based websites
 - **Quick Prototypes** - Get beautiful modals running in minutes, not hours
+
+## Browser Compatibility
+
+Minimum browser versions that should fully support this plugin:
+- Chrome: 30+
+- Firefox: 28+
+- Safari: 7+
+- Edge: 12+
+- Opera: 17+
+- Internet Explorer: 11 (with jQuery polyfills, but MutationObserver support is limited)
+
+**Note:** IE10 and below are not fully supported due to missing ES5 features and MutationObserver.
 
 ## 🚀 Quick Start
 
@@ -58,7 +66,11 @@ $.jAlert({
 // Image lightbox
 $.jAlert({
     image: 'path/to/image.jpg',
-    title: 'Beautiful Image'
+});
+
+// Video lightbox
+$.jAlert({
+    video: 'https://embed.youtube.com/my-video',
 });
 
 // Slideshow gallery
@@ -87,7 +99,7 @@ $.jAlert({
 - **AJAX** - Load dynamic content
 
 ### 🎭 **Beautiful Themes**
-12 built-in themes: `default`, `green`, `red`, `blue`, `yellow`, `brown`, `gray`, `black`, and dark variants.
+14 built-in themes: `default`, `green`, `red`, `blue`, `yellow`, `orange`, `brown`, `gray`, `black`, and dark variants (`dark_green`, `dark_red`, `dark_blue`, `dark_gray`, `dark_orange`).
 
 ### ⌨️ **Keyboard & Accessibility**
 - Full keyboard navigation (ESC, arrow keys)
@@ -114,7 +126,7 @@ $.jAlert({
 ## 🔧 Requirements
 
 - **jQuery 3.7.0+** (peer dependency)
-- **Modern browsers** (Chrome 60+, Firefox 55+, Safari 12+, Edge 79+, IE11+)
+- **Modern browsers** (see browser compatibility below)
 
 ## 🛠️ Development
 
