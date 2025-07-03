@@ -115,13 +115,13 @@ $.jAlert({
 
 ## 📖 Documentation & Examples
 
-**🎮 Live Demo:** [View Interactive Examples](https://htmlguyllc.github.io/jAlert/)
+**🎮 Live Demo:** [View Interactive Examples](https://htmlguyllc.github.io/jAlert/#examples)
 
-**📚 Full Documentation:** [Complete API Reference](https://htmlguyllc.github.io/jAlert/)
+**📚 Full Documentation:** [Complete API Reference](https://htmlguyllc.github.io/jAlert/#documentation)
 
 **🔄 Changelog:** [Version History](https://github.com/HTMLGuyLLC/jAlert/blob/master/CHANGELOG.md)
 
-**⬆️ Upgrade Guide:** [Migration Instructions](https://github.com/HTMLGuyLLC/jAlert/blob/master/UPGRADE_GUIDE.md)
+**⬆️ Upgrade Guide:** [Migration Instructions](https://github.com/HTMLGuyLLC/jAlert/blob/master/UPGRADE_GUIDE_V5_to_V6.md)
 
 ## 🔧 Requirements
 
