@@ -2,6 +2,15 @@
 
 All notable changes to jAlert will be documented in this file.
 
+## [6.0.1] - 2026-10-28
+
+### 🔒 Security
+
+- Patched vulnerable dev dependencies via `npm audit fix` (37 advisories → 5 low)
+- Upgraded `css-minimizer-webpack-plugin` to 8, `puppeteer` to 25, and `jest` / `jest-environment-jsdom` to 30
+- Updated the `test:unit` script for Jest 30's `--testPathPatterns` flag
+- No changes to the library code or `dist/` output
+
 ## [6.0.0] - 2025-07-03
 
 ### 🚀 Major Release - Complete Feature Overhaul
